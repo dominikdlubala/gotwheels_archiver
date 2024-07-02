@@ -1,5 +1,11 @@
 {
-    "users": [], 
+    "users": [
+        {
+            "id": 1, 
+            "firstName": "Karolina", 
+            "lastName": "Kowal"
+        }
+    ], 
     "collections": [], 
     "cars": []
 }

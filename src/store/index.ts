@@ -17,4 +17,4 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof store.getState> 
 export type AppDispatch = typeof store.dispatch; 
 
-export { useFetchCollectionsQuery } from './api/collectionsApi'; 
+export { collectionsApi } from './api/collectionsApi'; 
