@@ -1,26 +1,26 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'; 
-import type { User } from '../../types/userType'; 
-
+// import type { User } from '../../types/userType'; 
+import type {Collection} from '../../types/collectionType'; 
 
 
 export const collectionsApi = createApi({
     reducerPath: 'collections', 
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://localhost:3005'
+        baseUrl: 'http://localhost:3005'
     }), 
     endpoints(builder) {
         return {
-            fetchCollections: builder.query({
-                query: (user: User) => {
+            fetchCollections: builder.query<Collection[], number>({
+                query: (id: number) => {
                     return {
                         url: '/collections', 
                         params: {
-                            userId: user.id
+                            userId: id
                         }, 
                         method: 'GET'
                     }
                 }       
-            }) 
+            })
         }
     }
 })

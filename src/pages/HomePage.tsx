@@ -1,14 +1,17 @@
-import { collectionsApi } from '../store'; 
+import { Link } from 'react-router-dom'; 
+import { User } from '../types/userType'; 
 
-export default function HomePage() {
+interface HomePageProps {
+    user: User
+}
 
-    const useFetchCollectionsQuery = collectionsApi.endpoints.fetchCollections.useQuery; 
+export default function HomePage({user}: HomePageProps) {
 
-    console.log(useFetchCollectionsQuery({id: 1, firstName: 'Karolina', lastName: 'Kowal' })); 
 
     return (
         <div>
             Home
+            <Link to={`/collections/?userId=${user.id}`} >Go to collections</Link>
         </div>
     ); 
 }

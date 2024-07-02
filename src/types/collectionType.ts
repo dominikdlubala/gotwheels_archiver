@@ -1,5 +1,5 @@
 export type Collection = {
-    id: number, 
+    id: string, 
     name: string, 
-    description: string
+    userId: number
 }

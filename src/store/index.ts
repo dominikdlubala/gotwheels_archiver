@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'; 
 import { setupListeners } from '@reduxjs/toolkit/query'; 
 import { collectionsApi } from './api/collectionsApi'; 
+import { carsApi } from './api/carsApi';
 
 export const store = configureStore({
     reducer: {
@@ -18,3 +19,5 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch; 
 
 export { collectionsApi } from './api/collectionsApi'; 
+export const { useFetchCollectionsQuery }  = collectionsApi; 
+export const useFetchCarsQuery = carsApi.endpoints.fetchCars.useQuery; 
