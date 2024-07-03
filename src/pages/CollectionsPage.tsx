@@ -1,19 +1,33 @@
-import { User } from '../types/userType'; 
-import { useFetchCollectionsQuery } from '../store';
+import { useLoaderData } from 'react-router-dom'; 
+import { useState } from 'react'; 
+import type { Collection } from '../types/collectionType'; 
 import CollectionList from '../components/CollectionList'; 
+import { useAddCollectionMutation } from '../store';
+import  CollectionModal  from '../components/CollectionModal'; 
 
-interface CollectionsPageProps {
-    user: User
-}
 
-export default function CollectionsPage({ user }: CollectionsPageProps) {    
+export default function CollectionsPage() {    
+    
+    const [modalOpen, setModalOpen] = useState(false); 
+    
+    const { fetchResults } = useLoaderData() as { fetchResults: Collection[]}; 
+    // const { data, isLoading, isError } = useFetchCollectionsQuery(fetchResults[0].userId); 
+    const [addCollection, {isLoading: isAdding}] = useAddCollectionMutation();  
 
-    const {data} = useFetchCollectionsQuery(user.id); 
+    
+    const handleFormSubmit = async (newCollection: {userId: number, name: string}) => {
+        await addCollection(newCollection); 
+        setModalOpen(false); 
+    }
 
 
     return (
         <div>
-            <CollectionList data={data} />
+            <CollectionList userId={fetchResults[0].userId} />
+
+            <button onClick={() => setModalOpen(true)}>Add collection</button>
+
+            { modalOpen && <CollectionModal handleFormSubmit={handleFormSubmit} userId={fetchResults[0].userId} isAdding={isAdding} />}
         </div>
     ); 
 }

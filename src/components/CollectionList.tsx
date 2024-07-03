@@ -1,21 +1,26 @@
-import type { Collection } from '../types/collectionType'; 
 import CollectionListItem from './CollectionListItem';
+import { useFetchCollectionsQuery } from '../store';
 
 interface CollectionListProps {
-    data: Collection[] | undefined
+    userId: number
 }
 
-export default function CollectionList ({ data }: CollectionListProps) {
+export default function CollectionList ({ userId }: CollectionListProps) {
 
-    const renderedCollectionListItems = data?.map(collection => {
-        return (
-            <CollectionListItem key={collection.id} collection={collection} />
-        ); 
-    }); 
+    const {data, isLoading, isError} = useFetchCollectionsQuery(userId); 
 
-    return (
-        <div>
-            {renderedCollectionListItems}
-        </div>
-    ); 
+    let content; 
+    if(isLoading) {
+        content = <div>...Loading</div>
+    }
+
+    if(!isLoading && !isError) {
+        content = data?.map(collection => (
+            <div key={collection.id}> 
+                <CollectionListItem key={collection.id} collection={collection} />
+            </div>
+        ))
+    }
+
+    return content; 
 }

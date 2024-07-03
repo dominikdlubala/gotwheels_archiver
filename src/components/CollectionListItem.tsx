@@ -6,7 +6,6 @@ interface CollectionListItemProps {
 
 export default function CollectionListItem({ collection }: CollectionListItemProps) {
 
-
     return (
         <div>
             id: {collection.id} name: {collection.name} 

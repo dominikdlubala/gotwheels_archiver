@@ -1,43 +1,53 @@
 {
-    "users": [
-        {
-            "id": 1, 
-            "firstName": "Karolina", 
-            "lastName": "Kowal"
-        }
-    ], 
-    "collections": [
-        {
-            "id": 1, 
-            "name": "Hotwheels 1", 
-            "userId": 1
-        },
-        {
-            "id": 2, 
-            "name": "Hotwheels 2", 
-            "userId": 2
-        },
-        {
-            "id": 3, 
-            "name": "Hotwheels 3", 
-            "userId": 1
-        }
-    ], 
-    "cars": [
-        {
-            "id": 1, 
-            "name": "Honda Civic", 
-            "collectionId": 1
-        },
-        {
-            "id": 2, 
-            "name": "Honda Civic2", 
-            "collectionId": 1
-        },
-        {
-            "id": 3, 
-            "name": "Honda Civic3", 
-            "collectionId": 2
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Karolina",
+      "lastName": "Kowal"
+    }
+  ],
+  "collections": [
+    {
+      "id": "1",
+      "name": "Hotwheels 1",
+      "userId": 1
+    },
+    {
+      "id": "2",
+      "name": "Hotwheels 2",
+      "userId": 2
+    },
+    {
+      "id": "3",
+      "name": "Hotwheels 3",
+      "userId": 1
+    },
+    {
+      "id": "b473",
+      "name": "cos",
+      "userId": 1
+    },
+    {
+      "id": "387d",
+      "name": "cos",
+      "userId": 1
+    }
+  ],
+  "cars": [
+    {
+      "id": "1",
+      "name": "Honda Civic",
+      "collectionId": 1
+    },
+    {
+      "id": "2",
+      "name": "Honda Civic2",
+      "collectionId": 1
+    },
+    {
+      "id": "3",
+      "name": "Honda Civic3",
+      "collectionId": 2
+    }
+  ]
 }

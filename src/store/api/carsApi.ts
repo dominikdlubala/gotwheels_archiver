@@ -24,4 +24,5 @@ export const carsApi = createApi({
 
 })
 
+export const { useFetchCarsQuery } = carsApi; 
 

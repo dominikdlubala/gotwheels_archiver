@@ -5,6 +5,7 @@ import CollectionsPage from './pages/CollectionsPage';
 import CarsPage from './pages/CarsPage'; 
 
 import { carsLoader } from './store/api/loaders/carsLoader'; 
+import { collectionsLoader } from './store/api/loaders/collectionsLoader'; 
 
 const user = {
   id: 1, 
@@ -23,7 +24,8 @@ const router = createBrowserRouter([
       }, 
       {
         path: '/collections', 
-        element: <CollectionsPage user={user} />, 
+        element: <CollectionsPage />, 
+        loader: collectionsLoader
       }, 
       {
         path: '/cars', 
