@@ -6,10 +6,11 @@ export const carsApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3005'
     }), 
+    tagTypes: ['Cars'],
     endpoints: (builder) => {
         return {
-            fetchCars: builder.query<Car[], number>({
-                query: (collectionId: number) => {
+            fetchCars: builder.query<Car[], string>({
+                query: (collectionId: string) => {
                     return {
                         url: '/cars', 
                         params: {
@@ -17,12 +18,34 @@ export const carsApi = createApi({
                         }, 
                         method: 'GET'
                     }
-                }
+                }, 
+                providesTags: (result) => 
+                    result 
+                    ? 
+                        [
+                            ...result.map(({id}) => ({ type: 'Cars', id} as const )), 
+                            {type: 'Cars', id: 'LIST'}
+                        ]
+                    : 
+                        [{ type: 'Cars', id: 'LIST'}]
+            }), 
+            addCar: builder.mutation<Car, Omit<Car, 'id'>>({
+                query: (body) => {
+                    return {
+                        url: '/cars', 
+                        method: 'POST', 
+                        body
+                    }
+                }, 
+                invalidatesTags: [{ type: 'Cars', id: 'LIST'}]
             })
         }
     }
 
 })
 
-export const { useFetchCarsQuery } = carsApi; 
+export const { 
+    useFetchCarsQuery, 
+    useAddCarMutation
+ } = carsApi; 
 

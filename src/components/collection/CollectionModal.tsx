@@ -3,8 +3,8 @@ import { useState } from 'react';
 // type addCollectionMutation = ReturnType<typeof useAddCollectionMutation>[0]; 
 
 interface CollectionModalProps {
-    handleFormSubmit: (x: {userId: number, name: string}) => void; 
-    userId: number;   
+    handleFormSubmit: (x: {userId: string, name: string}) => void; 
+    userId: string;   
     isAdding: boolean
 }
 

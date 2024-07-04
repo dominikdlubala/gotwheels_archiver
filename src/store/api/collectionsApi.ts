@@ -11,8 +11,8 @@ export const collectionsApi = createApi({
     tagTypes: ['Collections'],
     endpoints(builder) {
         return {
-            fetchCollections: builder.query<Collection[], number>({
-                query: (id: number) => {
+            fetchCollections: builder.query<Collection[], string>({
+                query: (id: string) => {
                     return {
                         url: '/collections', 
                         params: {
@@ -31,8 +31,8 @@ export const collectionsApi = createApi({
                     :
                         [{ type: 'Collections', id: 'LIST'}]
             }), 
-            addCollection: builder.mutation<Collection, { userId: number, name: string}>({
-                query: ({userId, name}: {userId: number, name: string}) => {
+            addCollection: builder.mutation<Collection, { userId: string, name: string}>({
+                query: ({userId, name}: {userId: string, name: string}) => {
                     return {
                         url: '/collections', 
                         method: 'POST', 

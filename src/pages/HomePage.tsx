@@ -1,17 +1,14 @@
 import { Link } from 'react-router-dom'; 
-import { User } from '../types/userType'; 
+import { useUserData } from '../hooks/useUserData'; 
 
-interface HomePageProps {
-    user: User
-}
+export default function HomePage() {
 
-export default function HomePage({user}: HomePageProps) {
-
+    const { user } = useUserData(); 
 
     return (
         <div>
             Home
-            <Link to={`/collections/?userId=${user.id}`} >Go to collections</Link>
+            <Link to={`/collections/${user.id}`} >Go to collections</Link>
         </div>
     ); 
 }

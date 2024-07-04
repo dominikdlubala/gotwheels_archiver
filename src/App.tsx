@@ -7,12 +7,6 @@ import CarsPage from './pages/CarsPage';
 import { carsLoader } from './store/api/loaders/carsLoader'; 
 import { collectionsLoader } from './store/api/loaders/collectionsLoader'; 
 
-const user = {
-  id: 1, 
-  firstName: "Karolina", 
-  lastName: "Kowal"
-}
-
 const router = createBrowserRouter([
   {
     path: '/', 
@@ -20,15 +14,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true, 
-        element: <HomePage user={user} />
+        element: <HomePage />
       }, 
       {
-        path: '/collections', 
+        path: '/collections/:userId', 
         element: <CollectionsPage />, 
         loader: collectionsLoader
       }, 
       {
-        path: '/cars', 
+        path: '/cars/:collectionId', 
         element: <CarsPage />, 
         loader: carsLoader
       }

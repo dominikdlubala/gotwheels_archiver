@@ -1,8 +1,8 @@
 import CollectionListItem from './CollectionListItem';
-import { useFetchCollectionsQuery } from '../store';
+import { useFetchCollectionsQuery } from '../../store';
 
 interface CollectionListProps {
-    userId: number
+    userId: string
 }
 
 export default function CollectionList ({ userId }: CollectionListProps) {
