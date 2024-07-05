@@ -1,21 +1,22 @@
 import { FaFire } from 'react-icons/fa'; 
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../hooks/useAuth'; 
 
 export default function Header() {
 
     const { logout } = useAuth(); 
+    const navigate = useNavigate(); 
 
     return (
         <div className="header-container">
             <div className="header-logo">
                 <Link to={`/home`} className="header-logo-link">
-                    Hot<FaFire className="icon-fire" />Wheels
+                    <span>Hot</span><FaFire className="icon-fire" />Wheels
                 </Link>
             </div>
             <div className="header-links">
                 <a onClick={() => logout()}>Log out</a>
-                <Link to={'/register'}>Register</Link>
+                <a onClick={() => navigate('/register')}>Register</a>
             </div>
         </div>
     ); 

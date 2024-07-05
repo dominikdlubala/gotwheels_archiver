@@ -17,17 +17,26 @@ export default function RegisterPage() {
     }
     
     return (
-        <div> 
-            Register a new user
-            <form onSubmit={handleFormSubmit}>
-                <label>Username</label>
-                <input value={username} onChange={(e: React.FormEvent<HTMLInputElement>) => setUsername(e.currentTarget.value)} />
-                <label>Password</label>
-                <input 
-                    value={password}
-                    onChange={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
-                />
-                <button type="submit" disabled={isAdding}>Submit</button>
+        <div className="form-container"> 
+            <form className="form" onSubmit={handleFormSubmit}>
+                <h1 className="form-title">Register a new user</h1>
+                <div className="form-group">
+                    <label>Username</label>
+                    <input 
+                        className="form-input"
+                        value={username} 
+                        onChange={(e: React.FormEvent<HTMLInputElement>) => setUsername(e.currentTarget.value)} 
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input 
+                        className="form-input"
+                        value={password}
+                        onChange={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
+                    />
+                </div>
+                <button className="btn-submit" type="submit" disabled={isAdding}>Submit</button>
             </form>
         </div>
     )
