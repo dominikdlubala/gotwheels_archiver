@@ -3,9 +3,9 @@ import Root from './pages/Root';
 import HomePage from './pages/HomePage'; 
 import CollectionsPage from './pages/CollectionsPage'; 
 import CarsPage from './pages/CarsPage'; 
-
-import { carsLoader } from './store/api/loaders/carsLoader'; 
-import { collectionsLoader } from './store/api/loaders/collectionsLoader'; 
+import LoginPage from './pages/LoginPage'; 
+import RegisterPage from './pages/RegisterPage'; 
+import { ProtectedRoute } from './components/login/ProtectedRoute'; 
 
 const router = createBrowserRouter([
   {
@@ -14,17 +14,35 @@ const router = createBrowserRouter([
     children: [
       {
         index: true, 
-        element: <HomePage />
+        element: <LoginPage />
       }, 
       {
+        path: '/register', 
+        element: <RegisterPage />
+      },
+      {
+        path: '/home', 
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        )
+      },
+      {
         path: '/collections/:userId', 
-        element: <CollectionsPage />, 
-        loader: collectionsLoader
+        element: (
+          <ProtectedRoute>
+            <CollectionsPage />
+          </ProtectedRoute>
+        ), 
       }, 
       {
         path: '/cars/:collectionId', 
-        element: <CarsPage />, 
-        loader: carsLoader
+        element: (
+          <ProtectedRoute>
+            <CarsPage />, 
+          </ProtectedRoute>
+        )
       }
 
     ]

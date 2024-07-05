@@ -2,7 +2,7 @@ import { useFetchCarsQuery } from "../../store"
 import  CarsListItem  from './CarsListItem'; 
 
 interface CarsListProps {
-    collectionId?: string
+    collectionId: string
 }
 export default function CarsList({ collectionId }: CarsListProps) {
 

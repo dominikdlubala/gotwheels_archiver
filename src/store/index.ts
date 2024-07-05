@@ -2,16 +2,19 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query'; 
 import { collectionsApi } from './api/collectionsApi'; 
 import { carsApi } from './api/carsApi'; 
+import { usersApi } from './api/usersApi'; 
 
 export const store = configureStore({
     reducer: {
         [collectionsApi.reducerPath]: collectionsApi.reducer, 
-        [carsApi.reducerPath]: carsApi.reducer
+        [carsApi.reducerPath]: carsApi.reducer, 
+        [usersApi.reducerPath]: usersApi.reducer
     }, 
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
             .concat(collectionsApi.middleware)
             .concat(carsApi.middleware) 
+            .concat(usersApi.middleware)
     }
 }); 
 
@@ -26,5 +29,11 @@ export {
     useAddCollectionMutation 
 } from './api/collectionsApi'; 
 export {
-    useFetchCarsQuery
+    useFetchCarsQuery, 
+    useAddCarMutation
 } from './api/carsApi'; 
+
+export {
+    useFetchUsersQuery, 
+    useAddUserMutation
+} from './api/usersApi'; 

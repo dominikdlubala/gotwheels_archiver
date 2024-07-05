@@ -1,6 +1,6 @@
 * {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-  margin: auto; 
+  margin: 0; 
 }
 
 body {
@@ -14,16 +14,23 @@ body {
   display: flex; 
   flex-direction: row; 
   background-color: gray; 
-  height: 7.5vh; 
+  height: 10vh; 
+  width: 100%; 
   position: relative; 
   align-items: center;
+  justify-content: space-between; 
 }
 
-.header-logo {
+.header-links, .header-logo {
+  margin: 2rem; 
+  cursor: pointer; 
+}
+
+.header-logo-link {
   font-size: 1.5rem; 
-  position: absolute; 
+  /* position: absolute;  */
   left: 0; 
-  margin-left: 1rem; 
+  /* margin-left: 1rem;  */
   text-decoration: none; 
   color: black; 
 }

@@ -2,8 +2,13 @@
   "users": [
     {
       "id": "1",
-      "firstName": "Karolina",
-      "lastName": "Kowal"
+      "username": "karolina123",
+      "password": "kochamPieski"
+    },
+    {
+      "id": "8c6e",
+      "username": "username2",
+      "password": "password2"
     }
   ],
   "collections": [

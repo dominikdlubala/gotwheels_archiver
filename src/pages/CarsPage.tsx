@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom'; 
 import  CarsList  from '../components/car/CarsList'; 
 import CarsModal from '../components/car/CarsModal'; 
-import { useAddCarMutation } from '../store/api/carsApi';
+import { useAddCarMutation } from '../store';
 
 export default function CarsPage() {
     const [modalOpen, setModalOpen] = useState(false); 
     const { collectionId } = useParams(); 
-
-    console.log(Number(collectionId)); 
 
     const [addCar, {isLoading: isAdding}] = useAddCarMutation(); 
 
@@ -17,9 +15,17 @@ export default function CarsPage() {
         setModalOpen(false); 
     }
 
+    // kinda scuffed
+    let sentCollectionId; 
+    if(!collectionId) {
+        sentCollectionId = ''; 
+    } else {
+        sentCollectionId = collectionId; 
+    }
+
     return (
         <div>
-            <CarsList collectionId={collectionId} />
+            <CarsList collectionId={sentCollectionId} />
             <button onClick={() => setModalOpen(true)}>Add car</button>
 
             {
