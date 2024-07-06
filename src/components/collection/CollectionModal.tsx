@@ -5,10 +5,12 @@ import { useState } from 'react';
 interface CollectionModalProps {
     handleFormSubmit: (x: {userId: string, name: string}) => void; 
     userId: string;   
-    isAdding: boolean
+    isAdding: boolean; 
+    handleClose: () => void; 
+    show: boolean; 
 }
 
-export default function CollectionModal({ handleFormSubmit, userId, isAdding }: CollectionModalProps) {
+export default function CollectionModal({ handleFormSubmit, userId, isAdding, handleClose, show }: CollectionModalProps) {
 
     const [name, setName] = useState(''); 
 
@@ -26,12 +28,24 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding }: 
         }
     }
 
+    const showHideClassName = show ? "modal display-block" : "modal display-none"; 
+
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input value={name} onChange={handleChange} />
-                <button type="submit" disabled={isAdding}>{ isAdding ? 'Submitting...' : 'Submit'}</button>
-            </form>
+        <div className={showHideClassName}>
+            <div className="modal-main form-container">
+                <div className="modal-header-div">
+                    <button className="btn-close" onClick={handleClose}>Close</button>
+                </div>
+                <form className="modal-form" onSubmit={handleSubmit}>
+                    <div className="form-title">
+                        Add a collection
+                    </div>
+                    <div className="form-group">
+                        <input className="form-input" value={name} onChange={handleChange} />
+                    </div>
+                        <button className="btn-submit" type="submit" disabled={isAdding}>{ isAdding ? 'Submitting...' : 'Submit'}</button>
+                </form>
+            </div>
         </div>
     )
 }

@@ -10,8 +10,6 @@ export default function LoginPage() {
     const { login } = useAuth(); 
     const { data, isLoading, isError } = useFetchUsersQuery(null); 
 
-    console.log(data); 
-
     const handleFormSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault(); 
         const foundUser = data?.find(user => user.username == username); 

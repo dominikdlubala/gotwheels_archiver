@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         path: '/cars/:collectionId', 
         element: (
           <ProtectedRoute>
-            <CarsPage />, 
+            <CarsPage />
           </ProtectedRoute>
         )
       }

@@ -18,19 +18,30 @@ export default function CollectionsPage() {
         setModalOpen(false); 
     }
 
+    const handleModalClose = () => {
+        setModalOpen(false); 
+    }
+
     return (
         <div>
-            <CollectionList userId={userId || ''} />
+            <div className="page-title">
+                <h1>Collections</h1>
+            </div>
+            <div className="page-section">
+                <div className="page-section-header"> 
+                    <h1>See your collections here</h1>
+                    <button className="btn-add" onClick={() => setModalOpen(true)}>+Add collection</button>
+                </div>
+                <CollectionList userId={userId || ''} />
+            </div>
 
-            <button onClick={() => setModalOpen(true)}>Add collection</button>
-
-            { modalOpen 
-                && 
                 <CollectionModal 
                     handleFormSubmit={handleFormSubmit} 
                     userId={userId || ''} 
                     isAdding={isAdding} 
-                />}
+                    show={modalOpen}
+                    handleClose={handleModalClose}
+                />
         </div>
     ); 
 }

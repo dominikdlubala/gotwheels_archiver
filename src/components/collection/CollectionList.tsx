@@ -22,5 +22,9 @@ export default function CollectionList ({ userId }: CollectionListProps) {
         ))
     }
 
-    return content; 
+    return (
+        <div className="list collection-list"> 
+            {content}
+        </div>
+    );
 }

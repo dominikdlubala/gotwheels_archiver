@@ -7,9 +7,13 @@ interface CollectionListItemProps {
 export default function CollectionListItem({ collection }: CollectionListItemProps) {
 
     return (
-        <div>
-            id: {collection.id} name: {collection.name} 
-            <Link to={`/cars/${collection.id}`}>See cars</Link>
+        <div className="list-item collection-list-item">
+            <div className="item-details">
+                <h3>
+                    {collection.name}
+                </h3>
+            </div>
+                <Link className="link" to={`/cars/${collection.id}`}>See cars</Link>
         </div>
     ); 
 }

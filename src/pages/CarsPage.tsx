@@ -25,8 +25,17 @@ export default function CarsPage() {
 
     return (
         <div>
-            <CarsList collectionId={sentCollectionId} />
-            <button onClick={() => setModalOpen(true)}>Add car</button>
+            <div className="page-title">
+                <h1>Cars</h1>
+            </div>
+            <div className="page-section">
+                    
+                <div className="page-section-header">
+                    <h1>See your cars here</h1>
+                    <button className="btn-add" onClick={() => setModalOpen(true)}>+Add car</button>
+                </div>
+                <CarsList collectionId={sentCollectionId} />
+            </div>
 
             {
                 modalOpen 

@@ -20,5 +20,9 @@ export default function CarsList({ collectionId }: CarsListProps) {
         ))
     }
 
-    return content; 
+    return (
+        <div className="list cars-list">
+            {content} 
+        </div>
+    );
 }

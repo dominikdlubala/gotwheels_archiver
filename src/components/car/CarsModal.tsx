@@ -2,9 +2,11 @@ import { useState } from 'react';
 interface CarsModalProps {
     onSubmit: (name: string) => void; 
     isAdding: boolean; 
+    show: boolean; 
+    handleClose: () => void
 }
 
-export default function AddCar({ onSubmit, isAdding}: CarsModalProps) {
+export default function CarsModal({ onSubmit, isAdding}: CarsModalProps) {
     const [name, setName] = useState(''); 
 
     const handleFormSubmit = async (e: React.SyntheticEvent) => {

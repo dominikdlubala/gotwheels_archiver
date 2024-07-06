@@ -2,13 +2,19 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; 
 
 export default function HomePage() {
-
     const { user } = useAuth(); 
 
     return (
         <div>
-            Home
-            <Link to={`/collections/${user?.id}`} >Go to collections</Link>
+            <div className="page-title">
+                <h1>Home</h1>
+            </div>
+            <div className="page-section">
+                <div>
+                    <h1>Section</h1>
+                </div>
+                <Link className="page-link collections-link" to={`/collections/${user?.id}`} >Go to collections</Link>
+            </div>
         </div>
     ); 
 }

@@ -6,8 +6,10 @@ interface CarsListItemProps {
 export default function CarsListItem({ car }: CarsListItemProps) {
 
     return (
-        <div>
-            {car.id} {car.name}
+        <div className="list-item cars-list-item">
+            <div className="item-details">
+                {car.name}
+            </div>
         </div>
     )
 }
