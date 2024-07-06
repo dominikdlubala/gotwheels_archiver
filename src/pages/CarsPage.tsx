@@ -15,6 +15,10 @@ export default function CarsPage() {
         setModalOpen(false); 
     }
 
+    const handleModalClose = () => {
+        setModalOpen(false); 
+    }
+
     // kinda scuffed
     let sentCollectionId; 
     if(!collectionId) {
@@ -37,14 +41,12 @@ export default function CarsPage() {
                 <CarsList collectionId={sentCollectionId} />
             </div>
 
-            {
-                modalOpen 
-                &&
                 <CarsModal 
                     onSubmit={handleModalSubmit}
                     isAdding={isAdding}
+                    show={modalOpen}
+                    handleClose={handleModalClose}
                  /> 
-            }
         </div>
     )
 }

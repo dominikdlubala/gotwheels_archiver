@@ -33,7 +33,7 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
     return (
         <div className={showHideClassName}>
             <div className="modal-main form-container">
-                <div className="modal-header-div">
+                <div className="modal-header">
                     <button className="btn-close" onClick={handleClose}>Close</button>
                 </div>
                 <form className="modal-form" onSubmit={handleSubmit}>

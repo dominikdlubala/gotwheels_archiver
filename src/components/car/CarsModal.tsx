@@ -6,7 +6,7 @@ interface CarsModalProps {
     handleClose: () => void
 }
 
-export default function CarsModal({ onSubmit, isAdding}: CarsModalProps) {
+export default function CarsModal({ onSubmit, isAdding, show, handleClose}: CarsModalProps) {
     const [name, setName] = useState(''); 
 
     const handleFormSubmit = async (e: React.SyntheticEvent) => {
@@ -19,12 +19,24 @@ export default function CarsModal({ onSubmit, isAdding}: CarsModalProps) {
         }
     }
 
+    const showHideClassName = show ? "modal display-flex" : "modal display-none"; 
+
     return (
-        <div> 
-            <form onSubmit={handleFormSubmit}>
-                <input value={name} onChange={(e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value) } />
-                <button type="submit" disabled={isAdding}>{isAdding ? '...Submitting' : 'Submit'}</button>
-            </form>
+        <div className={showHideClassName}> 
+            <div className="modal-main form-container">
+                <div className="modal-header">
+                    <button className="btn-close" onClick={handleClose}>Close</button>
+                </div>
+                <form  className="modal-form" onSubmit={handleFormSubmit}>
+                    <div className="form-title">
+                        Add a car
+                    </div>
+                    <div className="form-group">
+                        <input className="form-input" value={name} onChange={(e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value) } />
+                    </div>
+                    <button className="btn-submit" type="submit" disabled={isAdding}>{isAdding ? '...Submitting' : 'Submit'}</button>
+                </form>
+            </div>
         </div>
     )
 }
