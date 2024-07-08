@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'; 
 import type { PayloadAction } from '@reduxjs/toolkit'; 
 
+type SliceState = { value: ''} | { value: string}; 
+
 const inputSlice = createSlice({
     name: 'input', 
-    initialState: {
+    initialState: <SliceState> {
         value: ''
     }, 
     reducers: {

@@ -11,33 +11,38 @@ export default function RegisterPage() {
 
 
     const handleFormSubmit = async (e: React.SyntheticEvent) => {
+        if(username.length < 3 || ( password.length < 5 ))
         e.preventDefault(); 
         await addUser({username, password}); 
         navigate('/'); 
     }
     
     return (
-        <div className="form-container"> 
-            <form className="form" onSubmit={handleFormSubmit}>
-                <h1 className="form-title">Register a new user</h1>
-                <div className="form-group">
-                    <label>Username</label>
-                    <input 
-                        className="form-input"
-                        value={username} 
-                        onChange={(e: React.FormEvent<HTMLInputElement>) => setUsername(e.currentTarget.value)} 
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input 
-                        className="form-input"
-                        value={password}
-                        onChange={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
-                    />
-                </div>
-                <button className="btn-submit" type="submit" disabled={isAdding}>Submit</button>
-            </form>
+        <div className="page-container">
+            <div className="form-container"> 
+                <form className="form" onSubmit={handleFormSubmit}>
+                    <h1 className="form-title">Register a new user</h1>
+                    <div className="form-group">
+                        <label>Username</label>
+                        <input 
+                            className="form-input"
+                            value={username} 
+                            onChange={(e: React.FormEvent<HTMLInputElement>) => setUsername(e.currentTarget.value)} 
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault() }
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input 
+                            className="form-input"
+                            value={password}
+                            onChange={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault()}
+                        />
+                    </div>
+                    <button className="btn-submit" type="submit" disabled={isAdding}>Submit</button>
+                </form>
+            </div>
         </div>
     )
 }

@@ -31,11 +31,12 @@ export default function LoginPage() {
     return (
         <div className="page-container">
             <div className="form-container login-container">
-
-                <Form />
-
-
-                {/* <form className="form login-form" onSubmit={handleFormSubmit}>
+                {
+                    isError 
+                    &&
+                    <span className="input-validate">There was an error with our database, try again later</span>
+                }
+                <form className="form login-form" onSubmit={handleFormSubmit}>
                     <h1 className="form-title">Log in</h1>
                     <div className="form-group">
                         <label>Username</label>
@@ -55,12 +56,12 @@ export default function LoginPage() {
                         />
                     </div>
                     {
-                        isValid
+                        (isError || isValid)
                         ||
                         <span className="input-validate">Provided username and password are incorrect</span>
                     }
-                    <button className="btn-submit" type="submit">Submit</button>
-                </form> */}
+                    <button className="btn-submit" type="submit" disabled={isLoading}>{ isLoading ? 'Submitting...' : 'Submit'}</button>
+                </form>
                 <div className="login-register">
                     Not yet our user?
                     <a onClick={() => navigate('/register')}>Sign up</a> 
