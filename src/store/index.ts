@@ -4,11 +4,14 @@ import { collectionsApi } from './api/collectionsApi';
 import { carsApi } from './api/carsApi'; 
 import { usersApi } from './api/usersApi'; 
 
+import inputSlice  from './slices/inputSlice'; 
+
 export const store = configureStore({
     reducer: {
         [collectionsApi.reducerPath]: collectionsApi.reducer, 
         [carsApi.reducerPath]: carsApi.reducer, 
-        [usersApi.reducerPath]: usersApi.reducer
+        [usersApi.reducerPath]: usersApi.reducer, 
+        inputReducer: inputSlice.reducer
     }, 
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
