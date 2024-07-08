@@ -1,46 +1,59 @@
 import { useState } from 'react'; 
+import { useForm } from 'react-hook-form'; 
 import { useNavigate } from 'react-router-dom'; 
 import { useAddUserMutation } from "../store";
 
+type FormValues = {
+    email: string; 
+    password: string; 
+}
+
 export default function RegisterPage() {
 
-    const [username, setUsername] = useState(''); 
-    const [password, setPassword] = useState(''); 
-    const navigate = useNavigate(); 
-    const [addUser, { isLoading: isAdding }] = useAddUserMutation(); 
-
-
-    const handleFormSubmit = async (e: React.SyntheticEvent) => {
-        if(username.length < 3 || ( password.length < 5 ))
-        e.preventDefault(); 
-        await addUser({username, password}); 
-        navigate('/'); 
-    }
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();  
     
+    const onSubmit = (data: FormValues) => {
+        console.log(data); 
+    } 
+
     return (
         <div className="page-container">
             <div className="form-container"> 
-                <form className="form" onSubmit={handleFormSubmit}>
+                <form className="form" onSubmit={handleSubmit(onSubmit)}>
                     <h1 className="form-title">Register a new user</h1>
                     <div className="form-group">
-                        <label>Username</label>
+                        <label>E-mail</label>
                         <input 
                             className="form-input"
-                            value={username} 
-                            onChange={(e: React.FormEvent<HTMLInputElement>) => setUsername(e.currentTarget.value)} 
+                            type="email"
                             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault() }
+                            {...register("email", {
+                                required: "Email is required"
+                            })}
                         />
+                        {
+                            errors.email && <span className="input-validate">{errors.email.message}</span>
+                        }
                     </div>
                     <div className="form-group">
                         <label>Password</label>
                         <input 
                             className="form-input"
-                            value={password}
-                            onChange={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
+                            type="password"
                             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault()}
+                            {...register("password", {
+                                required: true, 
+                                minLength: {
+                                    value: 6,
+                                    message: "You must provide a password of at least 6 characters in length"
+                                } 
+                            })}
                         />
+                        {
+                            errors.password && <span className="input-validate">{errors.password.message}</span>
+                        }
                     </div>
-                    <button className="btn-submit" type="submit" disabled={isAdding}>Submit</button>
+                    <button className="btn-submit" type="submit" >Submit</button>
                 </form>
             </div>
         </div>

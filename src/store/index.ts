@@ -7,13 +7,18 @@ import { usersApi } from './api/usersApi';
 import inputSlice  from './slices/inputSlice'; 
 import formSlice from './slices/formSlice';
 
+import authReducer from './slices/authSlice'; 
+
 export const store = configureStore({
     reducer: {
         [collectionsApi.reducerPath]: collectionsApi.reducer, 
         [carsApi.reducerPath]: carsApi.reducer, 
         [usersApi.reducerPath]: usersApi.reducer, 
+        // not used
         input: inputSlice.reducer, 
-        form: formSlice.reducer
+        // not used
+        form: formSlice.reducer, 
+        auth: authReducer
     }, 
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
