@@ -1,7 +1,17 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import { useForm } from 'react-hook-form'; 
 import { useNavigate } from 'react-router-dom'; 
+
+import { ref } from 'firebase/database'; 
+
 import { useAddUserMutation } from "../store";
+
+
+import axios from 'axios'; 
+import { auth, dbUrl } from '../firebaseSetup';
+import { createUserWithEmailAndPassword } from 'firebase/auth'; 
+
+import type { User } from '../types/userType'; 
 
 type FormValues = {
     email: string; 
@@ -12,9 +22,20 @@ export default function RegisterPage() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();  
     
-    const onSubmit = (data: FormValues) => {
-        console.log(data); 
+    const onSubmit = async (data: FormValues) => {
+        await addUser(data); 
     } 
+
+    const addUser = async ({email, password}: { email:string, password:string}) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password); 
+            const user = userCredential.user; 
+            console.log(`user id: ${user?.uid}`); 
+        } catch (error) {
+            console.error(error); 
+        }
+    }
+
 
     return (
         <div className="page-container">

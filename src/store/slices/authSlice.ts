@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'; 
 import type { User } from '../../types/userType'; 
-import { userLogin } from '../thunks/userLogin'; 
+// import { userLogin } from '../thunks/userLogin'; 
 
 type MyError = {
     errorMessage: string
@@ -25,17 +25,17 @@ const authSlice = createSlice({
     }, 
     reducers: {}, 
     extraReducers: (builder) => {
-        builder.addCase(userLogin.pending, (state) =>  {   
-            state.isLoading = true; 
-        }), 
-        builder.addCase(userLogin.rejected, (state, action) => {
-            state.isError = action.payload as MyError; 
-        }), 
-        builder.addCase(userLogin.fulfilled, (state, action) => {
-            state.userInfo = action.payload; 
-            state.isLoading = false; 
-            state.userToken = action.payload.userToken; 
-        })
+        // builder.addCase(userLogin.pending, (state) =>  {   
+        //     state.isLoading = true; 
+        // }), 
+        // builder.addCase(userLogin.rejected, (state, action) => {
+        //     state.isError = action.payload as MyError; 
+        // }), 
+        // builder.addCase(userLogin.fulfilled, (state, action) => {
+        //     state.userInfo = action.payload; 
+        //     state.isLoading = false; 
+        //     state.userToken = action.payload.userToken; 
+        // })
     }
 })
 

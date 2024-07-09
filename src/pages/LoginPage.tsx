@@ -1,8 +1,12 @@
 import { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
+import { useForm, SubmitHandler } from 'react-hook-form'; 
+import axios from 'axios'; 
 import { useAuth } from '../hooks/useAuth'; 
 import { useFetchUsersQuery } from '../store';
-import { useForm, SubmitHandler } from 'react-hook-form'; 
+
+import type { User } from '../types/userType'; 
+import { dbUrl } from '../firebaseSetup'; 
 
 type FormValues = {
     username: string; 
@@ -16,8 +20,14 @@ export default function LoginPage() {
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>();  
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data); 
+            console.log(data); 
     }
+
+
+    const getUser = async (data: User) => {
+        const response = await axios.get(``)
+    }
+
 
 
     return (

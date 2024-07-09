@@ -4,8 +4,6 @@ import { collectionsApi } from './api/collectionsApi';
 import { carsApi } from './api/carsApi'; 
 import { usersApi } from './api/usersApi'; 
 
-import inputSlice  from './slices/inputSlice'; 
-import formSlice from './slices/formSlice';
 
 import authReducer from './slices/authSlice'; 
 
@@ -14,10 +12,6 @@ export const store = configureStore({
         [collectionsApi.reducerPath]: collectionsApi.reducer, 
         [carsApi.reducerPath]: carsApi.reducer, 
         [usersApi.reducerPath]: usersApi.reducer, 
-        // not used
-        input: inputSlice.reducer, 
-        // not used
-        form: formSlice.reducer, 
         auth: authReducer
     }, 
     middleware: (getDefaultMiddleware) => {
@@ -47,6 +41,3 @@ export {
     useFetchUsersQuery, 
     useAddUserMutation
 } from './api/usersApi'; 
-
-export { changeValue } from './slices/inputSlice'; 
-export { inputChange } from './slices/formSlice'; 
