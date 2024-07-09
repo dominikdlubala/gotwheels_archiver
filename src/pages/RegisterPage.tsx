@@ -1,41 +1,39 @@
-import { useState, useEffect } from 'react'; 
 import { useForm } from 'react-hook-form'; 
 import { useNavigate } from 'react-router-dom'; 
-
-import { ref } from 'firebase/database'; 
-
-import { useAddUserMutation } from "../store";
-
-
-import axios from 'axios'; 
-import { auth, dbUrl } from '../firebaseSetup';
-import { createUserWithEmailAndPassword } from 'firebase/auth'; 
-
-import type { User } from '../types/userType'; 
+import type { User } from '../types/types.ts';
+import { faker } from '@faker-js/faker'; 
+import {  useAddUserMutation } from '../store'; 
 
 type FormValues = {
     email: string; 
+    username: string;
     password: string; 
 }
 
 export default function RegisterPage() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();  
+    const navigate = useNavigate(); 
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>(); 
+    
+    const [addUser] = useAddUserMutation(); 
     
     const onSubmit = async (data: FormValues) => {
-        await addUser(data); 
-    } 
-
-    const addUser = async ({email, password}: { email:string, password:string}) => {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password); 
-            const user = userCredential.user; 
-            console.log(`user id: ${user?.uid}`); 
-        } catch (error) {
-            console.error(error); 
+        const user: User = { 
+            id: faker.string.uuid(), 
+            ... data
         }
-    }
-
+        try {
+            const { error } = await addUser({user, username: data.username}); 
+            // do poprawienia
+            console.log(error); 
+            if(!error){
+                navigate('/'); 
+            }
+        } catch (err) {
+            console.error('Blad', err); 
+        }
+    } 
 
     return (
         <div className="page-container">
@@ -55,6 +53,25 @@ export default function RegisterPage() {
                         {
                             errors.email && <span className="input-validate">{errors.email.message}</span>
                         }
+                    </div>
+                    <div className="form-group">
+                        <label>Username</label>
+                        <input 
+                            className="form-input"
+                            type="text"
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault() }
+                            {...register("username", {
+                                required: true, 
+                                minLength: {
+                                    value: 3, 
+                                    message: "Username must be at least of length 3"
+                                }
+                            })}
+                        />
+                        {
+                            errors.username && <span className="input-validate">{errors.username.message}</span>
+                        }
+                        
                     </div>
                     <div className="form-group">
                         <label>Password</label>

@@ -1,12 +1,10 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
-import axios from 'axios'; 
-import { useAuth } from '../hooks/useAuth'; 
-import { useFetchUsersQuery } from '../store';
 
-import type { User } from '../types/userType'; 
-import { dbUrl } from '../firebaseSetup'; 
+import { useAuth } from '../hooks/useAuth'; 
+import { useFetchUserByUsernameQuery } from '../store';
+
 
 type FormValues = {
     username: string; 
@@ -15,20 +13,30 @@ type FormValues = {
 
 export default function LoginPage() {
 
+    const [fetchParams, setFetchParams] = useState<{username: string, password: string}>({ username: '', password: ''});
+
     const navigate = useNavigate(); 
+    const { login } = useAuth(); 
 
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>();  
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<FormValues>();  
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
-            console.log(data); 
+    const onSubmit: SubmitHandler<FormValues> = ({ username, password}) => {
+        setFetchParams({username, password}); 
     }
 
-
-    const getUser = async (data: User) => {
-        const response = await axios.get(``)
-    }
-
-
+    const { data, error } = useFetchUserByUsernameQuery(fetchParams?.username); 
+    
+    useEffect(() => {
+        if(fetchParams && data) {
+            if(data.password !== fetchParams.password)  {
+                setError('password', { type: 'manual', message: 'Incorrect password'} )
+            } else {
+                login(data); 
+            }
+        } else if (fetchParams && error) {
+            setError('username', { type: 'manual', message: 'Username does not exist'}); 
+        }
+    }, [data, error, fetchParams, navigate, setError, login]); 
 
     return (
         <div className="page-container">

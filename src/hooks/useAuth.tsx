@@ -1,11 +1,7 @@
 import { createContext, useContext, useMemo, ReactNode, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
-
-import { User } from 'firebase/auth';  
-import { auth } from '../firebaseSetup'; 
-
 import { useLocalStorage } from './useLocalStorage'; 
-// import type { User } from '../types/userType'; 
+import type { User } from '../types/types.ts'; 
 
 interface AuthContextType {
     user: User | null; 
@@ -18,12 +14,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: {children: ReactNode}) => {
     const [user, setUser] = useLocalStorage<User | null>('user', null); 
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-            setUser(firebaseUser); 
-        }); 
-        return unsubscribe; 
-    }, []); 
+    // useEffect(() => {
+    //     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+    //         setUser(firebaseUser); 
+    //     }); 
+    //     return unsubscribe; 
+    // }, []); 
 
     const navigate = useNavigate(); 
 

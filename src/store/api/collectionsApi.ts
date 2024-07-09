@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'; 
 // import type { User } from '../../types/userType'; 
-import type {Collection} from '../../types/collectionType'; 
+import type {Collection} from '../../types/types.ts'; 
 
 
 export const collectionsApi = createApi({

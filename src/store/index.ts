@@ -12,7 +12,7 @@ export const store = configureStore({
         [collectionsApi.reducerPath]: collectionsApi.reducer, 
         [carsApi.reducerPath]: carsApi.reducer, 
         [usersApi.reducerPath]: usersApi.reducer, 
-        auth: authReducer
+        auth: authReducer,
     }, 
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
@@ -39,5 +39,6 @@ export {
 
 export {
     useFetchUsersQuery, 
-    useAddUserMutation
+    useAddUserMutation, 
+    useFetchUserByUsernameQuery
 } from './api/usersApi'; 
