@@ -1,22 +1,37 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+    collection, 
+    doc, 
+    getDocs,
+    setDoc,
+    query, where
+} from 'firebase/firestore'; 
+import { FirebaseError } from 'firebase'; 
+import { firestore } from '../../firebaseSetup'; 
 import type { Car } from '../../types/types'; 
 
 export const carsApi = createApi({
     reducerPath: 'cars', 
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3005'
-    }), 
+    baseQuery: fakeBaseQuery(), 
     tagTypes: ['Cars'],
     endpoints: (builder) => {
         return {
             fetchCars: builder.query<Car[], string>({
-                query: (collectionId: string) => {
-                    return {
-                        url: '/cars', 
-                        params: {
-                            collectionId: collectionId
-                        }, 
-                        method: 'GET'
+                async queryFn(collectionId) {
+                    try {
+                        const ref = collection(firestore, 'cars'); 
+                        const q = query(ref, where('collectionId', '==', collectionId))
+                        const querySnapshot = await getDocs(q); 
+                        if(querySnapshot.empty){
+                            return { error: { message: 'No cars in this collection'} }; 
+                        }
+                        const cars = querySnapshot.docs.map(doc => {
+                            return doc.data() as Car; 
+                        })
+                        
+                        return { data: cars}; 
+                    } catch(error){
+                        return { error: error }
                     }
                 }, 
                 providesTags: (result) => 
@@ -29,12 +44,14 @@ export const carsApi = createApi({
                     : 
                         [{ type: 'Cars', id: 'LIST'}]
             }), 
-            addCar: builder.mutation<Car, Omit<Car, 'id'>>({
-                query: (body) => {
-                    return {
-                        url: '/cars', 
-                        method: 'POST', 
-                        body
+            addCar: builder.mutation<Car, Car>({
+                async queryFn(car) {
+                    try {
+                        const ref = doc(firestore, 'cars', car.name); 
+                        await setDoc(ref, car); 
+                        return { data: car }; 
+                    } catch (error) {
+                        return { error: error }
                     }
                 }, 
                 invalidatesTags: [{ type: 'Cars', id: 'LIST'}]

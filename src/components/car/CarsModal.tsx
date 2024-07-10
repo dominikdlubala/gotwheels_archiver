@@ -3,19 +3,22 @@ interface CarsModalProps {
     onSubmit: (name: string) => void; 
     isAdding: boolean; 
     show: boolean; 
-    handleClose: () => void
+    handleClose: () => void; 
+    error: boolean;
 }
 
-export default function CarsModal({ onSubmit, isAdding, show, handleClose}: CarsModalProps) {
+export default function CarsModal({ onSubmit, isAdding, show, handleClose, error}: CarsModalProps) {
     const [name, setName] = useState(''); 
 
     const handleFormSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault(); 
-        try {
-            onSubmit(name); 
-            setName(''); 
-        } catch (error) {
-            console.error('Problem with adding a car'); 
+        if(!error) {
+            try {
+                onSubmit(name); 
+                setName(''); 
+            } catch (error) {
+                console.error('Problem with adding a car'); 
+            }
         }
     }
 
@@ -36,6 +39,11 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose}: Cars
                     </div>
                     <button className="btn-submit" type="submit" disabled={isAdding}>{isAdding ? '...Submitting' : 'Submit'}</button>
                 </form>
+                {
+                    error 
+                    &&
+                    <span className="input-validate">Problem with adding car</span>
+                }
             </div>
         </div>
     )

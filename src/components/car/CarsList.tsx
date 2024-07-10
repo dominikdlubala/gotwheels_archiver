@@ -14,6 +14,12 @@ export default function CarsList({ collectionId }: CarsListProps) {
         content = <div>...Loading</div>
     }
 
+    // if(isError) {
+    //     if(error instanceof FirebaseError){
+    //         content = <div>{error.message}</div>
+    //     }
+    // }
+
     if(!isLoading && !isError){
         content = data?.map(car => (
             <CarsListItem key={car.id} car={car} />

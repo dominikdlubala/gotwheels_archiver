@@ -1,24 +1,29 @@
 import { useParams } from 'react-router-dom'; 
 import { useState } from 'react'; 
-// import type { Collection } from '../types/collectionType'; 
+import { faker } from '@faker-js/faker'; 
+// import type { Collection } from '../types/types'; 
 import CollectionList from '../components/collection/CollectionList'; 
 import { useAddCollectionMutation } from '../store';
 import  CollectionModal  from '../components/collection/CollectionModal'; 
 
 
 export default function CollectionsPage() {    
+
+
+    // consider using useForm hook 
     
     const [modalOpen, setModalOpen] = useState(false); 
     const { userId } = useParams(); 
 
     const [addCollection, {isLoading: isAdding}] = useAddCollectionMutation();  
 
-    const handleFormSubmit = async (newCollection: {userId: string, name: string}) => {
-        await addCollection(newCollection); 
-        setModalOpen(false); 
-    }
+    const handleFormSubmit = async (data: {userId: string, name: string}) => {
+        const collection = {
+            ...data, 
+            id: faker.string.uuid()
+        }
 
-    const handleModalClose = () => {
+        await addCollection(collection); 
         setModalOpen(false); 
     }
 
@@ -40,7 +45,7 @@ export default function CollectionsPage() {
                     userId={userId || ''} 
                     isAdding={isAdding} 
                     show={modalOpen}
-                    handleClose={handleModalClose}
+                    handleClose={() => setModalOpen(false)}
                 />
         </div>
     ); 

@@ -3,13 +3,15 @@ import { AxiosError } from 'axios';
 export type Car = {
     id: string,
     name: string, 
-    collectionId: number 
+
+    // definitely change this
+    collectionId: string | undefined
 }
 
 export type Collection = {
     id: string, 
     name: string, 
-    userId: number
+    userId: string
 }
 
 export type User = {
@@ -25,3 +27,8 @@ export interface IUsersState {
     loaded: boolean; 
     error: AxiosError | null;
 }
+
+export type MyError = {
+    message: string
+}
+

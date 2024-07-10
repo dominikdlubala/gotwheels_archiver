@@ -1,3 +1,4 @@
+import { useState } from 'react'; 
 import { useForm } from 'react-hook-form'; 
 import { useNavigate } from 'react-router-dom'; 
 import type { User } from '../types/types.ts';
@@ -11,10 +12,10 @@ type FormValues = {
 }
 
 export default function RegisterPage() {
-
+    const [err, setErr] = useState<boolean>(false); 
     const navigate = useNavigate(); 
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>(); 
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
     
     const [addUser] = useAddUserMutation(); 
     
@@ -24,9 +25,9 @@ export default function RegisterPage() {
             ... data
         }
         try {
-            const { error } = await addUser({user, username: data.username}); 
+            const { error } = await addUser(user); 
             // do poprawienia
-            console.log(error); 
+            setErr(error ? true : false); 
             if(!error){
                 navigate('/'); 
             }
@@ -93,6 +94,11 @@ export default function RegisterPage() {
                     </div>
                     <button className="btn-submit" type="submit" >Submit</button>
                 </form>
+                {
+                    err
+                    &&
+                    <span className="input-validate">Error while adding user</span>
+                }
             </div>
         </div>
     )

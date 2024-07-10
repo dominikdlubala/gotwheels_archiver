@@ -13,7 +13,7 @@ type FormValues = {
 
 export default function LoginPage() {
 
-    const [fetchParams, setFetchParams] = useState<{username: string, password: string}>({ username: '', password: ''});
+    const [fetchParams, setFetchParams] = useState<null | { username: string, password: string}>(null);
 
     const navigate = useNavigate(); 
     const { login } = useAuth(); 
@@ -23,8 +23,9 @@ export default function LoginPage() {
     const onSubmit: SubmitHandler<FormValues> = ({ username, password}) => {
         setFetchParams({username, password}); 
     }
-
-    const { data, error } = useFetchUserByUsernameQuery(fetchParams?.username); 
+    
+    // check if good
+    const { data, error } = useFetchUserByUsernameQuery(fetchParams?.username || ''); 
     
     useEffect(() => {
         if(fetchParams && data) {
@@ -71,7 +72,7 @@ export default function LoginPage() {
                     {
                         ( errors.username || errors.password )
                         &&
-                        <span className="input-validate">Provided username or password are incorrect</span>
+                        <span className="input-validate">{errors.username?.message || errors.password?.message} </span>
                     }
                     <button className="btn-submit" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
                 </form>

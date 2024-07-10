@@ -4,15 +4,12 @@ import { collectionsApi } from './api/collectionsApi';
 import { carsApi } from './api/carsApi'; 
 import { usersApi } from './api/usersApi'; 
 
-
-import authReducer from './slices/authSlice'; 
-
 export const store = configureStore({
     reducer: {
         [collectionsApi.reducerPath]: collectionsApi.reducer, 
         [carsApi.reducerPath]: carsApi.reducer, 
         [usersApi.reducerPath]: usersApi.reducer, 
-        auth: authReducer,
+        // auth: authReducer,
     }, 
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()

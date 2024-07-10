@@ -1,22 +1,31 @@
 import { useState } from 'react'; 
 import { useParams } from 'react-router-dom'; 
+import { faker } from '@faker-js/faker'; 
 import  CarsList  from '../components/car/CarsList'; 
 import CarsModal from '../components/car/CarsModal'; 
 import { useAddCarMutation } from '../store';
+import type { Car } from '../types/types'; 
 
 export default function CarsPage() {
     const [modalOpen, setModalOpen] = useState(false); 
     const { collectionId } = useParams(); 
 
-    const [addCar, {isLoading: isAdding}] = useAddCarMutation(); 
+    const [addCar, {isLoading: isAdding, isError}] = useAddCarMutation(); 
+
+    const [err, setErr] = useState(false); 
 
     const handleModalSubmit = async (name: string) => {
-        await addCar({ name, collectionId: Number(collectionId) }); 
-        setModalOpen(false); 
-    }
-
-    const handleModalClose = () => {
-        setModalOpen(false); 
+        if(name.length === 0){
+            setErr(true); 
+        } else {
+            const car: Car = {
+                name, 
+                id: faker.string.uuid(), 
+                collectionId
+            }
+            await addCar(car); 
+            setModalOpen(false); 
+        }
     }
 
     // kinda scuffed
@@ -45,7 +54,8 @@ export default function CarsPage() {
                     onSubmit={handleModalSubmit}
                     isAdding={isAdding}
                     show={modalOpen}
-                    handleClose={handleModalClose}
+                    handleClose={() => setModalOpen(false)}
+                    error={err || isError}
                  /> 
         </div>
     )

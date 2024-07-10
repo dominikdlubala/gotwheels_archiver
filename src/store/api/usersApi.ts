@@ -34,20 +34,18 @@ export const usersApi = createApi({
                 }
 
             }),
-            addUser: builder.mutation<User, {user: User, username: string}>({
-                async queryFn({user, username}) {
+            addUser: builder.mutation<User, User>({
+                async queryFn(user) {
                     try {
-                        const checkRef = doc(firestore, 'users', username); 
+                        const checkRef = doc(firestore, 'users', user.username); 
                         const userDoc = await getDoc(checkRef); 
                         if(userDoc.exists()) {
                             return { error: { message: "Username already exists" } };  
                         }
-
                         await setDoc(checkRef, user); 
 
                         return { data: user }; 
-                    } catch (error) {
-                        console.error("Error", error); 
+                    } catch (error) { 
                         return { error: error }; 
                     }
                 }

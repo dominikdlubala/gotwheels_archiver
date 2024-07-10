@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'; 
-import type { Collection } from '../../types/collectionType'; 
+import type { Collection } from '../../types/types'; 
 interface CollectionListItemProps {
     collection: Collection
 }
