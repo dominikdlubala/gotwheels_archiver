@@ -5,7 +5,7 @@ import type { User } from '../types/types.ts';
 import { faker } from '@faker-js/faker'; 
 import {  useAddUserMutation } from '../store'; 
 
-type FormValues = {
+type RegisterFormValues = {
     email: string; 
     username: string;
     password: string; 
@@ -15,11 +15,11 @@ export default function RegisterPage() {
     const [err, setErr] = useState<boolean>(false); 
     const navigate = useNavigate(); 
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormValues>();
     
     const [addUser] = useAddUserMutation(); 
     
-    const onSubmit = async (data: FormValues) => {
+    const onSubmit = async (data: RegisterFormValues) => {
         const user: User = { 
             id: faker.string.uuid(), 
             ... data

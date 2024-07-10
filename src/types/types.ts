@@ -11,7 +11,8 @@ export type Car = {
 export type Collection = {
     id: string, 
     name: string, 
-    userId: string
+    userId: string, 
+    imageUrl: string
 }
 
 export type User = {
