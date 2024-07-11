@@ -16,9 +16,7 @@ export default function CollectionList ({ userId }: CollectionListProps) {
 
     if(!isLoading && !isError) {
         content = data?.map(collection => (
-            <div key={collection.id}> 
                 <CollectionListItem key={collection.id} collection={collection} />
-            </div>
         ))
     }
 

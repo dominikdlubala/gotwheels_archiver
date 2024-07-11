@@ -1,21 +1,27 @@
 import { useState } from 'react'; 
+import { useForm } from 'react-hook-form'; 
 interface CarsModalProps {
-    onSubmit: (name: string) => void; 
+    onSubmit: (name: string, file: FileList) => void; 
     isAdding: boolean; 
     show: boolean; 
     handleClose: () => void; 
     error: boolean;
 }
 
-export default function CarsModal({ onSubmit, isAdding, show, handleClose, error}: CarsModalProps) {
-    const [name, setName] = useState(''); 
+interface CarFormValues {
+    name: string; 
+    fileList: FileList; 
+}
 
-    const handleFormSubmit = async (e: React.SyntheticEvent) => {
-        e.preventDefault(); 
+export default function CarsModal({ onSubmit, isAdding, show, handleClose, error}: CarsModalProps) {
+    const [fileName, setFileName] = useState<string>(''); 
+    const { register, handleSubmit } = useForm<CarFormValues>(); 
+
+    const handleFormSubmit = async ({ name, fileList }: CarFormValues) => {
         if(!error) {
             try {
-                onSubmit(name); 
-                setName(''); 
+                setFileName(fileList[0].name); 
+                onSubmit(name, fileList); 
             } catch (error) {
                 console.error('Problem with adding a car'); 
             }
@@ -30,12 +36,29 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose, error
                 <div className="modal-header">
                     <button className="btn-close" onClick={handleClose}>Close</button>
                 </div>
-                <form  className="modal-form" onSubmit={handleFormSubmit}>
+                <form  className="modal-form" onSubmit={handleSubmit(handleFormSubmit)}>
                     <div className="form-title">
                         Add a car
                     </div>
                     <div className="form-group">
-                        <input className="form-input" value={name} onChange={(e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value) } />
+                        <input 
+                            className="form-input" 
+                            type="text"
+                            {...register("name")}
+                        />
+                        <input
+                            className="form-input input-file"
+                            type="file"
+                            id="file-upload"
+                            {...register("fileList")}
+                        />
+                        <label className="label-file" htmlFor="file-upload">Choose a file</label>
+                        {fileName && <span className="file-name">{fileName}</span>}
+                        {/* <input 
+                            className="form-input" 
+                            value={name} 
+                            onChange={(e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value) } 
+                        /> */}
                     </div>
                     <button className="btn-submit" type="submit" disabled={isAdding}>{isAdding ? '...Submitting' : 'Submit'}</button>
                 </form>

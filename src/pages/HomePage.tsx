@@ -12,7 +12,7 @@ export default function HomePage() {
                 <div>
                     <h1>Section</h1>
                 </div>
-                <Link className="page-link collections-link" to={`/collections/${user?.id}`} >Go to collections</Link>
+                <Link className="page-link collections-link" to={`/collections/${user?.id}`} >My collections</Link>
             </div>
         </div>
     ); 

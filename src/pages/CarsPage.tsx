@@ -6,25 +6,45 @@ import CarsModal from '../components/car/CarsModal';
 import { useAddCarMutation } from '../store';
 import type { Car } from '../types/types'; 
 
+import {
+    ref, 
+    uploadBytes, 
+    getDownloadURL
+} from 'firebase/storage'; 
+import { storage } from '../firebaseSetup'; 
+
 export default function CarsPage() {
     const [modalOpen, setModalOpen] = useState(false); 
-    const { collectionId } = useParams(); 
+    const { collectionId } = useParams();  
 
     const [addCar, {isLoading: isAdding, isError}] = useAddCarMutation(); 
 
     const [err, setErr] = useState(false); 
 
-    const handleModalSubmit = async (name: string) => {
-        if(name.length === 0){
-            setErr(true); 
-        } else {
-            const car: Car = {
-                name, 
-                id: faker.string.uuid(), 
-                collectionId
+    const handleModalSubmit = async (name: string, fileList: FileList) => {
+        try {
+            let downloadUrl = ''; 
+            if(fileList && fileList.length > 0) {
+                const file = fileList[0]; 
+                const storageRef = ref(storage, `/images/${file.name}`); 
+                const snapshot = await uploadBytes(storageRef, file); 
+                downloadUrl = await getDownloadURL(snapshot.ref); 
             }
-            await addCar(car); 
-            setModalOpen(false); 
+            console.log(downloadUrl); 
+            if(name.length <= 0){
+                setErr(true); 
+            } else {
+                const car: Car = {
+                    name, 
+                    id: faker.string.uuid(), 
+                    collectionId, 
+                    imageUrl: downloadUrl
+                }
+                await addCar(car); 
+                setModalOpen(false); 
+            }
+        } catch(error) {
+            console.error(error); 
         }
     }
 

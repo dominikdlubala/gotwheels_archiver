@@ -5,7 +5,8 @@ export type Car = {
     name: string, 
 
     // definitely change this
-    collectionId: string | undefined
+    collectionId: string | undefined; 
+    imageUrl: string; 
 }
 
 export type Collection = {

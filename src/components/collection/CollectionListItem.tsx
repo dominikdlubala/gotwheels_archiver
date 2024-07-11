@@ -7,18 +7,19 @@ interface CollectionListItemProps {
 export default function CollectionListItem({ collection }: CollectionListItemProps) {
 
     return (
-        <div className="list-item collection-list-item">
-            <div className="item-details">
-                <h3>
-                    {collection.name}
-                </h3>
-                {
-                    collection.imageUrl
-                    &&
-                        <img className="collection-image" src={collection.imageUrl} alt="collection-image" />
-                }
-                <Link className="link" to={`/cars/${collection.id}`}>See cars</Link>
-            </div>
-        </div>
+        <Link className="link-wrapper list-item" to={`/cars/${collection.id}`}>
+            {/* <div className="list-item collection-list-item"> */}
+                <div className="item-details">
+                    {
+                        collection.imageUrl
+                        &&
+                            <img className="item-image collection-image" src={collection.imageUrl} alt="collection-image" />
+                    }
+                    <h3>
+                        {collection.name}
+                    </h3>
+                </div>
+            {/* </div> */}
+        </Link>
     ); 
 }
