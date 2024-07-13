@@ -51,12 +51,9 @@ export default function CollectionsPage() {
         <div>
             <div className="page-title">
                 <h1>Collections</h1>
+                <button className="btn-add" onClick={() => setModalOpen(true)}>+Add collection</button>
             </div>
             <div className="page-section">
-                <div className="page-section-header"> 
-                    <h1>See your collections here</h1>
-                    <button className="btn-add" onClick={() => setModalOpen(true)}>+Add collection</button>
-                </div>
                 <CollectionList userId={userId || ''} />
             </div>
 

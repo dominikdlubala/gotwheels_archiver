@@ -168,19 +168,15 @@ body {
 /* List pages styling */
 .page-title {
   display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center;
-  height: 25vh;
-  background-color: #6a9bf5;
-  color: white; 
+  border-bottom: 4px solid #2863d1; 
+  margin: 1rem; 
+  padding-bottom: 1rem; 
+  justify-content: space-between; 
+  color: #000; 
 }
 
 .page-section {
   display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  height: 80vh; 
   padding-top: 1rem; 
   /* background-color: #ffeb89; */
 }
@@ -244,11 +240,15 @@ body {
   text-decoration: none; 
   position: relative; 
   align-items: end; 
+
+  transition: ease-in-out 0.35s all; 
 }
 
 .list-item:hover {
   border: 5px solid #000; 
-  color: #2863d1; 
+  color: #fff;
+  background-color: #2863d1; 
+  cursor: pointer; 
 }
 
 .link {
