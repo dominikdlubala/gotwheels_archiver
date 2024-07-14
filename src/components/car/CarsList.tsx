@@ -1,4 +1,4 @@
-import { useFetchCarsQuery } from "../../store"
+import { useFetchCarsByCollectionIdQuery } from "../../store"
 import  CarsListItem  from './CarsListItem'; 
 
 interface CarsListProps {
@@ -7,7 +7,7 @@ interface CarsListProps {
 export default function CarsList({ collectionId }: CarsListProps) {
 
     // fix string | undefined
-    const { data, isLoading, isError } = useFetchCarsQuery(collectionId); 
+    const { data, isLoading, isError } = useFetchCarsByCollectionIdQuery(collectionId); 
 
     let content; 
     if(isLoading){

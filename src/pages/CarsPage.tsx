@@ -1,10 +1,12 @@
 import { useState } from 'react'; 
-import { useParams } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom'; 
 import { faker } from '@faker-js/faker'; 
 import  CarsList  from '../components/car/CarsList'; 
 import CarsModal from '../components/car/CarsModal'; 
 import { useAddCarMutation } from '../store';
-import type { Car } from '../types/types'; 
+import type { Car, User } from '../types/types'; 
+
+import { useAuth } from '../hooks/useAuth'; 
 
 import {
     ref, 
@@ -14,8 +16,12 @@ import {
 import { storage } from '../firebaseSetup'; 
 
 export default function CarsPage() {
+
+    const { user }= useAuth() as { user: User}; 
+
     const [modalOpen, setModalOpen] = useState(false); 
-    const { collectionId } = useParams();  
+    const location = useLocation(); 
+    const { collectionId } = location.state; 
 
     const [addCar, {isLoading: isAdding, isError}] = useAddCarMutation(); 
 
@@ -37,6 +43,7 @@ export default function CarsPage() {
                 const car: Car = {
                     name, 
                     id: faker.string.uuid(), 
+                    userId: user.id, 
                     collectionId, 
                     imageUrl: downloadUrl
                 }

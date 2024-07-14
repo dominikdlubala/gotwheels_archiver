@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, ReactNode, useEffect } from 'react'; 
+import { createContext, useContext, useMemo, ReactNode } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
 import { useLocalStorage } from './useLocalStorage'; 
 import type { User } from '../types/types.ts'; 
@@ -13,13 +13,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: {children: ReactNode}) => {
     const [user, setUser] = useLocalStorage<User | null>('user', null); 
-
-    // useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-    //         setUser(firebaseUser); 
-    //     }); 
-    //     return unsubscribe; 
-    // }, []); 
 
     const navigate = useNavigate(); 
 

@@ -12,7 +12,8 @@ export default function HomePage() {
                 <div>
                     <h1>Section</h1>
                 </div>
-                    <Link className="page-link collections-link" to={`/collections/${user?.id}`} >My collections</Link>
+                    <Link className="page-link collections-link" to={`/collections`} state={{ userId: user?.id}} >My collections</Link>
+                    <Link className="page-link cars-link" to={`/cars`} >My cars</Link>
             </div>
         </div>
     ); 

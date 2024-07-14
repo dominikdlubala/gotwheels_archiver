@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom'; 
 import { useState } from 'react'; 
 import { faker } from '@faker-js/faker'; 
 // import type { Collection } from '../types/types'; 
@@ -17,7 +17,8 @@ import { storage } from '../firebaseSetup';
 export default function CollectionsPage() {    
     
     const [modalOpen, setModalOpen] = useState(false); 
-    const { userId } = useParams(); 
+    const location = useLocation(); 
+    const { userId } = location.state;
 
     const [addCollection, {isLoading: isAdding}] = useAddCollectionMutation();  
 

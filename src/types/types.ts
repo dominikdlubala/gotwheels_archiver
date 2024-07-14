@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 export type Car = {
     id: string,
     name: string, 
+    userId: string,
 
     // definitely change this
     collectionId: string | undefined; 

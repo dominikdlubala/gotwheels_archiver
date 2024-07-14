@@ -6,7 +6,6 @@ import {
     setDoc,
     query, where
 } from 'firebase/firestore'; 
-import { FirebaseError } from 'firebase'; 
 import { firestore } from '../../firebaseSetup'; 
 import type { Car } from '../../types/types'; 
 
@@ -16,7 +15,25 @@ export const carsApi = createApi({
     tagTypes: ['Cars'],
     endpoints: (builder) => {
         return {
-            fetchCars: builder.query<Car[], string>({
+
+            fetchCarsByUserId: builder.query<Car[], string>({
+                async queryFn(userId) {
+                    try {
+                        const ref = collection(firestore, 'cars'); 
+                        const q = query(ref, where('userId', '==', userId)); 
+                        const querySnapshot = await getDocs(q); 
+                        if(querySnapshot.empty) {
+                            return { error: { message: 'No cars in this collection '}}
+                        } 
+                        const cars = querySnapshot.docs.map(doc => doc.data() as Car);
+                        return { data: cars };  
+                    } catch(error) {
+                        return { error }; 
+                    }
+                }
+            }),
+
+            fetchCarsByCollectionId: builder.query<Car[], string>({
                 async queryFn(collectionId) {
                     try {
                         const ref = collection(firestore, 'cars'); 
@@ -62,7 +79,7 @@ export const carsApi = createApi({
 })
 
 export const { 
-    useFetchCarsQuery, 
+    useFetchCarsByCollectionIdQuery, 
     useAddCarMutation
  } = carsApi; 
 

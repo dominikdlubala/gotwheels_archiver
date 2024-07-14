@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/collections/:userId', 
+        path: '/collections/', 
         element: (
           <ProtectedRoute>
             <CollectionsPage />
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         ), 
       }, 
       {
-        path: '/cars/:collectionId', 
+        path: '/cars/:collectionId?', 
         element: (
           <ProtectedRoute>
             <CarsPage />
