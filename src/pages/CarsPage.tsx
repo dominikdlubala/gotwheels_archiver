@@ -1,10 +1,11 @@
 import { useState } from 'react'; 
-import { useLocation } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom'; 
 import { faker } from '@faker-js/faker'; 
 import  CarsList  from '../components/car/CarsList'; 
 import CarsModal from '../components/car/CarsModal'; 
 import { useAddCarMutation } from '../store';
 import type { Car, User } from '../types/types'; 
+import Drawer from '../components/Drawer';
 
 import { useAuth } from '../hooks/useAuth'; 
 
@@ -20,8 +21,8 @@ export default function CarsPage() {
     const { user }= useAuth() as { user: User}; 
 
     const [modalOpen, setModalOpen] = useState(false); 
-    const location = useLocation(); 
-    const { collectionId } = location.state; 
+
+    const { collectionId } = useParams(); 
 
     const [addCar, {isLoading: isAdding, isError}] = useAddCarMutation(); 
 
@@ -65,16 +66,12 @@ export default function CarsPage() {
 
     return (
         <div>
-            <div className="page-title">
-                <h1>Cars</h1>
-            </div>
-            <div className="page-section">
-                    
-                <div className="page-section-header">
-                    <h1>See your cars here</h1>
+                <div className="page-title">
+                    <Drawer currentRoute='Cars'/>
                     <button className="btn-add" onClick={() => setModalOpen(true)}>+Add car</button>
                 </div>
-                <CarsList collectionId={sentCollectionId} />
+            <div className="page-section">
+                <CarsList collectionId={sentCollectionId} userId={user.id} />
             </div>
 
                 <CarsModal 

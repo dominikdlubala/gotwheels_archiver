@@ -7,7 +7,7 @@ interface CollectionListItemProps {
 export default function CollectionListItem({ collection }: CollectionListItemProps) {
 
     return (
-        <Link className="link-wrapper list-item" to={`/cars`} state={{ collectionId: collection.id}} >
+        <Link className="link-wrapper list-item" to={`/cars/${collection.id}`} state={{ collectionId: collection.id}} >
             {/* <div className="list-item collection-list-item"> */}
                 <div className="item-details">
                     {

@@ -30,7 +30,7 @@ export {
     useAddCollectionMutation 
 } from './api/collectionsApi'; 
 export {
-    useFetchCarsByCollectionIdQuery, 
+    useFetchCarsQuery, 
     useAddCarMutation
 } from './api/carsApi'; 
 

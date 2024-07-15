@@ -166,13 +166,16 @@ body {
 
 
 /* List pages styling */
+
 .page-title {
   display: flex; 
   border-bottom: 4px solid #2863d1; 
   margin: 1rem; 
   padding-bottom: 1rem; 
   justify-content: space-between; 
+  align-items: center; 
   color: #000; 
+  position: relative; 
 }
 
 .page-section {
@@ -329,4 +332,64 @@ body {
   max-height: 100%; 
   width: 100%; 
   object-fit: contain;  
+}
+
+
+.home-section {
+  justify-content: center; 
+}
+
+.home-link {
+  align-items: center; 
+  border: 5px solid #000; 
+  color: #fff; 
+  background-color: #2863d1; 
+  font-weight: bold;
+  min-width: 40vw; 
+  min-height: 40vh; 
+}
+.home-link:hover {
+  background-color: #fff; 
+  border: 5px solid #2863d1; 
+  color: #000; 
+  scale: 1.05; 
+}  
+
+
+.drawer-main {
+  position: relative; 
+  left: 0; 
+  z-index: 1; 
+  height: 7vh; 
+}
+
+.drawer-link {
+  padding: 0.3rem; 
+  font-size: 1.2rem; 
+}
+
+.drawer {
+  display: flex; 
+  flex-direction: column;
+  /* background-color: #fff; */
+  /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); */
+  background-color: rgba(129, 163, 255, 0.95); 
+}
+
+.drawer-main-link {
+  cursor: pointer; 
+}
+
+.drawer-link {
+  text-decoration: none; 
+  cursor: pointer; 
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  padding: 0.5rem 0.1rem; 
+}
+
+.drawer-link:hover {
+  background-color: #007bff;
+  color: #fff;
 }
