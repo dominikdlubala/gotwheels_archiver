@@ -244,7 +244,7 @@ body {
   position: relative; 
   align-items: end; 
 
-  transition: ease-in-out 0.35s all; 
+  transition: ease-in-out 0.2s all; 
 }
 
 .list-item:hover {
@@ -357,39 +357,35 @@ body {
 
 
 .drawer-main {
+  display:flex; 
+  align-items: end; 
   position: relative; 
   left: 0; 
   z-index: 1; 
-  height: 7vh; 
-}
-
-.drawer-link {
-  padding: 0.3rem; 
-  font-size: 1.2rem; 
-}
-
-.drawer {
-  display: flex; 
-  flex-direction: column;
-  /* background-color: #fff; */
-  /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); */
-  background-color: rgba(129, 163, 255, 0.95); 
 }
 
 .drawer-main-link {
+  text-decoration: none;
+  vertical-align: bottom; 
   cursor: pointer; 
+  font-weight: bold;   
+  font-size: 2rem; 
+  z-index: 1; 
 }
 
 .drawer-link {
+  display: inline-block; 
   text-decoration: none; 
   cursor: pointer; 
   color: #333;
   text-decoration: none;
   transition: background-color 0.3s, color 0.3s;
-  padding: 0.5rem 0.1rem; 
+  margin-left: 0.5rem; 
+  padding: 0.25rem 0rem; 
+  font-size: 1.25rem; 
+  z-index: -1; 
 }
 
 .drawer-link:hover {
-  background-color: #007bff;
-  color: #fff;
+  color: #007bff;
 }

@@ -1,30 +1,64 @@
 import { useState } from 'react'; 
 import { Link } from 'react-router-dom'; 
 import { useAuth } from '../hooks/useAuth'; 
+import { useLocation } from 'react-router-dom'; 
 interface DrawerProps {
     currentRoute: string; 
+}
+
+type DrawerData = {
+    path: string; 
+    name: string; 
 }
 
 export default function Drawer({ currentRoute }: DrawerProps) {
     const { user } = useAuth(); 
     console.log(user); 
+    const location = useLocation();  
+
+    const drawerData: DrawerData[] = [
+        {
+            path: '/home', 
+            name: 'Home'
+        }, 
+        {
+            path: '/collections', 
+            name: 'Collections'
+        }, 
+        {
+            path: '/cars/', 
+            name: 'Cars'
+        }
+    ]; 
 
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false); 
 
-    let classes; 
-    if(isDrawerOpen) classes = 'drawer-open'; 
+    let classes = ''; 
+    if(isDrawerOpen) classes = 'open'; 
 
     return (
-        <div className={`drawer-main ${classes}`} >
-            <h1 className="drawer-main-link" onClick={() => setIsDrawerOpen(!isDrawerOpen)}>
+        <div className={`drawer-main`} >
+            <a className="drawer-main-link" onClick={(e) => {
+                    e.preventDefault(); 
+                    setIsDrawerOpen(!isDrawerOpen)}
+                }
+            >
                 {currentRoute}
-            </h1>
+            </a>
             {
                 isDrawerOpen
                 && 
-                <div className="drawer">
-                    <Link className="drawer-link" to={'/home'}>Home</Link>
-                    <Link className="drawer-link" to={'/collections'} state={ {userId: user?.id} }>Collections</Link>
+                <div className={`drawer ${classes}`}>
+                    {
+                        drawerData.filter( data => location.pathname !== data.path).map(data => (
+                            data.path === '/collections' 
+                            ?
+                            <Link className="drawer-link" to={data.path} state={{ userId: user?.id}}>{data.name}</Link> 
+                            :
+                            <Link className="drawer-link" to={data.path}>{data.name}</Link>
+                        ))
+                    }
+
                 </div>
             }
         </div>

@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker';
 import CollectionList from '../components/collection/CollectionList'; 
 import { useAddCollectionMutation } from '../store';
 import  CollectionModal  from '../components/collection/CollectionModal'; 
+import Drawer from '../components/Drawer'; 
 
 import {
     ref, 
@@ -51,7 +52,7 @@ export default function CollectionsPage() {
     return (
         <div>
             <div className="page-title">
-                <h1>Collections</h1>
+                <Drawer currentRoute="Collections"/>
                 <button className="btn-add" onClick={() => setModalOpen(true)}>+Add collection</button>
             </div>
             <div className="page-section">
