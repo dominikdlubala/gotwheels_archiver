@@ -5,7 +5,7 @@ export default function HomePage() {
     const { user } = useAuth(); 
 
     return (
-        <div>
+        <div className="page-container">
             <div className="page-title">
                 <Drawer currentRoute='Home'/>
             </div>

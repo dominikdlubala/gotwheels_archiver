@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom'; 
 import { useState } from 'react'; 
 import { useForm } from 'react-hook-form'; 
 interface CarsModalProps {
@@ -21,7 +22,7 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose, error
         if(!error) {
             try {
                 setFileName(fileList[0].name); 
-                onSubmit(name, fileList); 
+                await onSubmit(name, fileList); 
             } catch (error) {
                 console.error('Problem with adding a car'); 
             }
@@ -30,7 +31,7 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose, error
 
     const showHideClassName = show ? "modal display-flex" : "modal display-none"; 
 
-    return (
+    return ReactDOM.createPortal(
         <div className={showHideClassName}> 
             <div className="modal-main form-container">
                 <div className="modal-header">
@@ -54,11 +55,6 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose, error
                         />
                         <label className="label-file" htmlFor="file-upload">Choose a file</label>
                         {fileName && <span className="file-name">{fileName}</span>}
-                        {/* <input 
-                            className="form-input" 
-                            value={name} 
-                            onChange={(e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value) } 
-                        /> */}
                     </div>
                     <button className="btn-submit" type="submit" disabled={isAdding}>{isAdding ? '...Submitting' : 'Submit'}</button>
                 </form>
@@ -68,6 +64,8 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose, error
                     <span className="input-validate">Problem with adding car</span>
                 }
             </div>
-        </div>
+        </div>, 
+
+        document.querySelector('.modal-container') as Element
     )
 }

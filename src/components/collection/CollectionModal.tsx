@@ -1,4 +1,5 @@
-import { useEffect } from 'react'; 
+import { useEffect } from 'react';
+import ReactDOM from 'react-dom';  
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 
 // type addCollectionMutation = ReturnType<typeof useAddCollectionMutation>[0]; 
@@ -37,7 +38,7 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
 
     const showHideClassName = show ? "modal display-block" : "modal display-none"; 
 
-    return (
+    return ReactDOM.createPortal(
         <div className={showHideClassName}>
             <div className="modal-main form-container">
                 <div className="modal-header">
@@ -83,6 +84,8 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
                         <button className="btn-submit" type="submit" disabled={isAdding}>{ isAdding ? 'Submitting...' : 'Submit'}</button>
                 </form>
             </div>
-        </div>
+        </div>, 
+
+        document.querySelector('.modal-container') as Element
     )
 }

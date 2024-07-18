@@ -50,7 +50,7 @@ export default function CollectionsPage() {
     }
 
     return (
-        <div>
+        <div className="page-container">
             <div className="page-title">
                 <Drawer currentRoute="Collections"/>
                 <button className="btn-add" onClick={() => setModalOpen(true)}>+Add collection</button>

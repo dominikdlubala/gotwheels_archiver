@@ -1,20 +1,20 @@
 import { useState } from 'react'; 
 import { useParams } from 'react-router-dom'; 
 import { faker } from '@faker-js/faker'; 
-import  CarsList  from '../components/car/CarsList'; 
-import CarsModal from '../components/car/CarsModal'; 
-import { useAddCarMutation } from '../store';
-import type { Car, User } from '../types/types'; 
-import Drawer from '../components/Drawer';
-
-import { useAuth } from '../hooks/useAuth'; 
-
 import {
     ref, 
     uploadBytes, 
     getDownloadURL
 } from 'firebase/storage'; 
 import { storage } from '../firebaseSetup'; 
+import  CarsList  from '../components/car/CarsList'; 
+import CarsModal from '../components/car/CarsModal'; 
+import { useFetchCarsQuery, useAddCarMutation } from '../store';
+import Drawer from '../components/Drawer';
+import { useAuth } from '../hooks/useAuth';
+import Input from '../components/Input'; 
+
+import type { Car, User } from '../types/types'; 
 
 export default function CarsPage() {
 
@@ -24,9 +24,16 @@ export default function CarsPage() {
 
     const { collectionId } = useParams(); 
 
+    const { data, isFetching, isError: isErrorFetching } = useFetchCarsQuery({ collectionId, userId: user.id });   
     const [addCar, {isLoading: isAdding, isError}] = useAddCarMutation(); 
 
     const [err, setErr] = useState(false); 
+
+    const [searchTerm, setSearchTerm] = useState<string>(''); 
+
+    const handleInputChange = (value:string) => {
+        setSearchTerm(value); 
+    }
 
     const handleModalSubmit = async (name: string, fileList: FileList) => {
         try {
@@ -37,7 +44,6 @@ export default function CarsPage() {
                 const snapshot = await uploadBytes(storageRef, file); 
                 downloadUrl = await getDownloadURL(snapshot.ref); 
             }
-            console.log(downloadUrl); 
             if(name.length <= 0){
                 setErr(true); 
             } else {
@@ -45,7 +51,7 @@ export default function CarsPage() {
                     name, 
                     id: faker.string.uuid(), 
                     userId: user.id, 
-                    collectionId, 
+                    collectionId: collectionId ? collectionId : '', 
                     imageUrl: downloadUrl
                 }
                 await addCar(car); 
@@ -56,22 +62,25 @@ export default function CarsPage() {
         }
     }
 
-    // kinda scuffed
-    let sentCollectionId; 
-    if(!collectionId) {
-        sentCollectionId = ''; 
-    } else {
-        sentCollectionId = collectionId; 
-    }
 
     return (
-        <div>
+        <div className="page-container">
                 <div className="page-title">
                     <Drawer currentRoute='Cars'/>
                     <button className="btn-add" onClick={() => setModalOpen(true)}>+Add car</button>
                 </div>
+                    <div className="search search-cars">
+                        <Input
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                        />
+                    </div>
             <div className="page-section">
-                <CarsList collectionId={sentCollectionId} userId={user.id} />
+                <CarsList 
+                    data={data?.filter(car => car.name.includes(searchTerm))} 
+                    isLoading={isFetching}
+                    isError={isErrorFetching}    
+                />
             </div>
 
                 <CarsModal 

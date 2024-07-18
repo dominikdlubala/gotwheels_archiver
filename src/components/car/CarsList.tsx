@@ -1,15 +1,13 @@
-import { useFetchCarsQuery } from "../../store"
+import type { Car } from '../../types/types'; 
 import  CarsListItem  from './CarsListItem'; 
 
 interface CarsListProps {
-    collectionId: string | null, 
-    userId: string
+    data?: Car[], 
+    isLoading: boolean, 
+    isError: boolean
 }
-export default function CarsList({ collectionId, userId }: CarsListProps) {
-
-    // fix string | undefined
-    const { data, isLoading, isError } = useFetchCarsQuery({ collectionId, userId}); 
-
+export default function CarsList({ data, isLoading, isError}: CarsListProps) {
+    
     let content; 
     if(isLoading){
         content = <div>...Loading</div>

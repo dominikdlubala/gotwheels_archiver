@@ -41,44 +41,46 @@ export default function LoginPage() {
 
     return (
         <div className="page-container">
-            <div className="form-container login-container">
-                {/* {
-                    isError 
-                    &&
-                    <span className="input-validate">There was an error with our database, try again later</span>
-                } */}
-                <form className="form login-form" onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="form-title">Log in</h1>
-                    <div className="form-group">
-                        <label>Username</label>
-                        <input 
-                            className="form-input"
-                            type="text"
-                            {...register("username", {
-                                required:true
-                            })}
-                        />
-                    </div>
-                    <div className="form-group"> 
-                        <label>Password</label>
-                        <input 
-                            className="form-input"
-                            type="password"
-                            {...register("password", {
-                                required: true, 
-                            })}
-                        />
-                    </div>
-                    {
-                        ( errors.username || errors.password )
+            <div className="page-wrapper">
+                <div className="form-container login-container">
+                    {/* {
+                        isError 
                         &&
-                        <span className="input-validate">{errors.username?.message || errors.password?.message} </span>
-                    }
-                    <button className="btn-submit" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-                </form>
-                <div className="login-register">
-                    Not yet our user?
-                    <a onClick={() => navigate('/register')}>Sign up</a> 
+                        <span className="input-validate">There was an error with our database, try again later</span>
+                    } */}
+                    <form className="form login-form" onSubmit={handleSubmit(onSubmit)}>
+                        <h1 className="form-title">Log in</h1>
+                        <div className="form-group">
+                            <label>Username</label>
+                            <input 
+                                className="form-input"
+                                type="text"
+                                {...register("username", {
+                                    required:true
+                                })}
+                            />
+                        </div>
+                        <div className="form-group"> 
+                            <label>Password</label>
+                            <input 
+                                className="form-input"
+                                type="password"
+                                {...register("password", {
+                                    required: true, 
+                                })}
+                            />
+                        </div>
+                        {
+                            ( errors.username || errors.password )
+                            &&
+                            <span className="input-validate">{errors.username?.message || errors.password?.message} </span>
+                        }
+                        <button className="btn-submit" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+                    </form>
+                    <div className="login-register">
+                        Not yet our user?
+                        <a onClick={() => navigate('/register')}>Sign up</a> 
+                    </div>
                 </div>
             </div>
         </div>

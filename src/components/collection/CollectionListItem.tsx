@@ -7,33 +7,21 @@ interface CollectionListItemProps {
 export default function CollectionListItem({ collection }: CollectionListItemProps) {
 
     return (
-        <Link className="link-wrapper list-item" to={`/cars/${collection.id}`} state={{ collectionId: collection.id}} >
-            {/* <div className="list-item collection-list-item"> */}
-                <div className="item-details">
-                    {
-                        collection.imageUrl
-                        &&
-                            <img className="item-image collection-image" src={collection.imageUrl} alt="collection-image" />
-                    }
-                    <h3>
-                        {collection.name}
-                    </h3>
+        <div className="list-item-container">
+            <Link to={`/cars/${collection.id}`} state={{ collectionId: collection.id}} >
+                <div className="list-item collection-list-item">
+                    <div className="item-details">
+                        {
+                            collection.imageUrl
+                            &&
+                                <img className="item-image collection-image" src={collection.imageUrl} alt="collection-image" />
+                        }
+                        <h3>
+                            {collection.name}
+                        </h3>
+                    </div>
                 </div>
-            {/* </div> */}
-        </Link>
-        // <Link className="link-wrapper list-item" to={`/cars/${collection.id}`}>
-        //     {/* <div className="list-item collection-list-item"> */}
-        //         <div className="item-details">
-        //             {
-        //                 collection.imageUrl
-        //                 &&
-        //                     <img className="item-image collection-image" src={collection.imageUrl} alt="collection-image" />
-        //             }
-        //             <h3>
-        //                 {collection.name}
-        //             </h3>
-        //         </div>
-        //     {/* </div> */}
-        // </Link>
+            </Link>
+        </div>
     ); 
 }

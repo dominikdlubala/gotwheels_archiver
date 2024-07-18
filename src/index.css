@@ -1,10 +1,15 @@
 * {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   margin: 0; 
+  box-sizing: border-box; 
 }
 
 body {
   box-sizing: border-box; 
+}
+
+a {
+  text-decoration: none;
 }
 
 /* header */
@@ -24,6 +29,10 @@ body {
 .header-links, .header-logo {
   margin: 2rem; 
   cursor: pointer; 
+}
+
+.header-links a {
+  text-decoration: none;
 }
 
 .header-logo-link {
@@ -53,11 +62,18 @@ body {
 
 /* login page */
 .page-container {
-  display: flex; 
+  /* display: flex; 
+  flex-direction: column; 
   justify-content: center; 
+  align-items: center;  */
+  margin: 1rem;
+}
+
+.page-wrapper {
+  display: flex; 
   align-items: center; 
-  height: 70vh; 
-  width: 100vw; 
+  justify-content: center; 
+  margin-top: 5rem; 
 }
 
 .form-container {
@@ -65,16 +81,14 @@ body {
   flex-direction: column;
   align-items: center; 
   padding: 2rem; 
-  margin-top: 3rem; 
-  width: 300px; 
-  min-height: 45vh; 
+  width: 25rem; 
   border: 5px solid #2863d1; 
 }
 
 .form {
   display: flex; 
   flex-direction:column; 
-  width: inherit; 
+  width: 100%; 
 }
 
 .form-title {
@@ -92,7 +106,7 @@ body {
 }
 
 .form-input {
-  height: 1.5rem;  
+  height: 2rem;  
   margin-top: 0.5rem;
 }
 
@@ -170,7 +184,7 @@ body {
 .page-title {
   display: flex; 
   border-bottom: 4px solid #2863d1; 
-  margin: 1rem; 
+  margin: 1rem 0rem; 
   padding-bottom: 1rem; 
   justify-content: space-between; 
   align-items: center; 
@@ -214,7 +228,7 @@ body {
   font-size: 1.25rem;
   justify-content: center; 
   align-items: center;  
-  margin-top: 2rem; 
+  margin: 1rem; 
   border: 2px solid #2863d1; 
   text-decoration: none;
   background-color: #8ab2fd;
@@ -232,13 +246,16 @@ body {
   justify-content: center; 
 }
 
+.list-item-container {
+  margin: 1rem; 
+}
+
 .list-item {
   display: flex; 
   width: 15rem; 
-  height: 12rem; 
+  height: 13rem; 
   border: 5px solid #2863d1; 
   color: #000; 
-  margin: 1rem; 
   padding: 0.5rem; 
   text-decoration: none; 
   position: relative; 
@@ -327,11 +344,16 @@ body {
   display:none; 
 }
 
+.item-details { 
+  display:flex; 
+  flex-direction: column; 
+}
+
 
 .item-image {
-  max-height: 100%; 
   width: 100%; 
-  object-fit: contain;  
+  /* object-fit: ;    */
+  margin-top: 1rem; 
 }
 
 
@@ -388,4 +410,20 @@ body {
 
 .drawer-link:hover {
   color: #007bff;
+}
+
+.search { 
+  display:flex; 
+  justify-content: end; 
+  /* margin-right: 1rem;  */
+}
+
+.search-input {
+  border: none; 
+  border-bottom: 2px solid #000; 
+  font-size: 1rem; 
+}
+
+.search input:focus {
+  outline: 0; 
 }

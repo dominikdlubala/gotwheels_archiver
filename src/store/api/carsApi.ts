@@ -16,7 +16,7 @@ export const carsApi = createApi({
     endpoints: (builder) => {
         return {
             
-            fetchCars: builder.query<Car[], {collectionId: string | null, userId: string}>({
+            fetchCars: builder.query<Car[], {collectionId: string | undefined, userId: string}>({
                 async queryFn({ collectionId, userId }) {
                     try {
                         const ref = collection(firestore, 'cars'); 

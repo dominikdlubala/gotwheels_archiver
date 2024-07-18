@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 
 export default function Header() {
 
-    const { logout } = useAuth(); 
+    const { user, logout } = useAuth(); 
     const navigate = useNavigate(); 
 
     return (
@@ -15,7 +15,13 @@ export default function Header() {
                 </Link>
             </div>
             <div className="header-links">
-                <a onClick={() => logout()}>Log out</a>
+                {
+                    user 
+                    ? 
+                    <a onClick={() => logout()}>Log out</a>
+                    : 
+                    <Link to="/">Log in</Link>
+                }
                 <a onClick={() => navigate('/register')}>Register</a>
             </div>
         </div>
