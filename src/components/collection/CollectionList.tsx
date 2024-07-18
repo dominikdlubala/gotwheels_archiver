@@ -1,13 +1,14 @@
 import CollectionListItem from './CollectionListItem';
 import { useFetchCollectionsQuery } from '../../store';
+import type { Collection } from '../../types/types'; 
 
 interface CollectionListProps {
-    userId: string
+    data?: Collection[]; 
+    isLoading: boolean; 
+    isError: boolean; 
 }
 
-export default function CollectionList ({ userId }: CollectionListProps) {
-
-    const {data, isLoading, isError} = useFetchCollectionsQuery(userId); 
+export default function CollectionList ({ data, isLoading, isError }: CollectionListProps) { 
 
     let content; 
     if(isLoading) {

@@ -10,7 +10,6 @@ import { storage } from '../firebaseSetup';
 import  CarsList  from '../components/car/CarsList'; 
 import CarsModal from '../components/car/CarsModal'; 
 import { useFetchCarsQuery, useAddCarMutation } from '../store';
-import Drawer from '../components/Drawer';
 import { useAuth } from '../hooks/useAuth';
 import Input from '../components/Input'; 
 
@@ -66,15 +65,14 @@ export default function CarsPage() {
     return (
         <div className="page-container">
                 <div className="page-title">
-                    <Drawer currentRoute='Cars'/>
                     <button className="btn-add" onClick={() => setModalOpen(true)}>+Add car</button>
-                </div>
                     <div className="search search-cars">
                         <Input
                             value={searchTerm}
                             onChange={handleInputChange}
                         />
                     </div>
+                </div>
             <div className="page-section">
                 <CarsList 
                     data={data?.filter(car => car.name.includes(searchTerm))} 
