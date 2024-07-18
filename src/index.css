@@ -94,7 +94,7 @@ a {
 
 .form-title {
   font-size: 1.5rem; 
-  margin-bottom: 1rem; 
+  margin-bottom: 0.5rem; 
 }
 
 .form-group {
@@ -107,14 +107,17 @@ a {
 }
 
 .form-input {
-  height: 2rem;  
+  /* height: 2rem;   */
+  font-size: 1rem; 
   margin-top: 0.5rem;
+  border: none; 
+  border-bottom: 1.5px solid #000; 
 }
 
 .form-input:focus {
   outline: none !important;
-  border: 2px solid #F1D74D; 
-  box-shadow: 0 0 10px #719ECE;
+  /* border: 2px solid #F1D74D;  */
+  /* box-shadow: 0 0 10px #719ECE; */
 }
 
 .input-validate {
@@ -128,6 +131,9 @@ a {
 }
 
 .label-file {
+  display: flex; 
+  width: 50%;
+  margin: auto; 
   background-color: #2863d1;
   color: white;
   padding: 0.5rem;
@@ -136,7 +142,7 @@ a {
   cursor: pointer;
   text-align: center;
   display: inline-block;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .label-file:hover {
@@ -156,6 +162,7 @@ a {
   color: white; 
   font-size: 1.25rem;
   font-style: bold; 
+  margin-top: 1rem; 
   padding: 0.5rem; 
   border: none; 
 }
@@ -301,6 +308,7 @@ a {
 
 .form {
   background-color: #fff; 
+  margin-bottom: 1rem; 
 }
 
 .modal-main {

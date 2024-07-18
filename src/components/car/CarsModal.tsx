@@ -45,15 +45,19 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose, error
                         <input 
                             className="form-input" 
                             type="text"
+                            placeholder="Car name"
                             {...register("name")}
                         />
+                    </div>
+                    <div className="form-group file-group">
+                        <label>Add a picture</label>
                         <input
                             className="form-input input-file"
                             type="file"
                             id="file-upload"
                             {...register("fileList")}
                         />
-                        <label className="label-file" htmlFor="file-upload">Choose a file</label>
+                        <label className="label-file" htmlFor="file-upload">Upload</label>
                         {fileName && <span className="file-name">{fileName}</span>}
                     </div>
                     <button className="btn-submit" type="submit" disabled={isAdding}>{isAdding ? '...Submitting' : 'Submit'}</button>

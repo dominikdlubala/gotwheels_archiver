@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';  
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 
@@ -24,11 +24,17 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
 
     const onSubmit: SubmitHandler<CollectionFormValues> = async ({ name, file }: CollectionFormValues) => {
         try {
-            await handleFormSubmit({userId, name, file}); 
+            if(file){
+                setFileName(file[0].name); 
+            }
+            await handleFormSubmit({userId, name, file});
+            setFileName('');  
         } catch (error) {
             console.error('Failed to add collection'); 
         }
     }
+
+    const [fileName, setFileName] = useState<string>(''); 
 
     useEffect(() => {
         if(isSubmitSuccessful){
@@ -44,15 +50,6 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
                 <div className="modal-header">
                     <button className="btn-close" onClick={handleClose}>Close</button>
                 </div>
-                {/* <form className="modal-form" onSubmit={onSubmit}>
-                    <div className="form-title">
-                        Add a collection
-                    </div>
-                    <div className="form-group">
-                        <input className="form-input" value={name} onChange={handleChange} />
-                    </div>
-                        <button className="btn-submit" type="submit" disabled={isAdding}>{ isAdding ? 'Submitting...' : 'Submit'}</button>
-                </form> */}
                 <form className="modal-form" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-title">
                         Add a collection
@@ -75,11 +72,15 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
                         <span className="input-validate">{errors.name.message}</span>
                     }
                     <div className="form-group">
+                        <label>Add a picture</label>
                         <input 
-                            className="form-input" 
+                            className="form-input input-file" 
                             type="file"
+                            id="file-upload"
                             {...register("file")}
                         />
+                        <label className="label-file" htmlFor="file-upload">Upload</label>
+                        {fileName && <span className="file-name">{fileName}</span>}
                     </div>
                         <button className="btn-submit" type="submit" disabled={isAdding}>{ isAdding ? 'Submitting...' : 'Submit'}</button>
                 </form>

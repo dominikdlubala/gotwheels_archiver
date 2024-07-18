@@ -43,10 +43,10 @@ export default function RegisterPage() {
                     <form className="form" onSubmit={handleSubmit(onSubmit)}>
                         <h1 className="form-title">Register a new user</h1>
                         <div className="form-group">
-                            <label>E-mail</label>
                             <input 
                                 className="form-input"
                                 type="email"
+                                placeholder="E-mail"
                                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault() }
                                 {...register("email", {
                                     required: "Email is required"
@@ -57,10 +57,10 @@ export default function RegisterPage() {
                             }
                         </div>
                         <div className="form-group">
-                            <label>Username</label>
                             <input 
                                 className="form-input"
                                 type="text"
+                                placeholder="Username"
                                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault() }
                                 {...register("username", {
                                     required: true, 
@@ -76,10 +76,10 @@ export default function RegisterPage() {
                             
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
                             <input 
                                 className="form-input"
                                 type="password"
+                                placeholder="Password"
                                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === " " && e.preventDefault()}
                                 {...register("password", {
                                     required: true, 
@@ -95,6 +95,10 @@ export default function RegisterPage() {
                         </div>
                         <button className="btn-submit" type="submit" >Submit</button>
                     </form>
+                    <div className="login-register">
+                        Already a user?
+                        <a onClick={() => navigate('/')}>Sign in</a> 
+                    </div>
                     {
                         err
                         &&

@@ -51,22 +51,30 @@ export default function LoginPage() {
                     <form className="form login-form" onSubmit={handleSubmit(onSubmit)}>
                         <h1 className="form-title">Log in</h1>
                         <div className="form-group">
-                            <label>Username</label>
+                            {/* <label>Username</label> */}
                             <input 
                                 className="form-input"
                                 type="text"
+                                placeholder="Username"
                                 {...register("username", {
-                                    required:true
+                                    required: {
+                                        value: true, 
+                                        message: 'Username is required'
+                                    }
                                 })}
                             />
                         </div>
                         <div className="form-group"> 
-                            <label>Password</label>
+                            {/* <label>Password</label> */}
                             <input 
                                 className="form-input"
                                 type="password"
+                                placeholder="Password"
                                 {...register("password", {
-                                    required: true, 
+                                    required: {
+                                        value: true, 
+                                        message: 'Password is required'
+                                    } 
                                 })}
                             />
                         </div>
