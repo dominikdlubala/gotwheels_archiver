@@ -19,7 +19,6 @@ type CollectionFormValues = {
 
 export default function CollectionModal({ handleFormSubmit, userId, isAdding, handleClose, show }: CollectionModalProps) {
 
-
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors } } = useForm<CollectionFormValues>(); 
 
     const onSubmit: SubmitHandler<CollectionFormValues> = async ({ name, file }: CollectionFormValues) => {
@@ -42,10 +41,19 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
         }
     }, [isSubmitSuccessful, reset])
 
-    const showHideClassName = show ? "modal display-block" : "modal display-none"; 
+    useEffect(() => {
+        document.body.classList.add('overflow-hidden')
+
+        return () => {
+            document.body.classList.remove('overflow-hidden') 
+        }
+    }, []); 
+
+    const showHideClassName = show ? "modal display-flex" : "modal display-none"; 
 
     return ReactDOM.createPortal(
         <div className={showHideClassName}>
+            <div className="modal-background" onClick={() => handleClose() }></div>
             <div className="modal-main form-container">
                 <div className="modal-header">
                     <button className="btn-close" onClick={handleClose}>Close</button>

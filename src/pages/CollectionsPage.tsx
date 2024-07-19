@@ -56,6 +56,7 @@ export default function CollectionsPage() {
             console.error(error); 
         }
     }
+    
 
     return (
         <div className="page-container">

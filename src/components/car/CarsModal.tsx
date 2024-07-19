@@ -33,6 +33,7 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose, error
 
     return ReactDOM.createPortal(
         <div className={showHideClassName}> 
+            <div className="modal-background" onClick={() => handleClose() }></div>
             <div className="modal-main form-container">
                 <div className="modal-header">
                     <button className="btn-close" onClick={handleClose}>Close</button>

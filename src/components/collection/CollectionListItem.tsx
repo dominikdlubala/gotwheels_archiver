@@ -14,7 +14,7 @@ export default function CollectionListItem({ collection }: CollectionListItemPro
                         {
                             collection.imageUrl
                             &&
-                                <img className="item-image collection-image" src={collection.imageUrl} alt="collection-image" />
+                            <img className="item-image collection-image" src={collection.imageUrl} alt="collection-image" />
                         }
                         <h3>
                             {collection.name}
