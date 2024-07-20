@@ -32,8 +32,8 @@ export default function MobileNav({ user, logout, className }: MobileNavProps) {
     }, []); 
 
     return (
-        <div className="mobile-nav-wrapper" ref={menuRef}>
-            <div className={`${className} header-container`}>
+        <div className={`${className} mobile-nav-wrapper`} ref={menuRef}>
+            <div className={`header-container`}>
                 <div className="header-logo">
                     <Link to={`/home`} className="header-logo-link">
                         <span>Hot</span><FaFire className="icon-fire" />Wheels

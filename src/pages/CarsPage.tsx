@@ -12,18 +12,19 @@ import CarsModal from '../components/car/CarsModal';
 import { useFetchCarsQuery, useAddCarMutation } from '../store';
 import { useAuth } from '../hooks/useAuth';
 import Input from '../components/Input'; 
+import type { User } from '@firebase/auth-types'; 
 
-import type { Car, User } from '../types/types'; 
+import type { Car } from '../types/types'; 
 
 export default function CarsPage() {
 
-    const { user }= useAuth() as { user: User}; 
+    const { user }= useAuth() as { user: User }; 
 
     const [modalOpen, setModalOpen] = useState(false); 
 
     const { collectionId } = useParams(); 
 
-    const { data, isFetching, isError: isErrorFetching } = useFetchCarsQuery({ collectionId, userId: user.id });   
+    const { data, isFetching, isError: isErrorFetching } = useFetchCarsQuery({ collectionId, userId: user.uid });   
     const [addCar, {isLoading: isAdding, isError}] = useAddCarMutation(); 
 
     const [err, setErr] = useState(false); 
@@ -49,7 +50,7 @@ export default function CarsPage() {
                 const car: Car = {
                     name, 
                     id: faker.string.uuid(), 
-                    userId: user.id, 
+                    userId: user.uid, 
                     collectionId: collectionId ? collectionId : '', 
                     imageUrl: downloadUrl
                 }

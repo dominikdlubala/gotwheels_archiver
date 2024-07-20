@@ -491,6 +491,15 @@ a {
     display: none; 
   }
 
+  .mobile-nav {
+    display: flex; 
+    flex-direction: column; 
+  }
+
+  .header-container {
+    display: flex; 
+  }
+
   .page-section {
     flex-direction: column;
   }

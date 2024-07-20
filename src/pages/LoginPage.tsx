@@ -1,43 +1,31 @@
-import { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import { useAuth } from '../hooks/useAuth'; 
-import { useFetchUserByUsernameQuery } from '../store';
-
+import { auth } from '../firebaseSetup'; 
 
 type FormValues = {
-    username: string; 
+    email: string; 
     password: string; 
 }
 
 export default function LoginPage() {
-
-    const [fetchParams, setFetchParams] = useState<null | { username: string, password: string}>(null);
-
     const navigate = useNavigate(); 
-    const { login } = useAuth(); 
-
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<FormValues>();  
 
-    const onSubmit: SubmitHandler<FormValues> = ({ username, password}) => {
-        setFetchParams({username, password}); 
+    const onSubmit: SubmitHandler<FormValues> = ({ email, password}) => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                console.log(email)
+            })
+            .catch(error => {
+                if(error.code === 'auth/invalid-email') {
+                    setError('email', { type: 'manual', message: 'E-mail is inavlid' }); 
+                } else if (error.code === 'auth/invalid-credential') {
+                    setError('email', { type: 'manual', message: 'Provided credentials are invalid' })
+                }
+            })
     }
-    
-    // check if good
-    const { data, error } = useFetchUserByUsernameQuery(fetchParams?.username || ''); 
-    
-    useEffect(() => {
-        if(fetchParams && data) {
-            if(data.password !== fetchParams.password)  {
-                setError('password', { type: 'manual', message: 'Incorrect password'} )
-            } else {
-                login(data); 
-            }
-        } else if (fetchParams && error) {
-            setError('username', { type: 'manual', message: 'Username does not exist'}); 
-        }
-    }, [data, error, fetchParams, navigate, setError, login]); 
 
     return (
         <div className="page-container">
@@ -51,21 +39,19 @@ export default function LoginPage() {
                     <form className="form login-form" onSubmit={handleSubmit(onSubmit)}>
                         <h1 className="form-title">Log in</h1>
                         <div className="form-group">
-                            {/* <label>Username</label> */}
                             <input 
                                 className="form-input"
                                 type="text"
-                                placeholder="Username"
-                                {...register("username", {
+                                placeholder="E-mail"
+                                {...register("email", {
                                     required: {
                                         value: true, 
-                                        message: 'Username is required'
+                                        message: 'E-mail is required'
                                     }
                                 })}
                             />
                         </div>
                         <div className="form-group"> 
-                            {/* <label>Password</label> */}
                             <input 
                                 className="form-input"
                                 type="password"
@@ -79,9 +65,9 @@ export default function LoginPage() {
                             />
                         </div>
                         {
-                            ( errors.username || errors.password )
+                            ( errors.email || errors.password )
                             &&
-                            <span className="input-validate">{errors.username?.message || errors.password?.message} </span>
+                            <span className="input-validate">{errors.email?.message || errors.password?.message} </span>
                         }
                         <button className="btn-submit" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
                     </form>

@@ -1,5 +1,9 @@
 import { AxiosError } from 'axios'; 
 
+import firebase from 'firebase/compat/app'; 
+
+export type FirebaseUser = firebase.User; 
+
 export type Car = {
     id: string,
     name: string, 

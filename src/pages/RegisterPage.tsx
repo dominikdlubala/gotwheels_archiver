@@ -1,9 +1,8 @@
-import { useState } from 'react'; 
 import { useForm } from 'react-hook-form'; 
 import { useNavigate } from 'react-router-dom'; 
-import type { User } from '../types/types.ts';
-import { faker } from '@faker-js/faker'; 
-import {  useAddUserMutation } from '../store'; 
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseSetup.ts'; 
 
 type RegisterFormValues = {
     email: string; 
@@ -12,28 +11,20 @@ type RegisterFormValues = {
 }
 
 export default function RegisterPage() {
-    const [err, setErr] = useState<boolean>(false); 
     const navigate = useNavigate(); 
 
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormValues>();
-    
-    const [addUser] = useAddUserMutation(); 
+    const { register, handleSubmit, formState: { errors }, setError } = useForm<RegisterFormValues>();
     
     const onSubmit = async (data: RegisterFormValues) => {
-        const user: User = { 
-            id: faker.string.uuid(), 
-            ... data
-        }
-        try {
-            const { error } = await addUser(user); 
-            // do poprawienia
-            setErr(error ? true : false); 
-            if(!error){
+        await createUserWithEmailAndPassword(auth, data.email, data.password)
+            .then(() => {
                 navigate('/'); 
-            }
-        } catch (err) {
-            console.error('Blad', err); 
-        }
+            })
+            .catch(error => {
+                if(error.code === 'auth/invalid-email') {
+                    setError('email', { type: 'manual', message: 'Something went wrong...'})
+                }
+            })
     } 
 
     return (
@@ -99,11 +90,6 @@ export default function RegisterPage() {
                         Already a user?
                         <a onClick={() => navigate('/')}>Sign in</a> 
                     </div>
-                    {
-                        err
-                        &&
-                        <span className="input-validate">Error while adding user</span>
-                    }
                 </div>
             </div>
         </div>
