@@ -1,5 +1,4 @@
 import CollectionListItem from './CollectionListItem';
-import { useFetchCollectionsQuery } from '../../store';
 import type { Collection } from '../../types/types'; 
 
 interface CollectionListProps {
