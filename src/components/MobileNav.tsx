@@ -52,9 +52,9 @@ export default function MobileNav({ user, logout, className }: MobileNavProps) {
                         navigationData.map(link => (
                             link.path === '/collections'
                             ?
-                            <Link onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path} state={ {userId: user?.uid}}>{link.name}</Link>
+                            <Link key={link.path} onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path} state={ {userId: user?.uid}}>{link.name}</Link>
                             :
-                            <Link onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path}>{link.name}</Link>         
+                            <Link key={link.path} onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path}>{link.name}</Link>         
                         ))
                     }
                     {
@@ -73,7 +73,13 @@ export default function MobileNav({ user, logout, className }: MobileNavProps) {
                     {
                         !user 
                         &&
-                        <a className="nav-link login-link" onClick={() => navigate('/register')}>Register</a>
+                        <a 
+                            className="nav-link login-link" 
+                            onClick={() => {
+                                setIsMenuOpen(!isMenuOpen) 
+                                navigate('/register')
+                            }}
+                        >Register</a>
                     }
                 </div>      
             } 
