@@ -32,7 +32,7 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose}: Cars
 
     useEffect(() => {
         isSubmitSuccessful && reset(); 
-    }, [])
+    }, []) 
 
     const showHideClassName = show ? "modal display-flex" : "modal display-none"; 
 
