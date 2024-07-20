@@ -33,7 +33,6 @@ export default function CarsPage() {
     const handleModalSubmit = async (name: string, fileList: FileList) => {
         try {
             let downloadUrl = ''; 
-            console.log('modal submit try')
             if(fileList && fileList.length > 0) {
                 const file = fileList[0]; 
                 const storageRef = ref(storage, `/images/${file.name}`); 
