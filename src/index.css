@@ -552,5 +552,8 @@ a {
     margin-bottom: 0.5rem; 
   }
 
+  .item-image {
+    height: 80%; 
+  }
   
 }
