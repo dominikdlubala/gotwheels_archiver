@@ -12,25 +12,20 @@ import CarsModal from '../components/car/CarsModal';
 import { useFetchCarsQuery, useAddCarMutation } from '../store';
 import { useAuth } from '../hooks/useAuth';
 import Input from '../components/Input'; 
-import type { User } from '@firebase/auth-types'; 
-
-import type { Car } from '../types/types'; 
+import type { Car, FirebaseUser } from '../types/types'; 
+import Prompt from '../components/Prompt'; 
 
 export default function CarsPage() {
 
-    const { user }= useAuth() as { user: User }; 
-
+    const { user }= useAuth() as { user: FirebaseUser }; 
     const [modalOpen, setModalOpen] = useState(false); 
-
+    const [isSuccess, setIsSuccess] = useState(false); 
     const { collectionId } = useParams(); 
 
     const { data, isFetching, isError: isErrorFetching } = useFetchCarsQuery({ collectionId, userId: user.uid });   
-    const [addCar, {isLoading: isAdding, isError}] = useAddCarMutation(); 
-
-    const [err, setErr] = useState(false); 
+    const [addCar, {isLoading: isAdding }] = useAddCarMutation(); 
 
     const [searchTerm, setSearchTerm] = useState<string>(''); 
-
     const handleInputChange = (value:string) => {
         setSearchTerm(value); 
     }
@@ -38,25 +33,24 @@ export default function CarsPage() {
     const handleModalSubmit = async (name: string, fileList: FileList) => {
         try {
             let downloadUrl = ''; 
+            console.log('modal submit try')
             if(fileList && fileList.length > 0) {
                 const file = fileList[0]; 
                 const storageRef = ref(storage, `/images/${file.name}`); 
                 const snapshot = await uploadBytes(storageRef, file); 
                 downloadUrl = await getDownloadURL(snapshot.ref); 
             }
-            if(name.length <= 0){
-                setErr(true); 
-            } else {
-                const car: Car = {
-                    name, 
-                    id: faker.string.uuid(), 
-                    userId: user.uid, 
-                    collectionId: collectionId ? collectionId : '', 
-                    imageUrl: downloadUrl
-                }
-                await addCar(car); 
-                setModalOpen(false); 
+            const car: Car = {
+                name, 
+                id: faker.string.uuid(), 
+                userId: user.uid, 
+                collectionId: collectionId ? collectionId : '', 
+                imageUrl: downloadUrl
             }
+            await addCar(car); 
+            setModalOpen(false); 
+            setIsSuccess(true); 
+            setTimeout(() => setIsSuccess(false), 2000); 
         } catch(error) {
             console.error(error); 
         }
@@ -65,6 +59,7 @@ export default function CarsPage() {
 
     return (
         <div className="page-container">
+            { isSuccess && <Prompt success>Car succesfully added</Prompt>}
                 <div className="page-title">
                     <button className="btn-add" onClick={() => setModalOpen(true)}>+Add car</button>
                     <div className="search search-cars">
@@ -87,7 +82,6 @@ export default function CarsPage() {
                     isAdding={isAdding}
                     show={modalOpen}
                     handleClose={() => setModalOpen(false)}
-                    error={err || isError}
                  /> 
         </div>
     )

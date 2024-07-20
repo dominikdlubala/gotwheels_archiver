@@ -52,7 +52,7 @@ export default function Drawer({ currentRoute }: DrawerProps) {
                         drawerData.filter( data => !location.pathname.startsWith(data.path)).map(data => (
                             data.path === '/collections' 
                             ?
-                            <Link className="drawer-link" to={data.path} state={{ userId: user?.id}}>{data.name}</Link> 
+                            <Link className="drawer-link" to={data.path} state={{ userId: user?.uid}}>{data.name}</Link> 
                             :
                             <Link className="drawer-link" to={data.path}>{data.name}</Link>
                         ))

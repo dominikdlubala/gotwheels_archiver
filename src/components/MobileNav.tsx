@@ -2,13 +2,13 @@ import { useState, useRef, useEffect } from 'react';
 import { FaFire } from 'react-icons/fa'; 
 import { Link, useNavigate } from 'react-router-dom'; 
 import { navigationData } from './Header'; 
-import type { User } from '../types/types'; 
+import type { FirebaseUser } from '../types/types'; 
 
 import { CiMenuBurger } from "react-icons/ci";
 
 interface MobileNavProps {
     className: string; 
-    user: User | null; 
+    user: FirebaseUser | null; 
     logout: () => void; 
 }
 
@@ -52,7 +52,7 @@ export default function MobileNav({ user, logout, className }: MobileNavProps) {
                         navigationData.map(link => (
                             link.path === '/collections'
                             ?
-                            <Link onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path} state={ {userId: user?.id}}>{link.name}</Link>
+                            <Link onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path} state={ {userId: user?.uid}}>{link.name}</Link>
                             :
                             <Link onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path}>{link.name}</Link>         
                         ))

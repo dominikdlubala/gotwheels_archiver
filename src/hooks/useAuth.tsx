@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }: {children: ReactNode}) => {
         onAuthStateChanged(auth, (user) => {
             if(user) {
                 setUser(user as FirebaseUser); 
-                navigate('/home') 
             } else {
                 logout(); 
             }

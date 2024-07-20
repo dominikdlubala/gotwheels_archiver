@@ -1,11 +1,11 @@
 import { FaFire } from 'react-icons/fa'; 
 import { Link, useNavigate } from 'react-router-dom'; 
 import { navigationData } from './Header'; 
-import type { User } from '../types/types'; 
+import type { FirebaseUser } from '../types/types'; 
 
 interface DesktopNavProps {
     className: string; 
-    user: User | null; 
+    user: FirebaseUser | null; 
     logout: () => void; 
 }
 
@@ -24,7 +24,7 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
                         navigationData.map(link => (
                             link.path === '/collections'
                             ?
-                            <Link key={link.path} className="nav-link" to={link.path} state={ {userId: user?.id}}>{link.name}</Link>
+                            <Link key={link.path} className="nav-link" to={link.path} state={ {userId: user?.uid}}>{link.name}</Link>
                             :
                             <Link key={link.path} className="nav-link" to={link.path}>{link.name}</Link>
                         ))

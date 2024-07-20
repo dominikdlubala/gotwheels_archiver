@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';  
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 
-// type addCollectionMutation = ReturnType<typeof useAddCollectionMutation>[0]; 
+import Prompt from '../Prompt'; 
 
 interface CollectionModalProps {
     handleFormSubmit: (x: {userId: string, name: string, file: FileList | undefined}) => void; 
@@ -19,6 +19,7 @@ type CollectionFormValues = {
 
 export default function CollectionModal({ handleFormSubmit, userId, isAdding, handleClose, show }: CollectionModalProps) {
 
+    const [isError, setIsError] = useState(false); 
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors } } = useForm<CollectionFormValues>(); 
 
     const onSubmit: SubmitHandler<CollectionFormValues> = async ({ name, file }: CollectionFormValues) => {
@@ -29,7 +30,8 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
             await handleFormSubmit({userId, name, file});
             setFileName('');  
         } catch (error) {
-            console.error('Failed to add collection'); 
+            setIsError(true); 
+            setTimeout(() => setIsError(false), 2000); 
         }
     }
 
@@ -41,18 +43,11 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
         }
     }, [isSubmitSuccessful, reset])
 
-    useEffect(() => {
-        document.body.classList.add('overflow-hidden')
-
-        return () => {
-            document.body.classList.remove('overflow-hidden') 
-        }
-    }, []); 
-
     const showHideClassName = show ? "modal display-flex" : "modal display-none"; 
 
     return ReactDOM.createPortal(
         <div className={showHideClassName}>
+            { isError && <Prompt error>Problem with adding a collection</Prompt>}
             <div className="modal-background" onClick={() => handleClose() }></div>
             <div className="modal-main form-container">
                 <div className="modal-header">

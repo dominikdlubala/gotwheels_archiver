@@ -16,7 +16,7 @@ export default function LoginPage() {
     const onSubmit: SubmitHandler<FormValues> = ({ email, password}) => {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
-                console.log(email)
+                navigate('/home'); 
             })
             .catch(error => {
                 if(error.code === 'auth/invalid-email') {
@@ -31,11 +31,6 @@ export default function LoginPage() {
         <div className="page-container">
             <div className="page-wrapper">
                 <div className="form-container login-container">
-                    {/* {
-                        isError 
-                        &&
-                        <span className="input-validate">There was an error with our database, try again later</span>
-                    } */}
                     <form className="form login-form" onSubmit={handleSubmit(onSubmit)}>
                         <h1 className="form-title">Log in</h1>
                         <div className="form-group">

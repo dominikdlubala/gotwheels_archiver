@@ -6,6 +6,7 @@ import CollectionList from '../components/collection/CollectionList';
 import { useFetchCollectionsQuery, useAddCollectionMutation } from '../store';
 import  CollectionModal  from '../components/collection/CollectionModal'; 
 import Input from '../components/Input'; 
+import Prompt from '../components/Prompt'; 
 
 import {
     ref, 
@@ -18,30 +19,28 @@ import { storage } from '../firebaseSetup';
 export default function CollectionsPage() {    
     
     const [modalOpen, setModalOpen] = useState(false); 
+    const [isSuccess, setIsSuccess] = useState(false); 
+    
     const location = useLocation(); 
     const { userId } = location.state;
 
     const { data, isLoading, isError } = useFetchCollectionsQuery(userId); 
-
     const [addCollection, {isLoading: isAdding}] = useAddCollectionMutation();  
 
     const [searchTerm, setSearchTerm] = useState<string>(''); 
-
     const handleInputChange = (value:string) => {
         setSearchTerm(value); 
     }
 
     const handleFormSubmit = async (data: {userId: string, name: string, file: FileList | undefined }) => {
         try {
-                let downloadUrl = ''; 
-                if(data.file && data.file.length > 0) {
-                    const file = data.file[0] as File; 
-                    const storageRef = ref(storage, `/images/${file.name}`); 
-                    const snapshot = await uploadBytes(storageRef, file); 
-                    downloadUrl = await getDownloadURL(snapshot.ref); 
-                }
-            
-
+            let downloadUrl = ''; 
+            if(data.file && data.file.length > 0) {
+                const file = data.file[0] as File; 
+                const storageRef = ref(storage, `/images/${file.name}`); 
+                const snapshot = await uploadBytes(storageRef, file); 
+                downloadUrl = await getDownloadURL(snapshot.ref); 
+            }
             const collection = {
                 userId: data.userId,
                 name: data.name, 
@@ -51,6 +50,8 @@ export default function CollectionsPage() {
 
             await addCollection(collection); 
             setModalOpen(false); 
+            setIsSuccess(true); 
+            setTimeout(() => setIsSuccess(false), 2000); 
         } catch (error) {
             // popraw
             console.error(error); 
@@ -60,6 +61,11 @@ export default function CollectionsPage() {
 
     return (
         <div className="page-container">
+            {
+                isSuccess
+                &&
+                <Prompt success>Collection successfully added</Prompt>
+            }
             <div className="page-title">
                 <button className="btn-add" onClick={() => setModalOpen(true)}>+Add collection</button>
                 <div className="search">

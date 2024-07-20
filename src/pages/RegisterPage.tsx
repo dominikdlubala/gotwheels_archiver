@@ -1,8 +1,10 @@
+import { useState } from 'react'; 
 import { useForm } from 'react-hook-form'; 
 import { useNavigate } from 'react-router-dom'; 
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseSetup.ts'; 
+import Prompt from '../components/Prompt'; 
 
 type RegisterFormValues = {
     email: string; 
@@ -11,6 +13,7 @@ type RegisterFormValues = {
 }
 
 export default function RegisterPage() {
+    const [isSuccess, setIsSuccess] = useState(false); 
     const navigate = useNavigate(); 
 
     const { register, handleSubmit, formState: { errors }, setError } = useForm<RegisterFormValues>();
@@ -18,7 +21,11 @@ export default function RegisterPage() {
     const onSubmit = async (data: RegisterFormValues) => {
         await createUserWithEmailAndPassword(auth, data.email, data.password)
             .then(() => {
-                navigate('/'); 
+                setIsSuccess(true); 
+                setTimeout(() => {
+                    setIsSuccess(false); 
+                    navigate('/'); 
+                }, 2000);  
             })
             .catch(error => {
                 if(error.code === 'auth/invalid-email') {
@@ -29,6 +36,7 @@ export default function RegisterPage() {
 
     return (
         <div className="page-container">
+            { isSuccess && <Prompt success>User registered!</Prompt> }
             <div className="page-wrapper">
                 <div className="form-container"> 
                     <form className="form" onSubmit={handleSubmit(onSubmit)}>
