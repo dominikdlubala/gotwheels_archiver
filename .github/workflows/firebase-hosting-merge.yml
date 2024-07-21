@@ -28,5 +28,3 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GOTWHEELS_ARCHIVER }}
           channelId: live
           projectId: gotwheels-archiver
-
-
