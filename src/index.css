@@ -488,7 +488,7 @@ a {
 
 .prompt {
   position: fixed;
-  /* top: 5.5rem;  */
+  top: 5.5rem; 
   width: calc(100% - 2rem); 
   /* left: 1rem;    */
   background: #000;

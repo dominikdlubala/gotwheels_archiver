@@ -16,7 +16,7 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
             <div className={`header-container`}>
                 <div className="header-logo">
                     <Link to={`/home`} className="header-logo-link">
-                        <span>Hot</span><FaFire className="icon-fire" />Wheels
+                        <span>Got</span><FaFire className="icon-fire" />Wheels
                     </Link>
                 </div>
                 <div className="navigation-links">

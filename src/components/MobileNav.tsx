@@ -36,7 +36,7 @@ export default function MobileNav({ user, logout, className }: MobileNavProps) {
             <div className={`header-container`}>
                 <div className="header-logo">
                     <Link to={`/home`} className="header-logo-link">
-                        <span>Hot</span><FaFire className="icon-fire" />Wheels
+                        <span>Got</span><FaFire className="icon-fire" />Wheels
                     </Link>
                 </div>
                 
