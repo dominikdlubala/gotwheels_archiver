@@ -7,6 +7,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage'; 
 import { ProtectedRoute } from './components/login/ProtectedRoute'; 
 
+// some comment
+
 const router = createBrowserRouter([
   {
     path: '/', 
