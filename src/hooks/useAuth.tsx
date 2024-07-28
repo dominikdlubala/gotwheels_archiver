@@ -1,8 +1,8 @@
 import { createContext, useContext, useMemo, ReactNode, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
-import { useLocalStorage } from './useLocalStorage'; 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebaseSetup'; 
+import { useLocalStorage } from './useLocalStorage'; 
 import type { FirebaseUser } from '../types/types';  
 
 
@@ -46,11 +46,16 @@ export const AuthProvider = ({ children }: {children: ReactNode}) => {
             .catch(error => console.log(error))
     }
 
+    const register = () => {
+
+    }
+
     const value = useMemo(
         () => ({
           user,
           login,
           logout,
+          register
         }),
         [user]
       );

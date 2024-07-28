@@ -22,10 +22,12 @@ export type Collection = {
 }
 
 export type User = {
-    id: string,
-    email: string,
-    username: string, 
-    password: string
+    // id: string,
+    // email: string,
+    // username: string, 
+    // password: string
+    username: string
+    id: string
 }
 
 export interface IUsersState {

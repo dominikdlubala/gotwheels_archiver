@@ -407,6 +407,16 @@ a {
   scale: 1.05; 
 }  
 
+.database-link {
+  width: calc(100vw - 4rem);
+  height: 10vh; 
+  margin: 0 1rem;  
+  justify-content: center; 
+  align-items: center;
+  font-size: 1.5rem; 
+  font-weight: bold; 
+}
+
 
 .drawer-main {
   display:flex; 

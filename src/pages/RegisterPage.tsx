@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseSetup.ts'; 
 import Prompt from '../components/Prompt'; 
+// import { useAddUserMutation } from '../store/index.ts';
 
 type RegisterFormValues = {
     email: string; 
@@ -16,12 +17,15 @@ export default function RegisterPage() {
     const [isSuccess, setIsSuccess] = useState(false); 
     const navigate = useNavigate(); 
 
+    // const [addUser] = useAddUserMutation(); 
+
     const { register, handleSubmit, formState: { errors }, setError } = useForm<RegisterFormValues>();
     
     const onSubmit = async (data: RegisterFormValues) => {
         await createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then(() => {
+            .then((userCredential) => {
                 setIsSuccess(true); 
+                console.log(userCredential)
                 setTimeout(() => {
                     setIsSuccess(false); 
                     navigate('/'); 

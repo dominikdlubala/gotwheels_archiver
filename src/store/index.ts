@@ -35,7 +35,5 @@ export {
 } from './api/carsApi'; 
 
 export {
-    useFetchUsersQuery, 
     useAddUserMutation, 
-    useFetchUserByUsernameQuery
 } from './api/usersApi'; 

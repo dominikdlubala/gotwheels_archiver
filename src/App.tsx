@@ -3,6 +3,7 @@ import Root from './pages/Root';
 import HomePage from './pages/HomePage'; 
 import CollectionsPage from './pages/CollectionsPage'; 
 import CarsPage from './pages/CarsPage'; 
+import CarsDatabasePage from './pages/CarsDatabasePage';
 import LoginPage from './pages/LoginPage'; 
 import RegisterPage from './pages/RegisterPage'; 
 import { ProtectedRoute } from './components/login/ProtectedRoute'; 
@@ -44,6 +45,12 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <CarsPage />
           </ProtectedRoute>
+        )
+      }, 
+      {
+        path: '/cars-database',
+        element: (
+          <CarsDatabasePage />
         )
       }
     ]
