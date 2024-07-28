@@ -4,7 +4,7 @@ import { useFetchDatabaseCarsQuery } from '../store';
 
 export default function CarsDatabasePage() {
 
-    const [year, setYear] = useState(1974); 
+    const [year, setYear] = useState(1969); 
 
     const { data, isLoading, isError } = useFetchDatabaseCarsQuery(year); 
 

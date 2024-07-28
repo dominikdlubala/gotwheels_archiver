@@ -77,6 +77,18 @@ export const carsApi = createApi({
                 }, 
                 invalidatesTags: [{ type: 'Cars', id: 'LIST'}]
             }), 
+            addCarToWishlist: builder.mutation<Car, {car: Car, userId: string}>({
+                async queryFn({car, userId}) {
+                    try {
+                        const userRef = doc(firestore, 'users', userId); 
+                        const wishlistRef = collection(userRef, 'wishlist'); 
+                        await setDoc(doc(wishlistRef), car); 
+                        return { data: car }
+                    } catch (err) {
+                        return { error: err}
+                    }
+                }
+            }),
             fetchDatabaseCars: builder.query<Car[], number>({
                 async queryFn(year) {
                     try {
@@ -99,6 +111,7 @@ export const carsApi = createApi({
 export const { 
     useFetchCarsQuery, 
     useAddCarMutation, 
+    useAddCarToWishlistMutation,
     useFetchDatabaseCarsQuery
  } = carsApi; 
 

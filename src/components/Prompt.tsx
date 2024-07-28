@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'; 
+import { createPortal } from 'react-dom'; 
 import classNames from 'classnames'; 
 
 interface PromptProps {
@@ -10,9 +11,10 @@ interface PromptProps {
 export default function Prompt({ children, success, error }: PromptProps) {
     const processedClassNames = classNames('prompt', {'prompt-success': success}, {'prompt-error': error})
 
-    return (
+    return createPortal(
         <div className={processedClassNames}>
             {children}
-        </div>
+        </div>, 
+        document.querySelector('.modal-container') as Element 
     )
 }
