@@ -25,10 +25,10 @@ export default function RegisterPage() {
         await createUserWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
                 setIsSuccess(true); 
-                console.log(userCredential)
+                console.log(userCredential);
                 setTimeout(() => {
                     setIsSuccess(false); 
-                    navigate('/'); 
+                    // navigate('/'); 
                 }, 2000);  
             })
             .catch(error => {
