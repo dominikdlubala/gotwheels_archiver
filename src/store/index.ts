@@ -31,7 +31,8 @@ export {
 } from './api/collectionsApi'; 
 export {
     useFetchCarsQuery, 
-    useAddCarMutation
+    useAddCarMutation, 
+    useFetchDatabaseCarsQuery
 } from './api/carsApi'; 
 
 export {

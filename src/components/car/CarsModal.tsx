@@ -4,14 +4,20 @@ import { useForm } from 'react-hook-form';
 import Prompt from '../Prompt'; 
 
 interface CarsModalProps {
-    onSubmit: (name: string, file: FileList) => void; 
+    onSubmit: ({car, fileList}: CarFormValues) => void; 
     isAdding: boolean; 
     show: boolean; 
     handleClose: () => void; 
 }
 
-interface CarFormValues {
-    name: string; 
+export interface CarFormValues {
+    car: {
+        model: string;
+        series?: string | null;
+        series_num?: string | null;
+        toy_num?: string | null;
+        year: number;
+    }
     fileList: FileList; 
 }
 
@@ -20,10 +26,10 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose}: Cars
     const [isError, setIsError] = useState(false); 
     const { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset } = useForm<CarFormValues>(); 
 
-    const handleFormSubmit = async ({ name, fileList }: CarFormValues) => {
+    const handleFormSubmit = async ({ car, fileList }: CarFormValues) => {
         try {
             setFileName(fileList[0].name); 
-            await onSubmit(name, fileList); 
+            await onSubmit({car, fileList}); 
         } catch (error) {
             setIsError(true); 
             setTimeout(() => setIsError(false), 2000); 
@@ -53,14 +59,55 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose}: Cars
                             className="form-input" 
                             type="text"
                             placeholder="Car name"
-                            {...register("name", {
+                            {...register("car.model", {
                                 required: {
                                     value: true, 
                                     message: 'This field is required'
                                 }
                             })}
                         />
-                        { errors.name && <span className="input-validate">{errors.name.message}</span>}
+                        { errors.car?.model && <span className="input-validate">{errors.car.model.message}</span>}
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            className="form-input" 
+                            type="text"
+                            placeholder="Series name"
+                            {...register("car.series")}
+                        />
+                        { errors.car?.series && <span className="input-validate">{errors.car.series.message}</span>}
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            className="form-input" 
+                            type="text"
+                            placeholder="Series number"
+                            {...register("car.series_num")}
+                        />
+                        { errors.car?.series_num && <span className="input-validate">{errors.car.series_num.message}</span>}
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            className="form-input" 
+                            type="text"
+                            placeholder="Toy number"
+                            {...register("car.toy_num")}
+                        />
+                        { errors.car?.toy_num && <span className="input-validate">{errors.car.toy_num.message}</span>}
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            className="form-input" 
+                            type="text"
+                            placeholder="Year"
+                            {...register("car.year", {
+                                required: {
+                                    value: true, 
+                                    message: 'This field is required'
+                                }
+                            })}
+                        />
+                        { errors.car?.year && <span className="input-validate">{errors.car.year.message}</span>}
                     </div>
                     <div className="form-group file-group">
                         <label>Add a picture</label>

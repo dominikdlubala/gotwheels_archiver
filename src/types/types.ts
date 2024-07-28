@@ -5,13 +5,20 @@ import firebase from 'firebase/compat/app';
 export type FirebaseUser = firebase.User; 
 
 export type Car = {
-    id: string,
-    name: string, 
-    userId: string,
+    model: string; 
+    series: string; 
+    series_num: string;
+    toy_num: string; 
+    year: number; 
+    photo_url: string 
 
-    // definitely change this
-    collectionId: string | undefined; 
-    imageUrl: string; 
+    // id: string,
+    // name: string, 
+    // userId: string,
+
+    // // definitely change this
+    // collectionId: string | undefined; 
+    // imageUrl: string; 
 }
 
 export type Collection = {

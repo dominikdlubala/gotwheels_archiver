@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useAuth } from '../hooks/useAuth'; 
 
 import { auth } from '../firebaseSetup'; 
 
@@ -12,6 +13,11 @@ type FormValues = {
 export default function LoginPage() {
     const navigate = useNavigate(); 
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<FormValues>();  
+
+    const { user } = useAuth(); 
+    if(user) {
+        navigate('/home'); 
+    }
 
     const onSubmit: SubmitHandler<FormValues> = ({ email, password}) => {
         signInWithEmailAndPassword(auth, email, password)

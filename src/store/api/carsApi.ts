@@ -15,18 +15,16 @@ export const carsApi = createApi({
     tagTypes: ['Cars'],
     endpoints: (builder) => {
         return {
-            
             fetchCars: builder.query<Car[], {collectionId: string | undefined, userId: string}>({
                 async queryFn({ collectionId, userId }) {
                     try {
-                        const ref = collection(firestore, 'cars'); 
-                        let q; 
+                        const ref = collection(firestore, 'users');
+                        const userRef = doc(ref, userId); 
+                        const carsRef = collection(userRef, 'cars');  
+                        let q = query(carsRef);  
                         if(collectionId){
-                            q = query(ref, where('collectionId', '==', collectionId))
-                        } else {
-                            q = query(ref, where('userId', '==', userId)); 
+                            q = query(carsRef, where('collectionId', '==', collectionId))
                         }
-                        
                         const querySnapshot = await getDocs(q); 
                         if(querySnapshot.empty){
                             return { error: { message: 'No cars in this collection'} }; 
@@ -44,7 +42,7 @@ export const carsApi = createApi({
                     result 
                     ? 
                         [
-                            ...result.map(({id}) => ({ type: 'Cars', id} as const )), 
+                            ...result.map(({toy_num}) => ({ type: 'Cars', toy_num} as const )), 
                             {type: 'Cars', id: 'LIST'}
                         ]
                     : 
@@ -66,18 +64,32 @@ export const carsApi = createApi({
                     }
                 }
             }),
-
-            addCar: builder.mutation<Car, Car>({
-                async queryFn(car) {
+            addCar: builder.mutation<Car, { car: Car, userId: string}>({
+                async queryFn({car, userId}) {
                     try {
-                        const ref = doc(firestore, 'cars', car.name); 
-                        await setDoc(ref, car); 
+                        const userRef = doc(firestore, 'users', userId); 
+                        const usersCarsRef = collection(userRef, 'cars'); 
+                        await setDoc(doc(usersCarsRef), car); 
                         return { data: car }; 
                     } catch (error) {
                         return { error: error }
                     }
                 }, 
                 invalidatesTags: [{ type: 'Cars', id: 'LIST'}]
+            }), 
+            fetchDatabaseCars: builder.query<Car[], number>({
+                async queryFn(year) {
+                    try {
+                        const databaseRef = collection(firestore, 'hotwheels_database'); 
+                        const yearRef = doc(databaseRef, year.toString()); 
+                        const carsCollectionRef = collection(yearRef, 'cars');  
+                        const querySnapshot = await getDocs(carsCollectionRef);
+                        const cars = querySnapshot.docs.map(doc => doc.data() as Car);  
+                        return { data: cars }
+                    } catch (err) {
+                        return { error: err }
+                    }
+                }
             })
         }
     }
@@ -86,6 +98,7 @@ export const carsApi = createApi({
 
 export const { 
     useFetchCarsQuery, 
-    useAddCarMutation
+    useAddCarMutation, 
+    useFetchDatabaseCarsQuery
  } = carsApi; 
 

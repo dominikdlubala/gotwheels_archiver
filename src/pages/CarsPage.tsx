@@ -1,6 +1,6 @@
 import { useState } from 'react'; 
 import { useParams } from 'react-router-dom'; 
-import { faker } from '@faker-js/faker'; 
+// import { faker } from '@faker-js/faker'; 
 import {
     ref, 
     uploadBytes, 
@@ -14,6 +14,8 @@ import { useAuth } from '../hooks/useAuth';
 import Input from '../components/Input'; 
 import type { Car, FirebaseUser } from '../types/types'; 
 import Prompt from '../components/Prompt'; 
+
+import type { CarFormValues } from '../components/car/CarsModal'; 
 
 export default function CarsPage() {
 
@@ -30,7 +32,7 @@ export default function CarsPage() {
         setSearchTerm(value); 
     }
 
-    const handleModalSubmit = async (name: string, fileList: FileList) => {
+    const handleModalSubmit = async ({car, fileList}: CarFormValues) => {
         try {
             let downloadUrl = ''; 
             if(fileList && fileList.length > 0) {
@@ -39,14 +41,15 @@ export default function CarsPage() {
                 const snapshot = await uploadBytes(storageRef, file); 
                 downloadUrl = await getDownloadURL(snapshot.ref); 
             }
-            const car: Car = {
-                name, 
-                id: faker.string.uuid(), 
-                userId: user.uid, 
-                collectionId: collectionId ? collectionId : '', 
-                imageUrl: downloadUrl
+            const carToAdd: Car = {
+                model: car.model,
+                series: car.series || '',
+                series_num: car.series_num || '',
+                toy_num: car.toy_num || '',
+                year: car.year,
+                photo_url: downloadUrl
             }
-            await addCar(car); 
+            await addCar({car: carToAdd, userId: user.uid}); 
             setModalOpen(false); 
             setIsSuccess(true); 
             setTimeout(() => setIsSuccess(false), 2000); 
@@ -70,7 +73,7 @@ export default function CarsPage() {
                 </div>
             <div className="page-section">
                 <CarsList 
-                    data={data?.filter(car => car.name.includes(searchTerm))} 
+                    data={data?.filter(car => car.model.includes(searchTerm))} 
                     isLoading={isFetching}
                     isError={isErrorFetching}    
                 />
