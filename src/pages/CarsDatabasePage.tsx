@@ -1,12 +1,12 @@
 import { useState } from 'react';  
 import CarsList from '../components/car/CarsList'; 
-import { useFetchDatabaseCarsQuery, useFetchDatabaseCarsByYearQuery } from '../store'; 
+import { useFetchDatabaseCarsByYearQuery } from '../store'; 
 import Input from '../components/Input'; 
 
 export default function CarsDatabasePage() {
 
     const [searchTerm, setSearchTerm] = useState(''); 
-    const [year, setYear] = useState(1969); 
+    const [year, setYear] = useState(1970); 
     const { data, isLoading, isError } = useFetchDatabaseCarsByYearQuery(year); 
     const range = (min: number, max: number): number[] => {
         const len = max - min + 1; 
@@ -18,13 +18,11 @@ export default function CarsDatabasePage() {
     }
     const yearArr = range(1968, 2024); 
 
-    console.log(data); 
-
     const handleInputChange = (value: string) => {
         setSearchTerm(value); 
     }
 
-    const displayData = data?.filter(car => car.model.toLowerCase().includes(searchTerm))
+    const displayData = data?.filter(car => Number(car.year) === year).filter(car => car.model.toLowerCase().includes(searchTerm))
 
     return (
         <div className="page-container">

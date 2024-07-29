@@ -525,20 +525,30 @@ a {
 .search-database {
   position: relative; 
 }
+
+.search-database--drawer--closed {
+  display: none;
+}
+
 .search-database--drawer {
   position: absolute; 
-  left: 0px; 
-  /* background-color: #fff; */
+  left: 0px;
+  background-color: rgba(0, 68, 255, 0.637);
   backdrop-filter: blur(3px);
+  color: #fff;
   width: 100%; 
   padding-top: 0.25rem; 
   border-bottom: 2px solid black; 
   border-left: 2px solid black; 
-  border-right: 2px solid black; 
+  border-right: 2px solid black;
+  border-radius: 4px;  
   z-index: 10; 
+  padding: 0; 
 }
 .search-database-drawer--item {
   padding: 0.25rem 0; 
+  list-style: none;
+  padding-left: 0.25rem; 
 }
 .search-database-drawer--item:hover {
   background-color: rgba(62, 109, 236, 0.637);
