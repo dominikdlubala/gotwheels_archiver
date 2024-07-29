@@ -9,6 +9,16 @@ import {
 import { firestore } from '../../firebaseSetup'; 
 import type { Car } from '../../types/types'; 
 
+const range = (min: number, max: number): number[] => {
+    const len = max - min + 1; 
+    const arr = new Array<number>(len); 
+    for(let i = 0; i < len; i++){
+        arr[i] = min + i; 
+    }
+    return arr; 
+}
+const yearArr = range(1968, 2024); 
+
 export const carsApi = createApi({
     reducerPath: 'cars', 
     baseQuery: fakeBaseQuery(), 
@@ -89,7 +99,24 @@ export const carsApi = createApi({
                     }
                 }
             }),
-            fetchDatabaseCars: builder.query<Car[], number>({
+            fetchDatabaseCars: builder.query<Car[], void>({
+                async queryFn() {
+                    try {
+                        const data: Car[] = [];  
+                        const databaseRef = collection(firestore, 'hotwheels_database'); 
+                        for (const year of yearArr) {
+                            const yearRef = doc(databaseRef, year.toString());
+                            const carsCollectionRef = collection(yearRef, 'cars');   
+                            const querySnapshot = await getDocs(carsCollectionRef); 
+                            querySnapshot.docs.forEach(doc => data.push(doc.data() as Car))
+                        }
+                        return { data: data }
+                    } catch (err) {
+                        return { error: err}
+                    }
+                }
+            }),
+            fetchDatabaseCarsByYear: builder.query<Car[], number>({
                 async queryFn(year) {
                     try {
                         const databaseRef = collection(firestore, 'hotwheels_database'); 
@@ -112,6 +139,7 @@ export const {
     useFetchCarsQuery, 
     useAddCarMutation, 
     useAddCarToWishlistMutation,
-    useFetchDatabaseCarsQuery
+    useFetchDatabaseCarsQuery,
+    useFetchDatabaseCarsByYearQuery
  } = carsApi; 
 

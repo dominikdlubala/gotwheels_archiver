@@ -33,7 +33,8 @@ export {
     useFetchCarsQuery, 
     useAddCarMutation, 
     useAddCarToWishlistMutation,
-    useFetchDatabaseCarsQuery
+    useFetchDatabaseCarsQuery,
+    useFetchDatabaseCarsByYearQuery
 } from './api/carsApi'; 
 
 export {

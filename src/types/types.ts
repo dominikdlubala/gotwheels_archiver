@@ -6,11 +6,11 @@ export type FirebaseUser = firebase.User;
 
 export type Car = {
     model: string; 
-    series: string; 
-    series_num: string;
-    toy_num: string; 
-    year: number; 
-    photo_url: string 
+    series?: string; 
+    series_num?: string;
+    toy_num?: string; 
+    year?: number; 
+    photo_url?: string 
 
     // id: string,
     // name: string, 

@@ -522,6 +522,39 @@ a {
   outline: 0; 
 }
 
+.search-database {
+  position: relative; 
+}
+.search-database--drawer {
+  position: absolute; 
+  left: 0px; 
+  /* background-color: #fff; */
+  backdrop-filter: blur(3px);
+  width: 100%; 
+  padding-top: 0.25rem; 
+  border-bottom: 2px solid black; 
+  border-left: 2px solid black; 
+  border-right: 2px solid black; 
+  z-index: 10; 
+}
+.search-database-drawer--item {
+  padding: 0.25rem 0; 
+}
+.search-database-drawer--item:hover {
+  background-color: rgba(62, 109, 236, 0.637);
+  cursor: pointer; 
+  backdrop-filter: blur(3px);
+}
+.nav-input {
+  border: 2px solid #405dff; 
+  border-radius: 4px; 
+  padding: 0.5rem;
+}
+
+.nav-input:focus {
+  outline: 0; 
+}
+
 .navigation-links {
   display: flex; 
   justify-content: center; 
@@ -550,9 +583,41 @@ a {
   cursor: pointer; 
 }
 
+
+.database-year-select {
+  border-bottom: 2px solid black; 
+  padding-bottom: 1rem;  
+}
+.database-year-select--year {
+  color: #2847f4; 
+}
+
+.database-year-select--years {
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-around;
+  margin-top: 0.5rem; 
+  width: 100vw;
+}
+
+.database-year-select--link {
+  color: #000; 
+  font-weight: bold; 
+  font-size: 1.1rem; 
+  /* margin: 0.1rem;  */
+  width: 10vw; 
+}
+.database-year-select--link:hover {
+  color: #2847f4; 
+}
+
+.search-database-cars {
+  width: 100%; 
+}
+
 .prompt {
   position: fixed;
-  top: 5.5rem; 
+  top: 1rem; 
   width: calc(100% - 2rem);
   margin: 0 1rem;  
   /* left: 1rem;    */
@@ -562,9 +627,9 @@ a {
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 5s ease-in-out;
   opacity: 1;
-  animation: fadeIn 2s forwards;
+  animation: fadeIn 5s forwards;
 }
 
 .prompt-success {
@@ -576,6 +641,12 @@ a {
 }
 
 @keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
   50% {
       opacity: 1;
   }

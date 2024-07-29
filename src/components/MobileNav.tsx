@@ -50,10 +50,6 @@ export default function MobileNav({ user, logout, className }: MobileNavProps) {
                 <div className="hamburger-links">
                     {
                         navigationData.map(link => (
-                            link.path === '/collections'
-                            ?
-                            <Link key={link.path} onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path} state={ {userId: user?.uid}}>{link.name}</Link>
-                            :
                             <Link key={link.path} onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link" to={link.path}>{link.name}</Link>         
                         ))
                     }

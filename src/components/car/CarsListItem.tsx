@@ -32,15 +32,15 @@ export default function CarsListItem({ car }: CarsListItemProps) {
             const isAlreadyAdded = cars.some(doc => doc.model === car.model )
             if(isAlreadyAdded) {
                 setAlert({error: true, message: 'You already have this car in your collection'}); 
-                setTimeout(() => setAlert(null), 2000); 
+                setTimeout(() => setAlert(null), 5000); 
             } else {
                 await addCar({car, userId: user.uid}); 
                 setAlert({error: false, message: 'Successfully added the car into your collection'}); 
-                setTimeout(() => setAlert(null), 2000); 
+                setTimeout(() => setAlert(null), 5000); 
             }
         } catch (err) {
             setAlert({error: true, message: 'There was an error'}); 
-            setTimeout(() => setAlert(null), 2000); 
+            setTimeout(() => setAlert(null), 5000); 
         }
     }
 
@@ -52,15 +52,15 @@ export default function CarsListItem({ car }: CarsListItemProps) {
             const wishlistCars = querySnapshot.docs.map(doc => doc.data() as Car); 
             if(wishlistCars.some(doc => doc.model === car.model)){
                 setAlert({error: true, message: 'You already have this car on your wishlist'}); 
-                setTimeout(() => setAlert(null), 2000); 
+                setTimeout(() => setAlert(null), 5000); 
             } else {
                 await addCarToWishlist({car, userId: user.uid})
                 setAlert({error: false, message: 'Successfully added the car into your wishlist'}); 
-                setTimeout(() => setAlert(null), 2000); 
+                setTimeout(() => setAlert(null), 5000); 
             }
         } catch (err) {
             setAlert({error: true, message: 'There was an error'}); 
-            setTimeout(() => setAlert(null), 2000); 
+            setTimeout(() => setAlert(null), 5000); 
         }
     }
 

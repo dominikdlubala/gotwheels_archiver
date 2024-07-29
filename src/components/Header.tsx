@@ -10,12 +10,12 @@ type NavigationData = {
 
 export const navigationData: NavigationData[] = [
     {
-        path: '/collections', 
-        name: 'Collections'
+        path: '/cars-database', 
+        name: 'Cars Database'
     }, 
     {
         path: '/cars/', 
-        name: 'Cars'
+        name: 'My Cars'
     }
 ]
 
