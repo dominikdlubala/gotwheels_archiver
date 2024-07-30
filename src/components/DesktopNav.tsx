@@ -1,11 +1,19 @@
-import { useState } from 'react'; 
+import { useState, useCallback, useEffect } from 'react'; 
 import { FaFire } from 'react-icons/fa'; 
 import { Link, useNavigate } from 'react-router-dom'; 
+
+import {
+    collection, 
+    query, where,  
+    getDocs, 
+    limit
+} from 'firebase/firestore'; 
+import { firestore } from '../firebaseSetup'; 
+
 import { navigationData } from './Header'; 
 import type { FirebaseUser } from '../types/types'; 
-import { useFetchDatabaseCarsQuery } from '../store';  
+// import { useFetchDatabaseCarsQuery } from '../store';  
 import Input from './Input'; 
-
 
 interface DesktopNavProps {
     className: string; 
@@ -17,34 +25,67 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
     const navigate = useNavigate(); 
     const [searchTerm, setSearchTerm] = useState<string>(''); 
     const [drawerOpen, setDrawerOpen] = useState(false); 
+    const [searchResults, setSearchResults] = useState<string[]>([]); 
+    const [isLoading, setIsLoading] = useState(false);  
 
-    const { data } = useFetchDatabaseCarsQuery()
+    const fetchSearchResults = useCallback(async (term: string) => {
+        if(!term){
+            setSearchResults([]); 
+            setDrawerOpen(false); 
+            return; 
+        }
+        const termForSearch = term.split(' ').map(word => word.slice(0,1).toUpperCase() + word.slice(1)).join(' ')
+
+        setIsLoading(true); 
+        const years = Array.from({length: 2024 - 1968 + 1}, (_, i) => i + 1968); 
+        const promises = years.map(async (year) => {
+            const carsRef = collection(firestore, 'hotwheels_database', year.toString(), 'cars'); 
+            const q = query(carsRef, where('model', '>=', termForSearch), where('model', '<=', termForSearch + '\uf8ff'), limit(10)); 
+            const querySnapshot = await getDocs(q)
+            
+            return querySnapshot.docs.map(doc => doc.data().model); 
+        }); 
+
+        const resultsArray = await Promise.all(promises); 
+        const results = resultsArray.flat(); 
+        const uniqueResults = [...new Set(results)]; 
+
+        setSearchResults(uniqueResults); 
+        setDrawerOpen(true); 
+        setIsLoading(false); 
+    }, []); 
 
     const handleInputChange = (value: string) => {
         setSearchTerm(value); 
-        if(searchTerm === '') {
-            setDrawerOpen(false)
-        } else {
-            setDrawerOpen(true)
-        }; 
+        fetchSearchResults(value); 
     }
-    const addedClassName = drawerOpen &&  'search-database--drawer--closed'
 
+    useEffect(() => {
+        const debounceTimer = setTimeout(() => fetchSearchResults(searchTerm), 300);
+        return () => clearTimeout(debounceTimer); 
+    }, [searchTerm, fetchSearchResults]); 
 
     const drawerElement = (
         <ul className={`search-database--drawer`}>
             {
-                data && searchTerm !== ''
-                &&
-                [... new Set(data.filter(car => car.model.toLowerCase().includes(searchTerm)).slice(0, 10))].map(car => (
-                    <li 
-                        key={car.toy_num || car.model} 
-                        className="search-database-drawer--item"
-                        onClick={() => setSearchTerm(car.model)}
+                isLoading 
+                ?
+                [1, 2, 3].map((num) => (
+                    <li key={num} className="search-database-drawer--item">Loading..</li>
+                ))
+                :
+                searchResults.length > 0
+                ? 
+                searchResults.map((model, idx) => (
+                    <li
+                        key={idx}
+                        className="search-datbase-drawer--item"
+                        onClick={() => setSearchTerm(model)}
                     >
-                        {car.model}
+                        {model}
                     </li>
                 ))
+                : <li className="search-database-drawer--item">No results found</li>
             }
         </ul>
     )

@@ -61,7 +61,7 @@ export default function CarsPage() {
 
     return (
         <div className="page-container">
-            { isSuccess && <Prompt success>Car succesfully added</Prompt>}
+            { isSuccess && <Prompt success handleClose={() => setIsSuccess(false)}>Car succesfully added</Prompt>}
                 <div className="page-title">
                     <button className="btn-add" onClick={() => setModalOpen(true)}>+Add car</button>
                     <div className="search search-cars">

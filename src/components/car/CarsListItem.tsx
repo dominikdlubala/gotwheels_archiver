@@ -69,7 +69,7 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                 {
                     alert
                     &&
-                    <Prompt error={alert.error} success={!alert.error}>{alert.message}</Prompt>
+                    <Prompt error={alert.error} success={!alert.error} handleClose={() => setAlert(null)}>{alert.message}</Prompt>
                 }
                     {
                         car.photo_url
@@ -79,51 +79,53 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                         ''
                     }
 
-                    <div className="list-item-details">
-                        <p>
-                            <span className="item-details-title">Model: <br></br></span>{car.model}
-                        </p>
-                        {
-                            car.series 
-                            &&
+                    <div className="list-item-data">
+                        <div className="list-item-details">
                             <p>
-                                <span className="item-details-title">Series: <br></br></span>{car.series}
+                                <span className="item-details-title">Model: <br></br></span>{car.model}
                             </p>
-                        }
-                        {
-                            car.series_num
-                            &&
-                            <p>
-                                <span className="item-details-title">Series #: <br></br></span>{car.series_num}
-                            </p>
-                        }
-                        {
-                            car.year
-                            &&
-                            <p>
-                                <span className="item-details-title">Year: <br></br></span>{car.year}
-                            </p>
-                        }
-                        {
-                            car.toy_num
-                            &&
-                            <p>
-                                <span className="item-details-title">Toy #: <br></br></span>{car.toy_num}
-                            </p>
-                        }
-                    </div>
+                            {
+                                car.series 
+                                &&
+                                <p>
+                                    <span className="item-details-title">Series: <br></br></span>{car.series}
+                                </p>
+                            }
+                            {
+                                car.series_num
+                                &&
+                                <p>
+                                    <span className="item-details-title">Series #: <br></br></span>{car.series_num}
+                                </p>
+                            }
+                            {
+                                car.year
+                                &&
+                                <p>
+                                    <span className="item-details-title">Year: <br></br></span>{car.year}
+                                </p>
+                            }
+                            {
+                                car.toy_num
+                                &&
+                                <p>
+                                    <span className="item-details-title">Toy #: <br></br></span>{car.toy_num}
+                                </p>
+                            }
+                        </div>
 
-                    <div className="list-item-buttons">
-                        <button 
-                            className="btn-add-car btn-add-collection"
-                            onClick={handleCarAdd}
-                            >
-                            Add to collection
-                        </button>
-                        <button 
-                            className="btn-add-car btn-add-wishlist"
-                            onClick={handleWishlistAdd}
-                            >Add to wishlist</button>
+                        <div className="list-item-buttons">
+                            <button 
+                                className="btn-add-car btn-add-collection"
+                                onClick={handleCarAdd}
+                                >
+                                Add to collection
+                            </button>
+                            <button 
+                                className="btn-add-car btn-add-wishlist"
+                                onClick={handleWishlistAdd}
+                                >Add to wishlist</button>
+                        </div>
                     </div>
             </div>
     )
