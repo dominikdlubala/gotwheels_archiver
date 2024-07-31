@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react';  
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import CarsList from '../components/car/CarsList'; 
-import { useFetchDatabaseCarsByYearQuery } from '../store'; 
+import { useFetchDatabaseCarsByYearQuery, useFetchDatabaseCarsByModelQuery } from '../store'; 
 import Input from '../components/Input'; 
+import type { Car } from '../types/types'; 
 
 const range = (min: number, max: number): number[] => {
     const len = max - min + 1; 
@@ -12,19 +14,34 @@ const range = (min: number, max: number): number[] => {
     return arr; 
 }
 
-
 export default function CarsDatabasePage() {
 
     const [searchTerm, setSearchTerm] = useState(''); 
     const [year, setYear] = useState(1970); 
     const { data, isLoading, isError } = useFetchDatabaseCarsByYearQuery(year); 
+    const location = useLocation(); 
     const yearArr = range(1968, 2024); 
+    const navigate = useNavigate(); 
+
+    let modelSearch: string | null = null; 
+    if(location.state) {
+        modelSearch = location.state.modelSearch as string; 
+    }
 
     const handleInputChange = useCallback((value: string) => {
         setSearchTerm(value); 
     }, [])
 
-    const displayData = data?.filter(car => car.model.toLowerCase().includes(searchTerm.toLowerCase()))
+    const { data: navSearchData } = useFetchDatabaseCarsByModelQuery(modelSearch); 
+
+    // to be changed
+    let finalData: Car[] | undefined = []; 
+    if(modelSearch && navSearchData && navSearchData.length >= 1) 
+        finalData = navSearchData 
+    else 
+        finalData = data;  
+
+    const displayData = finalData?.filter(car => car.model.toLowerCase().includes(searchTerm.toLowerCase()))
 
     return (
         <div className="page-container">
@@ -34,6 +51,8 @@ export default function CarsDatabasePage() {
                     {
                         yearArr.map(year => <a href='' key={year} className="database-year-select--link" onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
                             e.preventDefault(); 
+                            setSearchTerm('');
+                            navigate('/cars-database')
                             setYear(year)
                         }}>{year.toString()}</a>) 
 

@@ -4,7 +4,7 @@ import {
     doc, 
     getDocs,
     setDoc,
-    query, where
+    query, where, limit
 } from 'firebase/firestore'; 
 import { firestore } from '../../firebaseSetup'; 
 import type { Car } from '../../types/types'; 
@@ -129,6 +129,36 @@ export const carsApi = createApi({
                         return { error: err }
                     }
                 }
+            }), 
+            fetchDatabaseCarsByModel: builder.query<Car[], string | null>({
+                async queryFn(model) {
+                    try {
+                        if(!model) return { data: [] as Car[] }
+
+                        const termForSearch = model.split(' ').map(word => word.slice(0,1).toUpperCase() + word.slice(1)).join(' '); 
+                        const years = Array.from({length: 2024 - 1968 + 1}, (_, i) => i + 1968); 
+                        const promises = years.map(async (year) => {
+                            const carsRef = collection(firestore, 'hotwheels_database', year.toString(), 'cars'); 
+                            const q = query(carsRef, where('model', '>=', termForSearch), where('model', '<=', termForSearch + '\uf8ff'), limit(10)); 
+                            const querySnapshot = await getDocs(q); 
+                            
+                            return querySnapshot.docs.map(doc => doc.data() as Car); 
+                        }); 
+
+                        const resultsArray = await Promise.all(promises);
+                        const results = resultsArray.flat() as Car[];  
+                        const uniqueResults = results.reduce((acc, obj) => {
+                            if(!acc.some(car => car.model === obj.model)){
+                                acc.push(obj); 
+                            }
+                            return acc; 
+                        }, [] as Car[])
+
+                        return { data: uniqueResults }
+                    } catch (err) {
+                        return { error: err }
+                    }
+                }
             })
         }
     }
@@ -140,6 +170,7 @@ export const {
     useAddCarMutation, 
     useAddCarToWishlistMutation,
     useFetchDatabaseCarsQuery,
-    useFetchDatabaseCarsByYearQuery
+    useFetchDatabaseCarsByYearQuery, 
+    useFetchDatabaseCarsByModelQuery
  } = carsApi; 
 

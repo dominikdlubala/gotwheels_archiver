@@ -1,9 +1,11 @@
 interface InputProps {
     onChange: (x: string) => void; 
     value: string;
-    className?: string
+    className?: string; 
+    onSubmit?: (term: string) => void;  
 }
-export default function Input({ onChange, value, className='' }: InputProps) {
+export default function Input({ onChange, value, className='', onSubmit }: InputProps) {
+
 
     return (
         <input
@@ -11,6 +13,9 @@ export default function Input({ onChange, value, className='' }: InputProps) {
             placeholder="Search..."
             value={value}
             onChange={(e:React.FormEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
+            onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                onSubmit ? (e.key === 'Enter' && onSubmit(value)) : null
+            }}
         />
     )
 }

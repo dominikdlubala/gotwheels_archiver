@@ -1,7 +1,6 @@
-import { useState, useCallback, useEffect } from 'react'; 
+import { useState, useCallback, useEffect, useRef } from 'react'; 
 import { FaFire } from 'react-icons/fa'; 
 import { Link, useNavigate } from 'react-router-dom'; 
-
 import {
     collection, 
     query, where,  
@@ -12,7 +11,6 @@ import { firestore } from '../firebaseSetup';
 
 import { navigationData } from './Header'; 
 import type { FirebaseUser } from '../types/types'; 
-// import { useFetchDatabaseCarsQuery } from '../store';  
 import Input from './Input'; 
 
 interface DesktopNavProps {
@@ -48,7 +46,7 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
 
         const resultsArray = await Promise.all(promises); 
         const results = resultsArray.flat(); 
-        const uniqueResults = [...new Set(results)]; 
+        const uniqueResults = [...new Set(results)]
 
         setSearchResults(uniqueResults); 
         setDrawerOpen(true); 
@@ -65,8 +63,22 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
         return () => clearTimeout(debounceTimer); 
     }, [searchTerm, fetchSearchResults]); 
 
+    const handleInputSubmit = (value: string) => {
+        navigate('/cars-database', { state: { modelSearch: value }}) 
+    }
+
+    const drawerRef = useRef<HTMLUListElement>(null); 
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutsideDrawer); 
+        return () => document.removeEventListener('click', handleClickOutsideDrawer)
+    }, [])
+    const handleClickOutsideDrawer = (e: MouseEvent) => {
+        if(drawerRef.current && !drawerRef.current.contains(e.target as Node))
+            setDrawerOpen(false); 
+    }
+
     const drawerElement = (
-        <ul className={`search-database--drawer`}>
+        <ul ref={drawerRef} className={`search-database--drawer`}>
             {
                 isLoading 
                 ?
@@ -79,8 +91,11 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
                 searchResults.map((model, idx) => (
                     <li
                         key={idx}
-                        className="search-datbase-drawer--item"
-                        onClick={() => setSearchTerm(model)}
+                        className="search-database-drawer--item"
+                        onClick={() => {
+                            setSearchTerm(model)
+                            handleInputSubmit(model)
+                        }}
                     >
                         {model}
                     </li>
@@ -99,12 +114,13 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
                     </Link>
                 </div>
                 <div className="search-database">
-                    <Input className="nav-input" value={searchTerm} onChange={handleInputChange}/>
-                    {
-                        drawerOpen 
-                        &&
-                        drawerElement
-                    }
+                    <Input 
+                        className="nav-input" 
+                        value={searchTerm} 
+                        onChange={handleInputChange}
+                        onSubmit={handleInputSubmit}
+                    />
+                    { drawerOpen && drawerElement }
                 </div>
                 <div className="navigation-links">
                     {
@@ -112,16 +128,8 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
                             <Link key={link.path} className="nav-link" to={link.path}>{link.name}</Link>
                         ))
                     }
-                    {
-                        user 
-                        &&
-                        <a className="nav-link login-link" onClick={() => logout()}>Log out</a>
-                    }
-                    {
-                        !user 
-                        &&
-                        <a className="nav-link login-link" onClick={() => navigate('/register')}>Register</a>
-                    }
+                    { user && <a className="nav-link login-link" onClick={() => logout()}>Log out</a> }
+                    { !user && <a className="nav-link login-link" onClick={() => navigate('/register')}>Register</a> }
                 </div>
             </div>
         </div>
