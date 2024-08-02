@@ -47,7 +47,7 @@ export default function CollectionModal({ handleFormSubmit, userId, isAdding, ha
 
     return ReactDOM.createPortal(
         <div className={showHideClassName}>
-            { isError && <Prompt error>Problem with adding a collection</Prompt>}
+            { isError && <Prompt handleClose={() => setIsError(false)} error>Problem with adding a collection</Prompt>}
             <div className="modal-background" onClick={() => handleClose() }></div>
             <div className="modal-main form-container">
                 <div className="modal-header">

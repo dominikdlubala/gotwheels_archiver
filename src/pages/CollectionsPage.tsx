@@ -57,6 +57,8 @@ export default function CollectionsPage() {
             console.error(error); 
         }
     }
+
+    const handlePromptClose = () => setIsSuccess(false); 
     
 
     return (
@@ -64,7 +66,7 @@ export default function CollectionsPage() {
             {
                 isSuccess
                 &&
-                <Prompt success>Collection successfully added</Prompt>
+                <Prompt handleClose={handlePromptClose} success>Collection successfully added</Prompt>
             }
             <div className="page-title">
                 <button className="btn-add" onClick={() => setModalOpen(true)}>+Add collection</button>

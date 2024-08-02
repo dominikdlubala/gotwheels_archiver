@@ -40,11 +40,13 @@ export default function CarsModal({ onSubmit, isAdding, show, handleClose}: Cars
         isSubmitSuccessful && reset(); 
     }, []) 
 
+    const handlePromptClose = () => setIsError(false); 
+
     const showHideClassName = show ? "modal display-flex" : "modal display-none"; 
 
     return ReactDOM.createPortal(
         <div className={showHideClassName}> 
-            { isError && <Prompt error>Problem with adding a car</Prompt>}
+            { isError && <Prompt handleClose={handlePromptClose} error>Problem with adding a car</Prompt>}
             <div className="modal-background" onClick={() => handleClose() }></div>
             <div className="modal-main form-container">
                 <div className="modal-header">

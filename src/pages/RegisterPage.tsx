@@ -37,10 +37,11 @@ export default function RegisterPage() {
                 }
             })
     } 
+    const handlePromptClose = () => setIsSuccess(false); 
 
     return (
         <div className="page-container">
-            { isSuccess && <Prompt success>User registered!</Prompt> }
+            { isSuccess && <Prompt handleClose={handlePromptClose} success>User registered!</Prompt> }
             <div className="page-wrapper">
                 <div className="form-container"> 
                     <form className="form" onSubmit={handleSubmit(onSubmit)}>
