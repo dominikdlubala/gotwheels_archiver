@@ -25,12 +25,16 @@ export const carsApi = createApi({
     tagTypes: ['Cars'],
     endpoints: (builder) => {
         return {
-            fetchCars: builder.query<Car[], {collectionId: string | undefined, userId: string}>({
-                async queryFn({ collectionId, userId }) {
+            fetchCars: builder.query<Car[], {collectionId?: string, userId: string, wishlist?: boolean}>({
+                async queryFn({ collectionId, userId, wishlist }) {
                     try {
                         const ref = collection(firestore, 'users');
                         const userRef = doc(ref, userId); 
-                        const carsRef = collection(userRef, 'cars');  
+                        let carsRef; 
+                        if(wishlist)
+                            carsRef = collection(userRef, 'wishlist')
+                        else
+                            carsRef = collection(userRef, 'cars');  
                         let q = query(carsRef);  
                         if(collectionId){
                             q = query(carsRef, where('collectionId', '==', collectionId))

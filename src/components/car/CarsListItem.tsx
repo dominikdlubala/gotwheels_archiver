@@ -1,4 +1,5 @@
 import { useState } from 'react'; 
+import { useLocation } from 'react-router-dom'; 
 import { 
     doc, 
     getDocs, 
@@ -22,6 +23,8 @@ export default function CarsListItem({ car }: CarsListItemProps) {
     const [addCar] = useAddCarMutation(); 
     const [addCarToWishlist] = useAddCarToWishlistMutation(); 
     const [alert, setAlert] = useState<{error: boolean, message: string} | null>(null); 
+
+    const { pathname } = useLocation(); 
 
     const handleCarAdd = async () => {
         try {
@@ -114,18 +117,36 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                             }
                         </div>
 
-                        <div className="list-item-buttons">
-                            <button 
-                                className="btn-add-car btn-add-collection"
-                                onClick={handleCarAdd}
+                        {
+                            !pathname.startsWith('/cars/')
+                            ?
+                            <div className="list-item-buttons">
+                                <button 
+                                    className="btn-add-car btn-add-collection"
+                                    onClick={handleCarAdd}
                                 >
                                 Add to collection
-                            </button>
-                            <button 
-                                className="btn-add-car btn-add-wishlist"
-                                onClick={handleWishlistAdd}
-                                >Add to wishlist</button>
-                        </div>
+                                </button>
+                                <button 
+                                    className="btn-add-car btn-add-wishlist"
+                                    onClick={handleWishlistAdd}
+                                >
+                                Add to wishlist
+                                </button>
+                            </div>
+                            :
+                            pathname.startsWith('/cars/wishlist')
+                            && 
+                            <div className="list-item-buttons">
+                                <button 
+                                    className="btn-add-car btn-add-collection"
+                                    onClick={handleCarAdd}
+                                >
+                                Add to collection
+                                </button>
+                            </div>
+
+                        }
                     </div>
             </div>
     )

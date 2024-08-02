@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         ), 
       }, 
       {
-        path: '/cars/:collectionId?', 
+        path: '/cars/:wishlist?/:collectionId?', 
         element: (
           <ProtectedRoute>
             <CarsPage />

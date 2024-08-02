@@ -207,6 +207,11 @@ a {
   color: #000; 
 }
 
+.page-title h2 {
+  display: flex; 
+  width: 100%; 
+}
+
 .page-section {
   display: flex; 
   padding-top: 1rem; 
@@ -268,7 +273,7 @@ a {
 
 .list-item {
   display: flex; 
-  height: 125px; 
+  height: 150px; 
   margin: 1rem 0;  
   border: 5px solid #2863d1; 
   color: #000; 
@@ -282,8 +287,6 @@ a {
 
 .list-item:hover {
   border: 5px solid #000; 
-  /* color: #fff; */
-  /* background-color: #2863d1;  */
   cursor: pointer; 
 }
 
@@ -296,7 +299,8 @@ a {
   flex-direction: row; 
   /* margin: 0 1rem;  */
   width: 100%; 
-  justify-content: space-evenly;
+  justify-content: start;
+  flex-wrap: wrap; 
 }
 
 .list-item-details p {
@@ -593,6 +597,26 @@ a {
   background-color: #2847f4;
 }
 
+.wishlist-link {
+  display: flex; 
+  align-items: center;
+  padding: 0; 
+  background-color: #fff; 
+}
+
+.wishlist-link:hover {
+  background-color: #fff; 
+}
+
+.wishlist-icon {
+  /* border: 2px solid #405dff;  */
+  color: #000; 
+  font-size: 2rem; 
+}
+.wishlist-icon:hover {
+  color: #2847f4; 
+}
+
 .login-link {
   margin-left: 1.5rem;
   background-color: #F1D74D; 
@@ -707,6 +731,7 @@ a {
   }
   .list-item {
     width: 90vw; 
+    min-height: 125px;
   }
 
   .page-link {

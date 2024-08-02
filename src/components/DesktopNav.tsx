@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react'; 
-import { FaFire } from 'react-icons/fa'; 
+import { FaFire, FaHeart } from 'react-icons/fa'; 
 import { Link, useNavigate } from 'react-router-dom'; 
 import {
     collection, 
@@ -128,6 +128,7 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
                             <Link key={link.path} className="nav-link" to={link.path}>{link.name}</Link>
                         ))
                     }
+                    <Link to="/cars/wishlist" className="nav-link wishlist-link"><FaHeart className="wishlist-icon" /></Link>
                     { user && <a className="nav-link login-link" onClick={() => logout()}>Log out</a> }
                     { !user && <a className="nav-link login-link" onClick={() => navigate('/register')}>Register</a> }
                 </div>

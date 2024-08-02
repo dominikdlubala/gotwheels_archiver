@@ -46,7 +46,6 @@ export default function CarsDatabasePage() {
     return (
         <div className="page-container">
             <div className="database-year-select">
-                <h2>Cars from <span className="database-year-select--year">{year}</span></h2>
                 <div className="database-year-select--years">
                     {
                         yearArr.map(year => <a href='' key={year} className="database-year-select--link" onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -60,13 +59,14 @@ export default function CarsDatabasePage() {
                 </div>
             </div>
             <div className="page-title">
-                    <div className="search search-cars search-database-cars">
-                        <Input
-                            value={searchTerm}
-                            onChange={handleInputChange}
-                        />
-                    </div>
+                <h2>Cars from&nbsp;<span className="database-year-select--year">{year}</span></h2>
+                <div className="search search-cars search-database-cars">
+                    <Input
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                    />
                 </div>
+            </div>
             <div className="page-section">
                 <CarsList
                     data={displayData}

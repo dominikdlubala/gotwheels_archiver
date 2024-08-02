@@ -22,9 +22,11 @@ export default function CarsPage() {
     const { user }= useAuth() as { user: FirebaseUser }; 
     const [modalOpen, setModalOpen] = useState(false); 
     const [isSuccess, setIsSuccess] = useState(false); 
-    const { collectionId } = useParams(); 
+    const { collectionId, wishlist } = useParams(); 
 
-    const { data, isFetching, isError: isErrorFetching } = useFetchCarsQuery({ collectionId, userId: user.uid });   
+    console.log(wishlist); 
+
+    const { data, isFetching, isError: isErrorFetching } = useFetchCarsQuery({ collectionId, userId: user.uid, wishlist: wishlist ? true : false });   
     const [addCar, {isLoading: isAdding }] = useAddCarMutation(); 
 
     const [searchTerm, setSearchTerm] = useState<string>(''); 
@@ -62,6 +64,7 @@ export default function CarsPage() {
     return (
         <div className="page-container">
             { isSuccess && <Prompt success handleClose={() => setIsSuccess(false)}>Car succesfully added</Prompt>}
+                <h1>{ wishlist ? 'Your wishlist' : 'Your cars' }</h1>
                 <div className="page-title">
                     <button className="btn-add" onClick={() => setModalOpen(true)}>+Add car</button>
                     <div className="search search-cars">
