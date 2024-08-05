@@ -1,4 +1,4 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import { useLocation } from 'react-router-dom'; 
 import { 
     doc, 
@@ -23,6 +23,7 @@ export default function CarsListItem({ car }: CarsListItemProps) {
     const [addCar] = useAddCarMutation(); 
     const [addCarToWishlist] = useAddCarToWishlistMutation(); 
     const [alert, setAlert] = useState<{error: boolean, message: string} | null>(null); 
+    const [showImage, setShowImage] = useState(false); 
 
     const { pathname } = useLocation(); 
 
@@ -67,6 +68,11 @@ export default function CarsListItem({ car }: CarsListItemProps) {
         }
     }
 
+    useEffect(() => {
+        const timer = setTimeout(() => setShowImage(true), 100); 
+        return () => clearTimeout(timer); 
+    }, [])
+
     return (
             <div className="list-item cars-list-item">
                 {
@@ -74,13 +80,11 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                     &&
                     <Prompt error={alert.error} success={!alert.error} handleClose={() => setAlert(null)}>{alert.message}</Prompt>
                 }
-                    {
-                        car.photo_url
-                        ? 
-                        <img src={car.photo_url} alt="car-image" className="item-image car-image" />
-                        : 
-                        ''
-                    }
+                {   
+                    showImage && car.photo_url 
+                    &&
+                    <img src={car.photo_url} alt="car-image" className="item-image car-image" />
+                }
 
                     <div className="list-item-data">
                         <div className="list-item-details">

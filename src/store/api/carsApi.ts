@@ -163,7 +163,20 @@ export const carsApi = createApi({
                         return { error: err }
                     }
                 }
-            })
+            }), 
+            // fetchDatabaseCarsTreasureHunt: builder.query<Car[], boolean?>({
+            //     async queryFn(superHunt = false) {
+            //         try {  
+            //             const years = Array.from({length: 2024 - 1968 + 1}, (_, i) => i + 1968); 
+            //             const promises = years.map(async (year) => {
+            //                 const carsRef = collection(firestore, 'hotwheels_database', year.toString(), 'cars'); 
+            //                 const q = query(carsRef, where('series', '==', ''))
+            //             })
+            //         } catch (err) {
+            //             return { error: err }
+            //         }
+            //     }
+            // })
         }
     }
 
