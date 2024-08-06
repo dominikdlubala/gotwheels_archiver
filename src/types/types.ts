@@ -9,7 +9,7 @@ export type Car = {
     series?: string; 
     series_num?: string;
     toy_num?: string; 
-    year?: number; 
+    year: number; 
     photo_url?: string 
 
     // id: string,

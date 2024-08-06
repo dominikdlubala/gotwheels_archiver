@@ -450,8 +450,8 @@ a {
 
 
 .item-image {
+  max-width: 30%;
   height: 100%; 
-  max-width: 40%;
   object-fit: cover;    
 }
 
@@ -478,9 +478,9 @@ a {
 }  
 
 .database-link {
-  width: calc(100vw - 4rem);
+  width: 100vw; 
   height: 10vh; 
-  margin: 0 1rem;  
+  /* margin: 0 1rem;   */
   justify-content: center; 
   align-items: center;
   font-size: 1.5rem; 
@@ -732,7 +732,7 @@ a {
     flex-direction: column;
   }
   .list-item {
-    width: 90vw; 
+    width: 100%; 
     min-height: 125px;
   }
 
