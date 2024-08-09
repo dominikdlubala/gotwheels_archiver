@@ -41,8 +41,11 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                 setTimeout(() => setAlert(null), 5000); 
             } else {
                 await addCar({car, userId: user.uid}); 
-                if(pathname.startsWith('cars/wishlist'))
-                    // await removeCar({docId: car.docId, userId: user.uid, wishlist: true})
+                if(pathname.startsWith('/cars/wishlist')) {
+                    await removeCar({docId: car.docId, userId: user.uid, wishlist: true})
+                    setAlert({error: false, message: 'Successfully added the car into your collection'}); 
+                    setTimeout(() => setAlert(null), 5000); 
+                }
                 setAlert({error: false, message: 'Successfully added the car into your collection'}); 
                 setTimeout(() => setAlert(null), 5000); 
             }

@@ -99,10 +99,11 @@ export const carsApi = createApi({
                 async queryFn({docId, userId, wishlist}) {
                     try {
                         const userRef = doc(firestore, 'users', userId); 
-                        let userCarsRef = collection(userRef, 'cars'); 
+                        let userCarsRef; 
                         if(wishlist) {
                             userCarsRef = collection(userRef, 'wishlist'); 
-                            console.log('wishlist remove'); 
+                        } else {
+                            userCarsRef = collection(userRef, 'cars');
                         }
                         await deleteDoc(doc(userCarsRef, docId)); 
                         return { data: null }
