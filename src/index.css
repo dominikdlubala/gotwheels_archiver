@@ -237,6 +237,17 @@ a {
   color: #fff; 
 }
 
+.btn-remove-car {
+  border: none; 
+  background-color: #fff; 
+  font-size: 1.25rem;
+}
+
+.btn-remove-car:hover {
+  color: red; 
+  cursor: pointer; 
+}
+
 .btn-add:hover {
   background-color: #4882ed;
   cursor: pointer; 

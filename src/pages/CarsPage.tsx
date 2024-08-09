@@ -1,6 +1,6 @@
 import { useState } from 'react'; 
 import { useParams } from 'react-router-dom'; 
-// import { faker } from '@faker-js/faker'; 
+import { faker } from '@faker-js/faker'; 
 import {
     ref, 
     uploadBytes, 
@@ -23,8 +23,6 @@ export default function CarsPage() {
     const [modalOpen, setModalOpen] = useState(false); 
     const [isSuccess, setIsSuccess] = useState(false); 
     const { collectionId, wishlist } = useParams(); 
-
-    console.log(wishlist); 
 
     const { data, isFetching, isError: isErrorFetching } = useFetchCarsQuery({ collectionId, userId: user.uid, wishlist: wishlist ? true : false });   
     const [addCar, {isLoading: isAdding }] = useAddCarMutation(); 
@@ -49,7 +47,8 @@ export default function CarsPage() {
                 series_num: car.series_num || '',
                 toy_num: car.toy_num || '',
                 year: car.year,
-                photo_url: downloadUrl
+                photo_url: downloadUrl, 
+                docId: faker.string.uuid()
             }
             await addCar({car: carToAdd, userId: user.uid}); 
             setModalOpen(false); 

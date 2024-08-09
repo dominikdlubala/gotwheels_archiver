@@ -4,6 +4,7 @@ import {
     doc, 
     getDocs,
     setDoc,
+    deleteDoc,
     query, where, limit
 } from 'firebase/firestore'; 
 import { firestore } from '../../firebaseSetup'; 
@@ -30,11 +31,9 @@ export const carsApi = createApi({
                     try {
                         const ref = collection(firestore, 'users');
                         const userRef = doc(ref, userId); 
-                        let carsRef; 
+                        let carsRef= collection(userRef, 'cars'); 
                         if(wishlist)
                             carsRef = collection(userRef, 'wishlist')
-                        else
-                            carsRef = collection(userRef, 'cars');  
                         let q = query(carsRef);  
                         if(collectionId){
                             q = query(carsRef, where('collectionId', '==', collectionId))
@@ -44,7 +43,7 @@ export const carsApi = createApi({
                             return { error: { message: 'No cars in this collection'} }; 
                         }
                         const cars = querySnapshot.docs.map(doc => {
-                            return doc.data() as Car; 
+                            return {...doc.data(), docId: doc.id } as Car; 
                         })
                         
                         return { data: cars}; 
@@ -83,11 +82,11 @@ export const carsApi = createApi({
                     try {
                         const userRef = doc(firestore, 'users', userId); 
                         const usersCarsRef = collection(userRef, 'cars'); 
-                        await setDoc(doc(usersCarsRef), car); 
+                        await setDoc(doc(usersCarsRef, car.docId), car); 
 
                         const yearRef = doc(firestore, 'hotwheels_database', car.year?.toString())
                         const userAddedCarsRef = collection(yearRef, 'user_added'); 
-                        await setDoc(doc(userAddedCarsRef), {...car, userId}); 
+                        await setDoc(doc(userAddedCarsRef, car.docId), {...car, userId}); 
 
                         return { data: car }; 
                     } catch (error) {
@@ -96,12 +95,29 @@ export const carsApi = createApi({
                 }, 
                 invalidatesTags: [{ type: 'Cars', id: 'LIST'}]
             }), 
+            removeCar: builder.mutation<null, {docId: string, userId: string, wishlist?: boolean}>({
+                async queryFn({docId, userId, wishlist}) {
+                    try {
+                        const userRef = doc(firestore, 'users', userId); 
+                        let userCarsRef = collection(userRef, 'cars'); 
+                        if(wishlist) {
+                            userCarsRef = collection(userRef, 'wishlist'); 
+                            console.log('wishlist remove'); 
+                        }
+                        await deleteDoc(doc(userCarsRef, docId)); 
+                        return { data: null }
+                    } catch(err) {
+                        return { error: err }
+                    }
+                }, 
+                invalidatesTags: [{type: 'Cars', id: 'LIST'}]
+            }), 
             addCarToWishlist: builder.mutation<Car, {car: Car, userId: string}>({
                 async queryFn({car, userId}) {
                     try {
                         const userRef = doc(firestore, 'users', userId); 
                         const wishlistRef = collection(userRef, 'wishlist'); 
-                        await setDoc(doc(wishlistRef), car); 
+                        await setDoc(doc(wishlistRef, car.docId), car); 
                         return { data: car }
                     } catch (err) {
                         return { error: err}
@@ -117,7 +133,7 @@ export const carsApi = createApi({
                             const yearRef = doc(databaseRef, year.toString());
                             const carsCollectionRef = collection(yearRef, 'cars');   
                             const querySnapshot = await getDocs(carsCollectionRef); 
-                            querySnapshot.docs.forEach(doc => data.push(doc.data() as Car))
+                            querySnapshot.docs.forEach(doc => data.push({...doc.data(), docId: doc.id} as Car))
                         }
                         return { data: data }
                     } catch (err) {
@@ -132,7 +148,8 @@ export const carsApi = createApi({
                         const yearRef = doc(databaseRef, year.toString()); 
                         const carsCollectionRef = collection(yearRef, 'cars');  
                         const querySnapshot = await getDocs(carsCollectionRef);
-                        const cars = querySnapshot.docs.map(doc => doc.data() as Car);  
+                        const cars: Car[] = [];
+                        querySnapshot.docs.map(doc => cars.push({...doc.data(), docId: doc.id } as Car));  
                         return { data: cars }
                     } catch (err) {
                         return { error: err }
@@ -190,6 +207,7 @@ export const carsApi = createApi({
 export const { 
     useFetchCarsQuery, 
     useAddCarMutation, 
+    useRemoveCarMutation,
     useAddCarToWishlistMutation,
     useFetchDatabaseCarsQuery,
     useFetchDatabaseCarsByYearQuery, 

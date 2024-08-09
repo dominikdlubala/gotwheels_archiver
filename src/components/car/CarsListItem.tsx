@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'; 
 import { useLocation } from 'react-router-dom'; 
+import { FaTrashAlt } from 'react-icons/fa'; 
 import { 
     doc, 
     getDocs, 
@@ -8,7 +9,7 @@ import {
 import { firestore } from '../../firebaseSetup'; 
 
 import type { Car, FirebaseUser } from '../../types/types'; 
-import { useAddCarMutation, useAddCarToWishlistMutation } from '../../store';
+import { useAddCarMutation, useAddCarToWishlistMutation, useRemoveCarMutation } from '../../store';
 import { useAuth } from '../../hooks/useAuth'; 
 import Prompt from '../../components/Prompt'; 
 
@@ -21,6 +22,7 @@ export default function CarsListItem({ car }: CarsListItemProps) {
 
     const { user } = useAuth() as { user: FirebaseUser}; 
     const [addCar] = useAddCarMutation(); 
+    const [removeCar] = useRemoveCarMutation(); 
     const [addCarToWishlist] = useAddCarToWishlistMutation(); 
     const [alert, setAlert] = useState<{error: boolean, message: string} | null>(null); 
     const [showImage, setShowImage] = useState(false); 
@@ -39,12 +41,22 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                 setTimeout(() => setAlert(null), 5000); 
             } else {
                 await addCar({car, userId: user.uid}); 
+                if(pathname.startsWith('cars/wishlist'))
+                    // await removeCar({docId: car.docId, userId: user.uid, wishlist: true})
                 setAlert({error: false, message: 'Successfully added the car into your collection'}); 
                 setTimeout(() => setAlert(null), 5000); 
             }
         } catch (err) {
             setAlert({error: true, message: 'There was an error'}); 
             setTimeout(() => setAlert(null), 5000); 
+        }
+    }
+
+    const handleCarRemove = async () => {
+        try {
+            await removeCar({userId: user.uid, docId: car.docId})
+        } catch(err) {
+            console.log(err); 
         }
     }
 
@@ -139,17 +151,27 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                                 </button>
                             </div>
                             :
-                            pathname.startsWith('/cars/wishlist')
-                            && 
-                            <div className="list-item-buttons">
-                                <button 
-                                    className="btn-add-car btn-add-collection"
-                                    onClick={handleCarAdd}
-                                >
-                                Add to collection
-                                </button>
-                            </div>
-
+                            (
+                                pathname.startsWith('/cars/wishlist')
+                                ?
+                                <div className="list-item-buttons">
+                                    <button 
+                                        className="btn-add-car btn-add-collection"
+                                        onClick={handleCarAdd}
+                                    >
+                                    Add to collection
+                                    </button>
+                                </div>
+                                :
+                                <div className="list-item-buttons">
+                                    <button 
+                                        className="btn-remove-car"
+                                        onClick={handleCarRemove}
+                                    >
+                                    <FaTrashAlt/>
+                                    </button>
+                                </div>
+                            )
                         }
                     </div>
             </div>

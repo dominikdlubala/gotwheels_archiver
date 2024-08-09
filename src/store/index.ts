@@ -32,6 +32,7 @@ export {
 export {
     useFetchCarsQuery, 
     useAddCarMutation, 
+    useRemoveCarMutation,
     useAddCarToWishlistMutation,
     useFetchDatabaseCarsQuery,
     useFetchDatabaseCarsByYearQuery,

@@ -10,15 +10,8 @@ export type Car = {
     series_num?: string;
     toy_num?: string; 
     year: number; 
-    photo_url?: string 
-
-    // id: string,
-    // name: string, 
-    // userId: string,
-
-    // // definitely change this
-    // collectionId: string | undefined; 
-    // imageUrl: string; 
+    photo_url?: string; 
+    docId: string;
 }
 
 export type Collection = {
