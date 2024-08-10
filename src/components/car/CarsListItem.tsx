@@ -98,7 +98,7 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                 {   
                     showImage && car.photo_url 
                     &&
-                    <img src={car.photo_url} alt="car-image" className="item-image car-image" />
+                    <img src={car.firebase_url} alt="car-image" className="item-image car-image" />
                 }
 
                     <div className="list-item-data">

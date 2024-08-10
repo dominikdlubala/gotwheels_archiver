@@ -11,6 +11,7 @@ export type Car = {
     toy_num?: string; 
     year: number; 
     photo_url?: string; 
+    firebase_url?: string; 
     docId: string;
 }
 
