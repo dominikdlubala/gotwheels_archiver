@@ -21,7 +21,7 @@ export default function CarsList({ data, isLoading, isError}: CarsListProps) {
 
     if(!isLoading && !isError){
         content = data?.map(car => (
-            <CarsListItem key={car.model} car={car} />
+            <CarsListItem key={`${car.model + Math.random()}`} car={car} />
         ))
     }
 
