@@ -20,7 +20,7 @@ export default function CarsList({ data, isLoading, isError}: CarsListProps) {
     // }
 
     if(!isLoading && !isError){
-        content = data?.map(car => (
+        content = data?.sort((a, b) => a.series && b.series ? a.series.localeCompare(b.series) : a.model.localeCompare(b.model)).map(car => (
             <CarsListItem key={`${car.model + Math.random()}`} car={car} />
         ))
     }
