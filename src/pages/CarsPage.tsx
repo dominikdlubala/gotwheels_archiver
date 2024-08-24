@@ -48,6 +48,7 @@ export default function CarsPage() {
                 toy_num: car.toy_num || '',
                 year: car.year,
                 photo_url: downloadUrl, 
+                firebase_url: downloadUrl,
                 docId: faker.string.uuid()
             }
             await addCar({car: carToAdd, userId: user.uid}); 

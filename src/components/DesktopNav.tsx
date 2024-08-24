@@ -99,7 +99,7 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
                     >
                         {model}
                     </li>
-                ))
+                )).slice(0, 10)
                 : <li className="search-database-drawer--item">No results found</li>
             }
         </ul>

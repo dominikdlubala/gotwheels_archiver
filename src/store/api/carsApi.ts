@@ -82,11 +82,14 @@ export const carsApi = createApi({
                     try {
                         const userRef = doc(firestore, 'users', userId); 
                         const usersCarsRef = collection(userRef, 'cars'); 
-                        await setDoc(doc(usersCarsRef, car.docId), car); 
 
                         const yearRef = doc(firestore, 'hotwheels_database', car.year?.toString())
-                        const userAddedCarsRef = collection(yearRef, 'user_added'); 
-                        await setDoc(doc(userAddedCarsRef, car.docId), {...car, userId}); 
+                        const userAddedCarsRef = collection(yearRef, 'user_added');
+                        
+                        await Promise.all([
+                            setDoc(doc(usersCarsRef, car.docId), car),
+                            setDoc(doc(userAddedCarsRef, car.docId), {...car, userId})
+                        ]); 
 
                         return { data: car }; 
                     } catch (error) {

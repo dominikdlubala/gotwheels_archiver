@@ -104,34 +104,34 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                     <div className="list-item-data">
                         <div className="list-item-details">
                             <p>
-                                <span className="item-details-title">Model: <br></br></span>{car.model}
+                                <span className="item-details-title">Model: </span>{car.model}
                             </p>
                             {
                                 car.series 
                                 &&
                                 <p>
-                                    <span className="item-details-title">Series: <br></br></span>{car.series}
+                                    <span className="item-details-title">Series: </span>{car.series}
                                 </p>
                             }
                             {
                                 car.series_num
                                 &&
                                 <p>
-                                    <span className="item-details-title">Series #: <br></br></span>{car.series_num}
+                                    <span className="item-details-title">Series #: </span>{car.series_num}
                                 </p>
                             }
                             {
                                 car.year
                                 &&
                                 <p>
-                                    <span className="item-details-title">Year: <br></br></span>{car.year}
+                                    <span className="item-details-title">Year: </span>{car.year}
                                 </p>
                             }
                             {
                                 car.toy_num
                                 &&
                                 <p>
-                                    <span className="item-details-title">Toy #: <br></br></span>{car.toy_num}
+                                    <span className="item-details-title">Toy #: </span>{car.toy_num}
                                 </p>
                             }
                         </div>

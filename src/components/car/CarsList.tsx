@@ -20,10 +20,24 @@ export default function CarsList({ data, isLoading, isError}: CarsListProps) {
     // }
 
     if(!isLoading && !isError){
-        content = data?.sort((a, b) => a.series && b.series ? a.series.localeCompare(b.series) : a.model.localeCompare(b.model)).map(car => (
+        content = data?.sort((a, b) => (
+            a.series && b.series 
+            ? 
+            (a.series.localeCompare(b.series)) || (
+                a.series_num && b.series_num
+                ?
+                a.series_num.localeCompare(b.series_num)
+                :
+                0
+            )
+            : 
+            a.model.localeCompare(b.model))
+        ).map(car => (
             <CarsListItem key={`${car.model + Math.random()}`} car={car} />
         ))
     }
+
+    console.log(data?.length)
 
     return (
         <div className="list cars-list">

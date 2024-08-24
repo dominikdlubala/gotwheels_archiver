@@ -255,11 +255,11 @@ a {
 
 .page-link {
   display: flex; 
-  width: 70vw; 
+  width: 45%; 
   font-size: 1.25rem;
   justify-content: center; 
   align-items: center;  
-  margin: 1rem; 
+  /* margin: 1rem;  */
   border: 2px solid #2863d1; 
   text-decoration: none;
   background-color: #8ab2fd;
@@ -284,7 +284,8 @@ a {
 
 .list-item {
   display: flex; 
-  height: 150px; 
+  min-height: 150px; 
+  max-height: 150px; 
   margin: 1rem 0;  
   border: 5px solid #2863d1; 
   color: #000; 
@@ -340,7 +341,7 @@ a {
   border: none; 
   border-radius: 4px; 
   padding: 0.2rem; 
-  height: 100%; 
+  /* height: 100%;  */
 }
 
 .btn-add-collection {
@@ -469,7 +470,7 @@ a {
 
 
 .home-section {
-  justify-content: center; 
+  justify-content: space-between; 
 }
 
 .home-link {
@@ -490,7 +491,7 @@ a {
 }  
 
 .database-link {
-  width: 100vw; 
+  width: 100%; 
   height: 10vh; 
   /* margin: 0 1rem;   */
   justify-content: center; 
@@ -745,7 +746,8 @@ a {
   }
   .list-item {
     width: 100%; 
-    min-height: 125px;
+    min-height: 150px;
+    max-height: 250px; 
   }
 
   .page-link {
