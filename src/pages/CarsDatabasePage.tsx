@@ -18,6 +18,7 @@ export default function CarsDatabasePage() {
 
     const [searchTerm, setSearchTerm] = useState(''); 
     const [year, setYear] = useState(1970); 
+    const [treasureHunt, setTreasureHunt] = useState(false); 
     const { data, isLoading, isError } = useFetchDatabaseCarsByYearQuery(year); 
     const location = useLocation(); 
     const yearArr = range(1968, 2024); 
@@ -41,7 +42,12 @@ export default function CarsDatabasePage() {
     else 
         finalData = data;  
 
-    const displayData = finalData?.filter(car => car.model.toLowerCase().includes(searchTerm.toLowerCase()))
+    let displayData = finalData?.filter(car => car.model.toLowerCase().includes(searchTerm.toLowerCase()))
+
+    if(treasureHunt){
+        displayData = displayData?.filter(car => car.treasure_hunt && ['Treasure Hunt', 'Super Treasure Hunt'].includes(car.treasure_hunt))
+    }
+
 
     return (
         <div className="page-container">
@@ -59,7 +65,16 @@ export default function CarsDatabasePage() {
                 </div>
             </div>
             <div className="page-title">
-                <h2>Cars from&nbsp;<span className="database-year-select--year">{year}</span></h2>
+                <h2>
+                    Cars from&nbsp;
+                    <span className="database-year-select--year">{year}</span>
+                    &nbsp;
+                    <button className={`btn btn-treasure-hunt ${treasureHunt && 'btn-treasure-hunt--active'}`}
+                        onClick={() => {
+                            setTreasureHunt(!treasureHunt)
+                        }}
+                    >Treasure Hunts</button>
+                </h2>
                 <div className="search search-cars search-database-cars">
                     <Input
                         value={searchTerm}

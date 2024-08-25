@@ -16,6 +16,10 @@ export const navigationData: NavigationData[] = [
     {
         path: '/cars/', 
         name: 'My Cars'
+    }, 
+    {
+        path: '/cars/wishlist',
+        name: 'Wishlist'
     }
 ]
 

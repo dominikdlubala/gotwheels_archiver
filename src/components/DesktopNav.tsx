@@ -124,9 +124,11 @@ export default function DesktopNav({ user, logout, className }: DesktopNavProps)
                 </div>
                 <div className="navigation-links">
                     {
-                        navigationData.map(link => (
-                            <Link key={link.path} className="nav-link" to={link.path}>{link.name}</Link>
-                        ))
+                        navigationData.map(link => {
+                            if(link.name === 'Wishlist') return ''
+                            return <Link key={link.path} className="nav-link" to={link.path}>{link.name}</Link>
+                        }
+                        )
                     }
                     <Link to="/cars/wishlist" className="nav-link wishlist-link"><FaHeart className="wishlist-icon" /></Link>
                     { user && <a className="nav-link login-link" onClick={() => logout()}>Log out</a> }

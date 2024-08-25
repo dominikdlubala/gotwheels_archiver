@@ -13,6 +13,7 @@ export type Car = {
     photo_url?: string; 
     firebase_url?: string; 
     docId: string;
+    treasure_hunt?: string;
 }
 
 export type Collection = {

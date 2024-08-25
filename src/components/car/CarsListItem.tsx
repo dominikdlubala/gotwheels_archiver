@@ -134,6 +134,13 @@ export default function CarsListItem({ car }: CarsListItemProps) {
                                     <span className="item-details-title">Toy #: </span>{car.toy_num}
                                 </p>
                             }
+                            {
+                                car.treasure_hunt
+                                &&
+                                <p>
+                                    <span className="item-details-title">TH: </span>{car.treasure_hunt}
+                                </p>
+                            }
                         </div>
 
                         {
