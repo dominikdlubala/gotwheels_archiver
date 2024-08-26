@@ -77,19 +77,25 @@ export const carsApi = createApi({
                     }
                 }
             }),
-            addCar: builder.mutation<Car, { car: Car, userId: string}>({
-                async queryFn({car, userId}) {
+            addCar: builder.mutation<Car, { car: Car, userId: string, userAdded?: boolean}>({
+                async queryFn({car, userId, userAdded}) {
                     try {
                         const userRef = doc(firestore, 'users', userId); 
                         const usersCarsRef = collection(userRef, 'cars'); 
 
                         const yearRef = doc(firestore, 'hotwheels_database', car.year?.toString())
-                        const userAddedCarsRef = collection(yearRef, 'user_added');
+
+                        const promises = []; 
+
+                        promises.push(setDoc(doc(usersCarsRef, car.docId), car)); 
+
+                        if(userAdded) {
+                            const userAddedCarsRef = collection(yearRef, 'user_added');
+                            promises.push(setDoc(doc(userAddedCarsRef, car.docId), {...car, userId}))
+                        }
+                            
                         
-                        await Promise.all([
-                            setDoc(doc(usersCarsRef, car.docId), car),
-                            setDoc(doc(userAddedCarsRef, car.docId), {...car, userId})
-                        ]); 
+                        await Promise.all(promises); 
 
                         return { data: car }; 
                     } catch (error) {

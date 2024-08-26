@@ -51,7 +51,7 @@ export default function CarsPage() {
                 firebase_url: downloadUrl,
                 docId: faker.string.uuid()
             }
-            await addCar({car: carToAdd, userId: user.uid}); 
+            await addCar({car: carToAdd, userId: user.uid, userAdded: true}); 
             setModalOpen(false); 
             setIsSuccess(true); 
             setTimeout(() => setIsSuccess(false), 2000); 
