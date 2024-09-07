@@ -37,8 +37,6 @@ export default function CarsList({ data, isLoading, isError}: CarsListProps) {
         ))
     }
 
-    console.log(data?.length)
-
     return (
         <div className="list cars-list">
             {content} 

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';  
-import { useLocation, useNavigate } from 'react-router-dom'; 
+import { useLocation, useNavigate, useParams } from 'react-router-dom'; 
 import CarsList from '../components/car/CarsList'; 
 import { useFetchDatabaseCarsByYearQuery, useFetchDatabaseCarsByModelQuery } from '../store'; 
 import Input from '../components/Input'; 
@@ -16,8 +16,9 @@ const range = (min: number, max: number): number[] => {
 
 export default function CarsDatabasePage() {
 
-    const [searchTerm, setSearchTerm] = useState(''); 
-    const [year, setYear] = useState(1970); 
+    const [searchTerm, setSearchTerm] = useState('');
+    const { year: pathYear } = useParams();   
+    const [year, setYear] = useState<number>(Number(pathYear)); 
     const [treasureHunt, setTreasureHunt] = useState(false); 
     const { data, isLoading, isError } = useFetchDatabaseCarsByYearQuery(year); 
     const location = useLocation(); 
@@ -28,6 +29,7 @@ export default function CarsDatabasePage() {
     if(location.state) {
         modelSearch = location.state.modelSearch as string; 
     }
+
 
     const handleInputChange = useCallback((value: string) => {
         setSearchTerm(value); 
@@ -57,7 +59,7 @@ export default function CarsDatabasePage() {
                         yearArr.map(year => <a href='' key={year} className="database-year-select--link" onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
                             e.preventDefault(); 
                             setSearchTerm('');
-                            navigate('/cars-database')
+                            navigate(`/cars-database/${year}`)
                             setYear(year)
                         }}>{year.toString()}</a>) 
 
@@ -69,11 +71,15 @@ export default function CarsDatabasePage() {
                     Cars from&nbsp;
                     <span className="database-year-select--year">{year}</span>
                     &nbsp;
-                    <button className={`btn btn-treasure-hunt ${treasureHunt && 'btn-treasure-hunt--active'}`}
-                        onClick={() => {
-                            setTreasureHunt(!treasureHunt)
-                        }}
-                    >Treasure Hunts</button>
+                    {
+                        year >= 2013
+                        &&
+                        <button className={`btn btn-treasure-hunt ${treasureHunt && 'btn-treasure-hunt--active'}`}
+                            onClick={() => {
+                                setTreasureHunt(!treasureHunt)
+                            }}
+                        >Treasure Hunts</button>
+                    }
                 </h2>
                 <div className="search search-cars search-database-cars">
                     <Input

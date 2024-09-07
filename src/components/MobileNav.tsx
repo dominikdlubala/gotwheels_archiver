@@ -129,7 +129,7 @@ export default function MobileNav({ user, logout, className }: MobileNavProps) {
         <div className={`${className} mobile-nav-wrapper`} ref={menuRef}>
             <div className={`header-container`}>
                 <div className="header-logo">
-                    <Link to={`/home`} className="header-logo-link">
+                    <Link to={`/cars-database`} className="header-logo-link">
                         <span>Got</span><FaFire className="icon-fire" />Wheels
                     </Link>
                 </div>

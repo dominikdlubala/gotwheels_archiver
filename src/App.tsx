@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';  
 import Root from './pages/Root'; 
-import HomePage from './pages/HomePage'; 
+// import HomePage from './pages/HomePage'; 
 import CollectionsPage from './pages/CollectionsPage'; 
 import CarsPage from './pages/CarsPage'; 
 import CarsDatabasePage from './pages/CarsDatabasePage';
@@ -24,10 +24,10 @@ const router = createBrowserRouter([
         element: <RegisterPage />
       },
       {
-        path: '/home', 
+        path: '/cars-database/:year', 
         element: (
           <ProtectedRoute>
-            <HomePage />
+            <CarsDatabasePage />
           </ProtectedRoute>
         )
       },
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         )
       }, 
       {
-        path: '/cars-database',
+        path: '/cars-database/:year',
         element: (
           <CarsDatabasePage />
         )

@@ -16,7 +16,7 @@ export default function LoginPage() {
 
     const { user } = useAuth(); 
     if(user) {
-        navigate('/home'); 
+        navigate('/cars-database'); 
     }
 
     const onSubmit: SubmitHandler<FormValues> = ({ email, password}) => {
