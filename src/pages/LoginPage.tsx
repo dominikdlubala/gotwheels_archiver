@@ -16,7 +16,8 @@ export default function LoginPage() {
 
     const { user } = useAuth(); 
     if(user) {
-        navigate('/cars-database'); 
+        const currYear = new Date().getFullYear();
+        navigate(`/cars-database/${currYear}`); 
     }
 
     const onSubmit: SubmitHandler<FormValues> = ({ email, password}) => {

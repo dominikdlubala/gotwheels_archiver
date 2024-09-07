@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         )
       }, 
       {
-        path: '/cars-database/:year',
+        path: '/cars-database/:year?',
         element: (
           <CarsDatabasePage />
         )

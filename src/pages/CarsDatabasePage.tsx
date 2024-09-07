@@ -18,7 +18,7 @@ export default function CarsDatabasePage() {
 
     const [searchTerm, setSearchTerm] = useState('');
     const { year: pathYear } = useParams();   
-    const [year, setYear] = useState<number>(Number(pathYear)); 
+    const [year, setYear] = useState<number>(pathYear ? Number(pathYear) : 2024); 
     const [treasureHunt, setTreasureHunt] = useState(false); 
     const { data, isLoading, isError } = useFetchDatabaseCarsByYearQuery(year); 
     const location = useLocation(); 
@@ -29,7 +29,6 @@ export default function CarsDatabasePage() {
     if(location.state) {
         modelSearch = location.state.modelSearch as string; 
     }
-
 
     const handleInputChange = useCallback((value: string) => {
         setSearchTerm(value); 
